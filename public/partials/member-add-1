@@ -1,0 +1,149 @@
+<div class="breadcrumbs shadow-1">
+    <div class="container">
+        <div class="row">
+            <i class="material-icons">home</i> You are in:
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Profile</a></li>
+                <li><a href="#">Create</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="body-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel z-depth-1">
+                    <div class="panel-header">
+                        <div class="panel-title" style="width:100%">
+                            <h5><b>新增成员</b></h5>
+                        </div>
+                    </div>
+                    <div class="panel-content">
+                        <form class="">
+                            <div layout-gt-sm="row">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>用户名</label>
+                                    <input ng-model="messages.data.username">
+                                </md-input-container>
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>用户类型</label>
+                                    <md-select ng-model="messages.data.type">
+                                        <md-option ng-repeat="type in types" value="{{type.name}}">
+                                            {{type.name}}
+                                        </md-option>
+                                    </md-select>
+                                </md-input-container>
+                            </div>
+
+                            <div class="row md-padding">
+                                <div class="col-xs-12 col-md-12">
+                                    <div class="form-group">
+                                        <label for="inputName" class="control-label">用户名</label>
+                                        <div class="">
+                                            <input type="text" class="form-control boxed-input" id="inputName" value="">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-xs-12 col-md-6">
+                                    <div class="form-group">
+                                        <label for="inputType" class=" control-label">用户类型</label>
+                                        <div class="">
+                                            <select class="form-control boxed-input" id="inputType">
+                                <!-- <option>Selecione o grupo de produto</option> -->
+                                <option>Norte Paraná</option>
+                                <option>Sul Paraná</option>
+                              </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-xs-12 col-md-6">
+                                    <div class="form-group">
+                                        <label for="inputParent" class=" control-label">部属单位</label>
+                                        <div class="">
+                                            <select class="form-control boxed-input" id="inputParent">
+                                <!-- <option>Selecione o grupo de produto</option> -->
+                                <option>Norte Paraná</option>
+                                <option>Sul Paraná</option>
+                              </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-md-6">
+                                    <div class="form-group">
+                                        <label for="inputLeader" class="control-label">登录密码</label>
+                                        <div class="">
+                                            <input type="text" class="form-control boxed-input" id="inputLeader" value="Daniel Salomão">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-md-6">
+                                    <div class="form-group">
+                                        <label for="inputPost" class="control-label">确认密码</label>
+                                        <div class="">
+                                            <input type="text" class="form-control boxed-input" id="inputPost" value="Daniel Salomão">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-md-6">
+                                    <div class="form-group">
+                                        <label for="inputPhone" class="control-label">姓名</label>
+                                        <div class="">
+                                            <input type="text" class="form-control boxed-input" id="inputPhone" value="Daniel Salomão">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-md-6">
+                                    <div class="form-group">
+                                        <label for="inputTel" class="control-label">身份证号</label>
+                                        <div class="">
+                                            <input type="text" class="form-control boxed-input" id="inputTel" value="Daniel Salomão">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-md-6">
+                                    <div class="form-group">
+                                        <label for="inputSafety" class="control-label">联系电话</label>
+                                        <div class="">
+                                            <input type="text" class="form-control boxed-input" id="inputSafety" value="Daniel Salomão">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-md-6">
+                                    <div class="form-group">
+                                        <label for="inputPost" class="control-label">联系邮箱</label>
+                                        <div class="">
+                                            <input type="text" class="form-control boxed-input" id="inputPost" value="Daniel Salomão">
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-xs-12 col-md-12">
+                                    <div class="form-group" style="text-align: right;">
+                                        <div class="">
+                                            <div class="checkbox">
+                                                
+                                                <button class="btn btn-primary" style=" color:white; margin-left: 15px;">确定</button>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- .row -->
+
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--.row-->
+    </div>
+    <!--.container-->
+</div>
+<!--.body-content-->

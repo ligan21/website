@@ -1,0 +1,20 @@
+.websiteMessage md-content {
+  background-color: transparent !important; }
+.websiteMessage md-content md-tabs  {
+    /*background: #f6f6f6;*/
+    background:white;
+    /*border: 1px solid #e1e1e1;*/
+    /*box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);*/
+    /*font-size:20px;*/
+    /*font-weight: bold;*/
+     }
+    md-tabs .md-tab{
+    font-size: 14px;
+    font-weight: bold;
+    }
+.websiteMessage md-content md-tabs md-tabs-wrapper {
+      background: white;
+      font-size:10px;
+     font-weight: bold; }
+.websiteMessage md-content h1:first-child {
+    margin-top: 0; }

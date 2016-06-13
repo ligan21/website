@@ -1,0 +1,182 @@
+<div class="breadcrumbs shadow-1">
+    <div class="container">
+        <div class="row">
+            <i class="material-icons">home</i> You are in:
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Profile</a></li>
+                <li><a href="#">Create</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="body-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel z-depth-1">
+                    <div class="panel-header">
+                        <div class="panel-title" style="width:100%">
+                            <h5><b>修改部属单位信息</b></h5>
+                        </div>
+                    </div>
+                    <div class="panel-content">
+                        <form class="">
+                            <div layout-gt-xs="row">
+                                <md-input-container class="md-block" flex-gt-xs>
+                                    <label>Company (Disabled)</label>
+                                    <input ng-model="messages.data.name" disabled>
+                                </md-input-container>
+                                
+                                </md-datepicker>
+                            </div>
+                            <div class="row md-padding">
+                                <div class="col-xs-12 col-md-12">
+                                    <div class="form-group">
+                                        <label for="inputName" class="control-label">单位名称</label>
+                                        <div class="">
+                                            <input type="text" class="form-control boxed-input" id="inputName" ng-model="messages.data.name" ng-disabled="true">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-xs-12 col-md-6">
+                                    <div class="form-group">
+                                        <label for="inputType" class=" control-label">类型</label>
+                                        <div class="">
+                                            <select class="form-control boxed-input" id="inputType" ng-model="messages.data.type" ng-disabled="true">
+                                              <option>部署高校</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-xs-12 col-md-6">
+                                    <div class="form-group col-md-12">
+                                        <!--label for="inputParent" class=" control-label">上级单位</label>
+                                        <div class="">
+                                            <select class="form-control boxed-input" id="inputParent" >
+                              </select>
+                                        </div-->
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-md-6">
+                                    <div class="form-group">
+                                        <label for="inputLeader" class="control-label">单位分管领导</label>
+                                        <div class="">
+                                            <input type="text" class="form-control boxed-input" id="inputLeader" ng-model="messages.data.leaderName">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-md-6">
+                                    <div class="form-group">
+                                        <label for="inputPost" class="control-label">职务</label>
+                                        <div class="">
+                                            <input type="text" class="form-control boxed-input" id="inputPost" ng-model="messages.data.leaderPost">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-md-6">
+                                    <div class="form-group">
+                                        <label for="inputPhone" class="control-label">手机</label>
+                                        <div class="">
+                                            <input type="text" class="form-control boxed-input" id="inputPhone" ng-model="messages.data.leaderPhone">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-md-6">
+                                    <div class="form-group">
+                                        <label for="inputTel" class="control-label">座机</label>
+                                        <div class="">
+                                            <input type="text" class="form-control boxed-input" id="inputTel" ng-model="messages.data.leaderTel">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-md-6">
+                                    <div class="form-group">
+                                        <label for="inputSafety" class="control-label">网络安全管理人</label>
+                                        <div class="">
+                                            <input type="text" class="form-control boxed-input" id="inputSafety" ng-model="messages.data.secureManagerName">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-md-6">
+                                    <div class="form-group">
+                                        <label for="inputPost" class="control-label">职务</label>
+                                        <div class="">
+                                            <input type="text" class="form-control boxed-input" id="inputPost" ng-model="messages.data.secureManagerPost">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-md-6">
+                                    <div class="form-group">
+                                        <label for="inputPhone" class="control-label">手机</label>
+                                        <div class="">
+                                            <input type="text" class="form-control boxed-input" id="inputPhone" ng-model="messages.data.secureManagerPhone">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-md-6">
+                                    <div class="form-group">
+                                        <label for="inputTel" class="control-label">座机</label>
+                                        <div class="">
+                                            <input type="text" class="form-control boxed-input" id="inputTel" ng-model="messages.data.secureManagerTel">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-md-6">
+                                    <div class="form-group">
+                                        <label for="inputSafety" class="control-label">网络安全联络员</label>
+                                        <div class="">
+                                            <input type="text" class="form-control boxed-input" id="inputSafety" ng-model="messages.data.secureLiaisonName">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-md-6">
+                                    <div class="form-group">
+                                        <label for="inputPost" class="control-label">职务</label>
+                                        <div class="">
+                                            <input type="text" class="form-control boxed-input" id="inputPost" ng-model="messages.data.secureLiaisonPost">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-md-6">
+                                    <div class="form-group">
+                                        <label for="inputPhone" class="control-label">手机</label>
+                                        <div class="">
+                                            <input type="text" class="form-control boxed-input" id="inputPhone" ng-model="messages.data.secureLiaisonPhone">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-md-6">
+                                    <div class="form-group">
+                                        <label for="inputTel" class="control-label">座机</label>
+                                        <div class="">
+                                            <input type="text" class="form-control boxed-input" id="inputTel" ng-model="messages.data.secureLiaisonTel">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-md-12">
+                                    <div class="form-group" style="text-align: right;">
+                                        <div class="">
+                                            <div class="checkbox">
+                                                <button class="btn btn-primary" style="color:white;  margin-left: 15px;">确定</button>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- .row -->
+
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--.row-->
+    </div>
+    <!--.container-->
+</div>
+<!--.body-content-->

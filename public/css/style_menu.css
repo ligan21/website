@@ -1,0 +1,33 @@
+/* ---------------------------------------------
+ Menu 
+--------------------------------------------- */
+
+
+.submenu >ul {
+  margin: 0 auto;
+  padding: 0;
+  display:none;
+
+}
+.submenu:hover >ul {
+  display:inline;
+  
+}
+
+.submeun  li{
+  padding: 0 0 0 ;
+  -webkit-transition-property: background;
+  -webkit-transition-duration: 0.2s;
+  -webkit-transition-timing-function: ease-out;
+  transition-property: background;
+  transition-duration: 0.2s;
+  transition-timing-function: ease-out;
+}
+.submenu:hover  li{
+  padding:0 0 0 50px;
+}
+.submenu li { list-style: none; }
+
+
+
+

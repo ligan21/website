@@ -1,0 +1,103 @@
+<div class="breadcrumbs shadow-1">
+  <div class="container">
+    <div class="row">
+      <i class="material-icons">home</i> You are in:
+      <ul>
+        <li><a href="#">修改成员详情</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+<div class="body-content">
+  <div class="container">
+    <div class="row ">
+      <div class="col-md-12 ">
+        <div class="panel z-depth-1 ">
+          <div class="panel-header ">
+            <div class="panel-title ">
+
+              <h5><b>修改成员详情</b></h5>
+
+            </div>
+          </div>
+          <div class="panel-content ">
+
+            <div class="row md-padding ">
+              <form class=" ">
+                <div style="background-color:rgba(0,0,0,0.1)" layout-padding>
+                  <div layout-gt-sm="row">
+                    <md-input-container class="md-block" flex-gt-xs>
+                      <label>用户名</label>
+                      <input ng-model="information.username" disabled>
+                    </md-input-container>
+
+                    <md-input-container class="md-block" flex-gt-xs>
+                      <label>用户类型</label>
+                      <input ng-model="information.userType" disabled>
+                    </md-input-container>
+                  </div>
+                  <div layout-gt-sm="row">
+                    <md-input-container class="md-block" flex-gt-xs>
+                      <label>创建时间</label>
+                      <input ng-model="information.time" disabled>
+                    </md-input-container>
+
+
+                    <md-input-container class="md-block" flex-gt-xs>
+                      <label>所属单位</label>
+                      <input ng-model="information.organization" disabled>
+                    </md-input-container>
+                  </div>
+                  <div layout-gt-sm="rows">
+                    <md-input-container class="md-block" flex-gt-xs>
+                      <label>网站管理员数</label>
+                      <input ng-model="information.managerNum" disabled>
+                    </md-input-container>
+                  </div>
+                </div>
+                <div layout-gt-sm="row" layout-padding></div>
+                <div layout-gt-sm="row">
+                  <md-input-container class="md-block" flex-gt-xs>
+                    <label>姓名</label>
+                    <input ng-model="information.name">
+                  </md-input-container>
+                  <md-input-container class="md-block" flex-gt-xs>
+                    <label>联系电话</label>
+                    <input ng-model="information.tel">
+                  </md-input-container>
+
+
+                </div>
+                <div layout-gt-sm="row">
+                  <md-input-container class="md-block" flex-gt-xs>
+                    <label>联系邮箱</label>
+                    <input ng-model="information.email">
+                  </md-input-container>
+                  <md-input-container class="md-block" flex-gt-xs>
+                    <label>身份证号</label>
+                    <input ng-model="information.IDCard">
+                  </md-input-container>
+                </div>
+
+
+              </form>
+            </div>
+            <!-- .row -->
+
+
+
+            <div layout-gt-sm="row" layout-align="end center">
+
+              <md-button class="md-raised md-primary" ng-click="modifyMember()">确定</md-button>
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--.row-->
+  </div>
+  <!--.container-->
+</div>
+<!--.body-content-->

@@ -1,0 +1,117 @@
+<div class="breadcrumbs shadow-1">
+    <div class="container">
+        <div class="row">
+            <i class="material-icons">home</i> You are in:
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Profile</a></li>
+                <li><a href="#">Create</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="body-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel z-depth-1">
+                    <div class="panel-header">
+                        <div class="panel-title" style="width:100%">
+                            <h5><b>修改部属单位信息</b></h5>
+                        </div>
+                    </div>
+                    <div class="panel-content">
+                        <form class="">
+                           <div style="background-color:rgba(0,0,0,0.1)" layout-padding>
+                            <div layout-gt-sm="row">
+                                <md-input-container class="md-block" flex-gt-xs>
+                                    <label>单位名称</label>
+                                    <input ng-model="information.name" disabled>
+                                </md-input-container>
+                            </div>
+                            <div layout-gt-sm="row">
+                                <md-input-container class="md-block" flex-gt-xs>
+                                    <label>单位类型</label>
+                                    <input ng-model="information.type" disabled>
+                                </md-input-container>
+                            </div>
+                            </div>
+                            <div layout-gt-sm="row" layout-padding></div>
+                            <div layout-gt-sm="row">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>单位分管领导</label>
+                                    <input ng-model="information.leaderName">
+                                </md-input-container>
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>职务</label>
+                                    <input ng-model="information.leaderPost">
+                                </md-input-container>
+                            </div>
+                            <div layout-gt-sm="row">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>手机</label>
+                                    <input ng-model="information.leaderPhone">
+                                </md-input-container>
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>座机</label>
+                                    <input ng-model="information.leaderTel">
+                                </md-input-container>
+                            </div>
+                            <div layout-gt-sm="row">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>网络安全管理人</label>
+                                    <input ng-model="information.secureManagerName">
+                                </md-input-container>
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>职务</label>
+                                    <input ng-model="information.secureManagerPost">
+                                </md-input-container>
+                            </div>
+                            <div layout-gt-sm="row">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>手机</label>
+                                    <input ng-model="information.secureManagerPhone">
+                                </md-input-container>
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>座机</label>
+                                    <input ng-model="information.secureManagerTel">
+                                </md-input-container>
+                            </div>
+                            <div layout-gt-sm="row">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>网络安全联系人</label>
+                                    <input ng-model="information.secureLiaisonName">
+                                </md-input-container>
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>职务</label>
+                                    <input ng-model="information.secureLiaisonPost">
+                                </md-input-container>
+                            </div>
+                            <div layout-gt-sm="row">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>手机</label>
+                                    <input ng-model="information.secureLiaisonPhone">
+                                </md-input-container>
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>座机</label>
+                                    <input ng-model="information.secureLiaisonTel">
+                                </md-input-container>
+                            </div>
+
+                            <div layout-gt-sm="row" layout-align="end center">
+                                
+                                    <md-button class="md-raised md-primary">确定</md-button>
+                                
+                            </div>
+
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--.row-->
+    </div>
+    <!--.container-->
+</div>
+<!--.body-content-->

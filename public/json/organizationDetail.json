@@ -1,0 +1,20 @@
+{
+ "code":200,
+  "data":{
+    "name":"北京邮电大学",
+    "type":"部署高校",
+    "time":"2016-09-8",
+    "leaderName":"张三",
+    "leaderPost":"处长",
+     "leaderPhone":"135032322",
+     "leaderTel":"010-78967",
+     "secureManagerName":"张三",
+     "secureManagerPost":"处长",
+     "secureManagerPhone":"1231311",
+     "secureManagerTel":"33803",
+     "secureLiaisonName":"张三",
+     "secureLiaisonPost":"处长",
+     "secureLiaisonPhone":"123123",
+     "secureLiaisonTel":"8927382"
+  }
+}

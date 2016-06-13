@@ -1,0 +1,31 @@
+{
+"code":200,
+"data":{
+    "id":"1234",
+    "organizationName":"清华大学",
+    "websiteName":"信息中心",
+    
+    "submitTime":"2012-9-2",
+    "useState":"在使用",
+    "state":"未通过",
+    "homepage":"http://www.133.com",
+    "submitter":"清华大学",
+    "domainNameList":"http://www.wee.com",
+    "websiteScale":"10-20",
+    "classify":"门户",
+    "userProperty":"面向社会",
+    "attachment":"http://www.111.com",
+    "developer":"北京大学",
+    "topology":"http://www.goe.com",
+    "backgroundInterconnect":"互联网",
+    "keyProducts":"http://www.okelk.com",
+    "securityEvaluationOrganization":"工信部",
+    "securityEvaluationResult":"通过",
+    "recoveryPlan":"http://www.wekj.com",
+    "gradeProtect":"http://www.com.com",
+    "securityEvalustionReport":"http://www.iklk.com",
+    "reformReport":"http://www.comco.com"
+    
+}
+
+}

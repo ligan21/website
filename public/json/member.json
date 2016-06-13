@@ -1,0 +1,13 @@
+{
+  "code":200,
+  "data":[
+    {
+    "id":"eee",
+    "organization" :"e3d3ee",
+    "username":"jkldjj",
+    "name":"张三",
+    "userType":"单位管理员",
+    "time":"2016-08-09"
+     }
+   ]
+}

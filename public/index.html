@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html data-ng-app="websiteApp" ng-controller="indexController">
+
+<head>
+    <meta charset="UTF-8">
+    <title>网站备案管理系统</title>
+
+
+
+    <!--link rel='stylesheet prefetch' href='http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css'-->
+    <link href="lib/bootstrap.min.css" rel="stylesheet">
+    <!--link rel='stylesheet prefetch' href='https://bootswatch.com/paper/bootstrap.min.css'-->
+    <!--link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.3.0/css/material.min.css'-->
+    <link rel='stylesheet prefetch' href='lib/bootstrap-material-design.css'>
+    <link rel='stylesheet prefetch' href='lib/ripples.css'>
+    <link rel="stylesheet prefetch" href="lib/font-awesome.min.css">
+    <!--link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"-->
+    <!--link href='http://fonts.googleapis.com/css?family=Roboto:500,300,700,400' rel='stylesheet' type='text/css'-->
+    <link href="lib/roboto.css" rel="stylesheet" type='text/css'>
+    <link href="lib/material-icons.css" rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="lib/angular-material.min.css">
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style_curd.css">
+    <link rel="stylesheet" href="css/style_menu.css">
+    <link rel="stylesheet" href="css/style_navtab.css">
+    <link rel="stylesheet" href="css/style_notification.css">
+    <link rel="stylesheet" href="css/websiteMessage.css">
+    <link rel="stylesheet" href="css/md-data-table.min.css">
+    <link href="css/summernote.css" rel="stylesheet">
+    <script src="js/prefixfree.min.js"></script>
+</head>
+
+<body>
+    <div class="sdc-container">
+        <div class="sdc-navbar shadow-1">
+            <div class="sdc-navbar-main">
+                <div class="col-xs-3">
+                    <img class="logo" src="http://i.imgur.com/eXoTvRC.png">
+                </div>
+                <ul class="col-xs-9 text-right">
+                    <li class="user-avatar">
+                        <a title="Gravatar picture" href="#"></a>
+                    </li>
+                    <li><a href="#" ui-sref="settings"><i class="material-icons">settings</i></a></li>
+                    <li><a href="#"><i class="material-icons">help</i></a></li>
+                    <li><a href="#" ng-click="logout()"><i class="material-icons">exit_to_app</i></a></li>
+                </ul>
+            </div>
+            <div class="sdc-navbar-secondary">
+                <ul class="col-xs-2">
+                    <li>
+                        <a href="javascript:void()" class="sidemenu-toggle active" data-target="#sidemenu" title="I'll add some nice animation later">
+                            <i class="material-icons">menu</i>
+                        </a>
+                    </li>
+                    <li>
+                        <span>Overview</span>
+                    </li>
+                </ul>
+                <ul class="text-center sdc-navbar-tabs nav-tab ">
+                    <li class="active"><a href="#" ui-sref="websites"><span>网站管理</span></a></li>
+                    <li><a href="#" ui-sref="members"><span>成员管理</span></a></li>
+                    <li><a href="#" ui-sref="messages"><span>公告消息</span></a></li>
+                    <li><a href="#" ui-sref="logs"><span>日志管理</span></a></li>
+                </ul>
+
+            </div>
+        </div>
+    </div>
+    <div id="sidemenu" class="sdc-sidemenu active shadow-2">
+        <div class="logo-mobile">
+            <img class="logo" src="http://i.imgur.com/eXoTvRC.png">
+        </div>
+        <ul>
+            <li class="searchbox">
+                <form>
+                    <i class="material-icons">search</i>
+                    <div class="field" contenteditable></div>
+                    <i class="material-icons reset"></i>
+                </form>
+            </li>
+            <li><span class="section-title">Hosts</span></li>
+            <li>
+                <a href="#" class="active" ui-sref="home">
+                    <i class="material-icons">home</i>主页
+                </a>
+
+            </li>
+            <li ng-hide="user.userType=='安全审核员'">
+                <a href="#" ui-sref="websites">
+                    <i class="fa fa-sitemap" aria-hidden="true"></i>网站管理
+                </a>
+
+            </li>
+            <li class="submenu" ng-show="user.userType=='系统管理员'">
+                <a href="#" ui-sref="members">
+                    <i class="material-icons">supervisor_account</i>成员管理
+                </a>
+
+                <ul>
+                    <li><a href="#" ui-sref="members"><i class="material-icons">group</i>成员列表</a></li>
+                    <li ><a href="#" ui-sref="organizations"><i class="material-icons">domain</i>部属单位</a></li>
+                </ul>
+            </li>
+            <li ng-show="user.userType=='部属单位管理员'"><a href="#" ui-sref="members"><i class="material-icons">group</i>成员列表</a></li>
+            <li ng-show="user.userType=='系统部级一般用户'"><a href="#" ui-sref="organizations"><i class="material-icons">domain</i>部属单位</a></li>
+            <li>
+                <a href="#" ui-sref="messages">
+                    <i class="material-icons">event_note</i>公告消息
+                </a>
+
+            </li>
+            <li>
+                <a href="#" ui-sref="logs" ng-hide="user.userType=='部属单位网站管理员'" ng-hide="user.userType=='部属单位管理员'" >
+                    <i class="material-icons">playlist_add_check</i>日志管理
+                </a>
+
+            </li>
+            <li>
+                <a href="#" ui-sref="settings">
+                    <i class="material-icons">settings</i>设置
+                </a>
+
+            </li>
+            <li>
+                <a href="# " ui-sref="charts" ng-hide="user.userType=='部属单位网站管理员'" ng-hide="user.userType=='部属单位管理员'" ng-hide="user.userType=='安全审核员'">
+                    <i class="material-icons">poll</i>统计
+                </a>
+
+            </li>
+
+        </ul>
+    </div>
+    <div class="sidemenu-backdrop" data-target="#sidemenu"></div>
+    <div class="fab-button">
+        <div class="btn btn-fab btn-material-purple fab-primary">
+            <i class="material-icons">add</i>
+        </div>
+        <div class="fab-actions">
+            <div class="btn btn-fab btn-material-purple">
+                <i class="material-icons">settings</i>
+            </div>
+            <div class="btn btn-fab btn-material-purple">
+                <i class="material-icons">exit_to_app</i>
+            </div>
+        </div>
+    </div>
+    <div class="fab-button-label">Actions must be defined</div>
+    <div class="container-fluid">
+        <div ui-view></div>
+    </div>
+    <script src="lib/angular.min.js"></script>
+    <script type="text/javascript" src="lib/angular-messages.min.js"></script>
+    <script type="text/javascript" src="lib/angular-ui-router.min.js"></script>
+    <script type="text/javascript" src="lib/angular-resource.min.js"></script>
+    <script type="text/javascript" src="lib/jquery.min.js"></script>
+    <script src="lib/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <!--script src='https://rawgit.com/FezVrasta/bootstrap-material-design/master/dist/js/material.min.js'></script-->
+    <script src="lib/material.min.js"></script>
+    <script src="lib/ripples.min.js"></script>
+    <script src="lib/angular-animate.min.js "></script>
+    <script src="lib/angular-aria.min.js "></script>
+    <script src="lib/pekeUpload.min.js"></script>
+    <!-- Angular Material Library -->
+    <script src="lib/angular-material.min.js "></script>
+    <script type="text/javascript" src="js/md-data-table.min.js"></script>
+    <script type="text/javascript" src="js/app.js"></script>
+    <script type="text/javascript" src="js/index.js "></script>
+    <script type="text/javascript" src="js/controllers.js"></script>
+    <script type="text/javascript" src="js/services.js"></script>
+    <script type="text/javascript" src="js/directives.js"></script>
+    <script type="text/javascript" src="js/filters.js"></script>
+    <script src="js/summernote.js"></script>"
+    <script src="js/lang/summernote-zh-CN.js"></script>
+
+
+</body>
+
+</html>

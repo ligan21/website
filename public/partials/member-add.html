@@ -1,0 +1,99 @@
+<div class="breadcrumbs shadow-1">
+    <div class="container">
+        <div class="row">
+            <i class="material-icons">home</i> You are in:
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Profile</a></li>
+                <li><a href="#">Create</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="body-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel z-depth-1">
+                    <div class="panel-header">
+                        <div class="panel-title" >
+                            <h5><b>新增成员</b></h5>
+                        </div>
+                    </div>
+                    <div class="panel-content">
+                        <form name= "addmember" class="">
+                            <div layout-gt-sm="row">
+
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>用户类型</label>
+                                    <md-select ng-model="information.userType">
+                                        <md-option ng-repeat="type in types" ng-value="{{type.name}}">
+                                            {{type.name}}
+                                        </md-option>
+                                    </md-select>
+                                </md-input-container>
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>单位</label>
+                                    <md-select ng-model="information.organization">
+                                        <md-option ng-repeat="organization in organizations.docs" ng-value="{{organization}}">
+                                            {{organization.name}}
+                                        </md-option>
+                                    </md-select>
+                                </md-input-container>
+                            </div>
+                            <div layout-gt-sm="row">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>用户名</label>
+                                    <input ng-model="information.username">
+                                </md-input-container>
+                             </div>
+                            <div layout-gt-sm="row">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>登录密码</label>
+                                    <input type="password"  ng-model="information.password" >
+                                </md-input-container>
+                                <md-input-container  class="md-block" flex-gt-sm>
+                                    <label>确认登录密码</label>
+                                    <input type="password" ng-pattern="\b{{information.password}}\b" name="confirmNewPassword">
+                                    <div ng-messages="addmember.confirmNewPassword.$error">
+                                        <div ng-message="pattern">密码不相等</div>
+                                    </div>
+                                </md-input-container>
+                            </div>
+                            <div layout-gt-sm="row">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>姓名</label>
+                                    <input ng-model="information.name">
+                                </md-input-container>
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>身份证号</label>
+                                    <input ng-model="information.IDCard">
+                                </md-input-container>
+                            </div>
+                            <div layout-gt-sm="row">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>联系电话</label>
+                                    <input ng-model="information.tel">
+                                </md-input-container>
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>联系邮箱</label>
+                                    <input ng-model="information.email">
+                                </md-input-container>
+                            </div>
+                            <div layout-gt-sm="row" layout-align="end center">
+                                
+                                    <md-button class="md-raised md-primary" ng-click="addMember()">确定</md-button>
+                                
+                            </div>
+
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--.row-->
+    </div>
+    <!--.container-->
+</div>
+<!--.body-content-->

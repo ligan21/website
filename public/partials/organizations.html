@@ -1,0 +1,59 @@
+<div class="breadcrumbs shadow-1">
+    <div class="container">
+        <div class="row">
+            <i class="material-icons">home</i> 
+            <ul>
+                <li><a href="#">部属单位</a></li>
+
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="body-content">
+    <div class="container">
+        <div class="row ">
+            <div class="col-md-12 ">
+                <div class="panel z-depth-1 well ">
+                    <div class="panel-header ">
+                        <div class="panel-title " style="width:100%">
+
+                            <div style="width:100%">
+                                <h5><b>部属单位</b></h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-content ">
+                        <div class="row ">
+                            <div class="col-md-12 ">
+                        <md-table-container>
+                                    <table md-table md-row-select multiple ng-model="selected " md-progress="promise ">
+                                        <thead md-head md-order="query.order " >
+                                            <tr md-row>
+                                                <th md-column ><span>单位名称</span></th>
+                                                <th md-column ><span>单位类别</span></th>
+                                                <th md-column >创建时间</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody md-body>
+                                            <tr md-row md-select="dessert " md-select-id="name " md-auto-select ng-repeat="organization in organizations.docs " class="table-row ">
+                                                <td md-cell><a style="color:green" ui-sref="organizationDetail({id:organization._id})">{{organization.name}}</a></td>
+                                                <td md-cell>{{organization.type}}</td>
+                                                <td md-cell>{{organization.time}}</td>
+        
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </md-table-container>
+                               <md-table-pagination md-label="{page: '页:', rowsPerPage: '每页行:', of: '/'} " md-limit="query.limit " md-limit-options="[5, 10, 15] " md-page="query.page " md-total="{{organizations.total}} " md-on-paginate="getOrganizations " md-page-select></md-table-pagination>
+ 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--.row-->
+    </div>
+    <!--.container-->
+</div>
+<!--.body-content-->

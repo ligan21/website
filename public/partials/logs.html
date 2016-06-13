@@ -1,0 +1,99 @@
+<div class="breadcrumbs shadow-1">
+    <div class="container">
+        <div class="row">
+            <i class="material-icons">home</i>
+            <ul>
+                <li>操作日志</li>
+
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="body-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel z-depth-1 well">
+                    <div class="panel-header">
+                        <div class="panel-title">
+                            <h5><b>操作日志</b></h5>
+                        </div>
+                    </div>
+                    <div class="panel-content">
+
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-4 col-md-4">
+                                <div class="form-group" style="margin-top:10px;">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>用户类型</label>
+                                        <md-select ng-model="userType">
+                                            <md-option ng-repeat="type in userTypes" value="{{type.name}}">
+                                                {{type.name}}
+                                            </md-option>
+                                        </md-select>
+                                    </md-input-container>
+                                </div>
+
+
+                            </div>
+
+                            <div class="col-xs-12 col-md-4 col-lg-4 ">
+                                <div class="form-group" style="margin-top:10px;">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label class=" control-label">单位名称:</label>
+                                        <md-select ng-model="organizationName">
+                                            <md-option ng-repeat="organization in organizations.docs" value="{{organization.name}}">
+                                                {{organization.name}}
+                                            </md-option>
+                                        </md-select>
+                                    </md-input-container>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-md-2 ">
+                                <div class="form-group " style="margin-top:10px;">
+                                    <div class=" ">
+                                        <button class="btn btn-raised btn-primary " ng-click="search()"><i class="material-icons " style="top:3px;position: relative; ">search</i></button>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row ">
+                            <div class="col-md-12 container ">
+                                <md-table-container>
+                                    <table md-table md-row-select multiple ng-model="selected " md-progress="promise ">
+                                        <thead md-head md-order="query.order ">
+                                            <tr md-row>
+                                                <th md-column><span>操作ID</span></th>
+                                                <th md-column><span>时间</span></th>
+                                                <th md-column><span>单位名称</span></th>
+                                                <th md-column>用户类型</th>
+                                                <th md-column>用户名</th>
+                                                <th md-column>操作</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody md-body>
+                                            <tr md-row md-select="dessert " md-select-id="name " md-auto-select ng-repeat="log in logs.docs " class="table-row ">
+                                                <td md-cell>{{log._id}}</td>
+                                                <td md-cell>{{log.time}}</td>
+                                                <td nd-cell>{{log.organizationName}}</td>
+                                                <td md-cell>{{log.userType}}</td>
+                                                <td md-cell>{{log.username}}</td>
+                                                <td md-cell>{{log.action}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </md-table-container>
+                                <md-table-pagination md-label="{page: '页:', rowsPerPage: '每页行:', of: '/'} " md-limit="query.limit " md-limit-options="[5, 10, 15] " md-page="query.page " md-total="{{logs.total}} " md-on-paginate="getLogs " md-page-select></md-table-pagination>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--.row-->
+    </div>
+    <!--.container-->
+</div>
+<!--.body-content-->

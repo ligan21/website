@@ -1,0 +1,211 @@
+<div class="breadcrumbs shadow-1">
+  <div class="container">
+    <div class="row">
+      <i class="material-icons">home</i> You are in:
+      <ul>
+        <li><a href="#">成员详情</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+<div class="body-content">
+  <div class="container">
+    <div class="row ">
+      <div class="col-md-12 ">
+        <div class="panel z-depth-1 ">
+          <div class="panel-header ">
+            <div class="panel-title " style="width:100%">
+
+
+              <div style="width:100%">
+                <h5><b>成员详情</b><md-button  class="md-fab  md-mini md-primary" style="float:right;margin-top:0px; " ui-sref="modifyMember"><i class="material-icons">mode_edit</i></md-button></h5>
+              </div>
+
+            </div>
+          </div>
+          <div class="panel-content ">
+
+            <div class="row md-padding ">
+              <form class=" ">
+                <div layout-gt-sm="row">
+                  <md-input-container class="md-block" flex-gt-xs>
+                    <label>用户名</label>
+                    <input ng-model="messages.data.username" disabled>
+                  </md-input-container>
+
+                  <md-input-container class="md-block" flex-gt-xs>
+                    <label>用户类型</label>
+                    <md-select ng-model="messages.data.userType" disabled>
+                      <md-option ng-repeat="type in types" value="{{type.name}}">
+                        {{type.name}}
+                      </md-option>
+                    </md-select>
+                  </md-input-container>
+                </div>
+                <div layout-gt-sm="row">
+                  <md-input-container class="md-block" flex-gt-xs>
+                    <label>用户名</label>
+                    <input ng-model="messages.data.username" disabled>
+                  </md-input-container>
+
+                  <md-input-container class="md-block" flex-gt-xs>
+                    <label>用户类型</label>
+                    <md-select ng-model="messages.data.userType" disabled>
+                      <md-option ng-repeat="type in types" value="{{type.name}}">
+                        {{type.name}}
+                      </md-option>
+                    </md-select>
+                  </md-input-container>
+                </div>
+                <div class="col-xs-12 col-md-6 ">
+                  <div class="form-group ">
+                    <label class="col-md-4 ">用户名：</label>
+                    <div class="col-md-8 " ">
+                      <label style="color:black ">{{messages.data.username}}</label>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xs-12 col-md-6 ">
+                  <div class="form-group ">
+                    <label class="col-md-4 ">用户类型：</label>
+                    <div class="col-md-8 " ">
+                      <label style="color:black ">{{messages.data.userType}}</label>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xs-12 col-md-6 ">
+                  <div class="form-group ">
+                    <label class="col-md-4 ">姓名：</label>
+                    <div class="col-md-8 " ">
+                      <label style="color:black ">{{messages.data.name}}</label>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xs-12 col-md-6 ">
+                  <div class="form-group ">
+                    <label class="col-md-4 ">所属单位：</label>
+                    <div class="col-md-8 " ">
+                      <label style="color:black ">{{messages.data.organization}}</label>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xs-12 col-md-6 ">
+                  <div class="form-group ">
+                    <label class="col-md-4 ">联系电话：</label>
+                    <div class="col-md-8 " ">
+                      <label style="color:black ">{{messages.data.tel}}</label>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xs-12 col-md-6 ">
+                  <div class="form-group ">
+                    <label class="col-md-4 ">用户ID：</label>
+                    <div class="col-md-8 " ">
+                      <label style="color:black ">{{messages.data.id}}</label>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xs-12 col-md-6 ">
+                  <div class="form-group ">
+                    <label class="col-md-4 ">联系邮箱：</label>
+                    <div class="col-md-8 " ">
+                      <label style="color:black ">{{messages.data.email}}</label>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xs-12 col-md-6 ">
+                  <div class="form-group ">
+                    <label class="col-md-4 ">创建时间：</label>
+                    <div class="col-md-8 " ">
+                      <label style="color:black ">{{messages.data.time}}</label>
+                    </div>
+                  </div>
+                </div>
+
+
+                <div class="col-xs-12 col-md-6 ">
+                  <div class="form-group ">
+                    <label class="col-md-4 ">身份证号：</label>
+                    <div class="col-md-8 " ">
+                                            <label style="color:black ">{{messages.data.IDCard}}</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-md-6 ">
+                                    <div class="form-group ">
+                                        <label class="col-md-4 ">网站管理员数：</label>
+                                        <div class="col-md-8 " ">
+                      <label style="color:black ">{{messages.data.managerNum}}</label>
+                    </div>
+                  </div>
+                </div>
+
+
+
+              </form>
+            </div>
+            <!-- .row -->
+
+            <div class="row ">
+              <div class="col-md-12 ">
+                <div class="panel z-depth-1 ">
+                  <div class="panel-header ">
+                    <div class="panel-title ">
+                      <h6>操作日志</h6>
+                    </div>
+                  </div>
+                  <div class="panel-content ">
+
+                    <div class="row ">
+                      <div class="col-md-12 ">
+
+                        <div class="table-responsive md-padding ">
+                          <table id="dataTable " class="table table-hover table-striped table-bordered ">
+                            <thead>
+                              <tr>
+                                <th>序号</th>
+                                <th>日期</th>
+                                <th>用户类型</th>
+                                <th>用户名</th>
+                                <th>操作</th>
+                              </tr>
+                            </thead>
+                            <tbody ng-repeat="log in logs.data">
+
+                              <tr class="table-row ">
+                                <td>{{log.id}}</td>
+                                <td>{{log.time}}</td>
+                                <td>{{log.userType}}</td>
+                                <td>{{log.username}}</td>
+                                <td>{{log.action}}</td>
+                              </tr>
+
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!--.row-->
+
+            <div class="row " style="text-align: right; ">
+              <div class="col-md-12 ">
+                <button class="btn btn-secundary " type="submit " name="action ">拒绝
+                              </button>
+
+                <button class="btn btn-raised btn-primary " type="submit ">同意</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--.row-->
+  </div>
+  <!--.container-->
+</div>
+<!--.body-content-->

@@ -1,0 +1,164 @@
+<div class="breadcrumbs shadow-1">
+    <div class="container">
+        <div class="row">
+            <i class="material-icons">home</i>
+            <ul>
+                <li><a href="#">主页</a></li>
+
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="body-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 col-xs-6">
+                <div class="rad-info-box rad-txt-success">
+                    <i class="fa fa-sitemap" aria-hidden="true"></i>
+                    <span class="heading">已备案网站数</span>
+                    <span class="value "><span class="rad-txt-success">{{count.websiteCount}}</span></span>
+                </div>
+            </div>
+            <div class="col-lg-4 col-xs-6">
+                <div class="rad-info-box rad-txt-danger">
+                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                    <span class="heading">待审核网站</span>
+                    <span class="value "><span class="rad-txt-danger">{{count.paddingCheckCount}}</span></span>
+                </div>
+            </div>
+            <div class="col-lg-4 col-xs-6">
+                <div class="rad-info-box rad-txt-violet">
+                    <i class="fa fa-users" aria-hidden="true"></i>
+                    <span class="heading">成员总数</span>
+                    <span class="value "><span class="rad-txt-violet">{{count.memberCount}}</span></span>
+                </div>
+            </div>
+
+            <div class="col-lg-12 col-xs-12 ">
+                <div ng-cloak="" class="websiteMessage rad-info-box">
+
+                    <md-content>
+                        <div><a style="font-weight:bold; color:#3F51B5;float:right;text-align:right; " ui-sref="messages">更多>></a></div>
+                        <md-tabs md-dynamic-height="" md-border-bottom="">
+
+                            <md-tab label="通知">
+                                <md-content>
+                                    <md-list ng-repeat="notification in notifications.docs ">
+                                        <md-list-item style="width:100%">
+                                            <div style="width:100%"><span style="color:green;margin-right:10px;">[通知]</span>{{notification.title}}
+                                                <span style="color:silver;float:right;text-align:right; ">{{notification.time}}</span></div>
+                                        </md-list-item>
+                                    </md-list>
+                                </md-content>
+                            </md-tab>
+                            <md-tab label="规定">
+                                <md-content>
+                                    <md-list ng-repeat="rule in rules.docs">
+                                        <md-list-item style="width:100% ">
+                                            <div style="width:100% "><span style="color:red;margin-right:10px;
+                                        ">[规定]</span>{{rule.title}} <span style="color:silver;float:right;text-align:right; ">{{rule.time}}</span></div>
+                                        </md-list-item>
+                                    </md-list>
+                                </md-content>
+                            </md-tab>
+
+                        </md-tabs>
+
+                    </md-content>
+
+                </div>
+            </div>
+
+        </div>
+        <!--row -->
+        <div class="row ">
+            <div class="col-md-12 ">
+                <div class="panel z-depth-1  ">
+                    <div class="panel-header ">
+                        <div class="panel-title " style="width:100%; ">
+
+                            <h5><b>待处理网站</b><a style="color:#3F51B5; float:right; " ui-sref="websites "><b>更多>></b></a></h5>
+                        </div>
+                    </div>
+                    <div class="panel-content ">
+                        <div class="row ">
+                            <div class="col-md-12 layout-padding">
+                                <md-table-container>
+                                    <table md-table md-row-select multiple ng-model="selected" md-progress="promise">
+                                        <thead md-head md-order="query.order" >
+                                            <tr md-row>
+                                                <th md-column ><span>备案ID</span></th>
+                                                <th md-column ><span>单位名称</span></th>
+                                                <th md-column >网站名称</th>
+                                                <th md-column >提交时间</th>
+                                                <th md-column >状态</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody md-body>
+                                            <tr md-row md-select="dessert" md-select-id="name" md-auto-select ng-repeat="paddingWebsite in paddingWebsites.docs" class="table-row">
+                                                <td md-cell>{{paddingWebsite._id}}</td>
+                                                <td md-cell>{{paddingWebsite.organizationName}}</td>
+                                                <td md-cell>{{paddingWebsite.websiteName}}</td>
+                                                <td md-cell>{{paddingWebsite.submitTime}}</td>
+                                                <td md-cell>{{paddingWebsite.state}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </md-table-container>
+
+                               
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--.row-->
+        <div class="row ">
+            <div class="col-md-12 ">
+                <div class="panel z-depth-1  ">
+                    <div class="panel-header ">
+                        <div class="panel-title " style="width:100% ">
+                            <h5><b>操作日志</b> <a style="color:#3F51B5; float:right; " ui-sref="logs "><b>更多>></b></a></h5>
+                        </div>
+                    </div>
+                    <div class="panel-content ">
+                        <div class="row layout-padding ">
+                            <div class="col-md-12 layout-padding ">
+                               <md-table-container>
+                                    <table md-table md-row-select multiple  md-progress="promise">
+                                        <thead md-head md-order="query.order" >
+                                            <tr md-row>
+                                                <th md-column md-order-by="nameToLower"><span>单位名称</span></th>
+                                                <th md-column  md-order-by="calories.value"><span>操作时间</span></th>
+                                                <th md-column >用户类型</th>
+                                                <th md-column >用户名</th>
+                                                <th md-column >操作</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody md-body>
+                                            <tr md-row   md-auto-select ng-repeat="log in logs.docs" class="table-row">
+                                                <td md-cell >{{log.organizationName}}</td>
+                                                <td md-cell >{{log.time}}</td>
+                                                <td md-cell >{{log.userType}}</td>
+                                                <td md-cell >{{log.username}}</td>
+                                                <td md-cell >{{log.action}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </md-table-container>
+
+                               
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--.row-->
+    </div>
+    <!--.container-->
+</div>
+<!--.body-content-->

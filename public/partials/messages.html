@@ -1,0 +1,121 @@
+<div class="breadcrumbs shadow-1">
+    <div class="container">
+        <div class="row">
+            <i class="material-icons">home</i> 
+            <ul>
+                <li>公共消息</li>
+
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="body-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel z-depth-1 well">
+                    <div class="panel-header">
+                        <div class="panel-title" style="width:100%">
+                            <div style="width:100%">
+                                <h5><b>公告消息</b><md-button  class="md-fab  md-mini md-primary" style="float:right;margin-top:0px; " ui-sref="addMessage"><i class="material-icons">insert_comment</i></md-button>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-content">
+                        <div class="row ">
+                            <div class="col-md-12 container ">
+                                <div ng-cloak=" ">
+                                    <md-content>
+                                        <md-tabs md-dynamic-height=" " md-border-bottom=" ">
+                                            <md-tab label="全部 ">
+                                                <md-content layout-padding>
+                         <md-table-container>
+                                    <table md-table md-row-select  md-progress="promise ">
+                                        <thead md-head md-order="query.order " >
+                                            <tr md-row>
+                                                <th md-column ><span>标题</span></th>
+                                                <th md-column ><span>发布时间</span></th>
+                                                <th md-column >有效时间</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody md-body>
+                                            <tr md-row md-select="message "  ng-repeat="message in messages.docs " class="table-row ">
+                                                <td md-cell><a style="color:green" ui-sref="messageDetail({id:message._id}) ">{{message.title}}<a></td>
+                                                <td md-cell>{{message.time}}</td>
+                                                <td md-cell>{{message.timeout}}</td>
+        
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </md-table-container>
+                               <md-table-pagination md-label="{page: '页:', rowsPerPage: '每页行:', of: '/'} " md-limit="query.limit " md-limit-options="[5, 10, 15] " md-page="query.page " md-total="{{messages.total}} " md-on-paginate="getMessages " md-page-select></md-table-pagination>
+
+                                                </md-content>
+                                            </md-tab>
+                                            <md-tab label="公告 ">
+                                                <md-content layout-padding>
+                        <md-table-container>
+                                    <table md-table md-row-select multiple ng-model="selected " md-progress="promise ">
+                                        <thead md-head md-order="query.order " >
+                                            <tr md-row>
+                                                <th md-column ><span>标题</span></th>
+                                                <th md-column ><span>发布时间</span></th>
+                                                <th md-column >有效时间</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody md-body>
+                                            <tr md-row md-select="dessert " md-select-id="name " md-auto-select ng-repeat="notification in notifications.docs " class="table-row ">
+                                                <td md-cell><a style="color:green" ui-sref="messageDetail({id:notification._id}) ">{{notification.title}}<a></td>
+                                                <td md-cell>{{notification.time}}</td>
+                                                <td md-cell>{{notification.timeout}}</td>
+        
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </md-table-container>
+                               <md-table-pagination md-label="{page: '页:', rowsPerPage: '每页行:', of: '/'} " md-limit="query.limit " md-limit-options="[5, 10, 15] " md-page="query.page " md-total="{{notifications.total}} " md-on-paginate="getNotifications " md-page-select></md-table-pagination>
+  
+                                                </md-content>
+                                            </md-tab>
+                                            <md-tab label="规定 ">
+                                                <md-content layout-padding>
+                        <md-table-container>
+                                    <table md-table md-row-select  md-progress="promise ">
+                                        <thead md-head md-order="query.order " >
+                                            <tr md-row>
+                                                <th md-column ><span>标题</span></th>
+                                                <th md-column ><span>发布时间</span></th>
+                                                <th md-column >有效时间</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody md-body>
+                                            <tr md-row md-select="dessert "  ng-repeat="rule in rules.docs " class="table-row ">
+                                                <td md-cell><a style="color:green" ui-sref="messageDetail({id:rule._id}) ">{{rule.title}}<a></td>
+                                                <td md-cell>{{rule.time}}</td>
+                                                <td md-cell>{{rule.timeout}}</td>
+        
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </md-table-container>
+                               <md-table-pagination md-label="{page: '页:', rowsPerPage: '每页行:', of: '/'} " md-limit="query.limit " md-limit-options="[5, 10, 15] " md-page="query.page " md-total="{{rules.total}} " md-on-paginate="getRules " md-page-select></md-table-pagination>
+      
+                                                </md-content>
+                                            </md-tab>
+                                        </md-tabs>
+                                    </md-content>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--.row-->
+
+    </div>
+    <!--.container-->
+</div>
+<!--.body-content-->
