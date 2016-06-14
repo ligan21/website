@@ -16,8 +16,8 @@ router.post('/login', function (req, res) {
       //res.status(200).send(o);
       var user = req.session.user;
       console.log("login"+user);
-      var log = new Log({ 'userType': user.userType, 'username': user.username, 'organizationName': user.organizationName, 'action': '登录', '_memberId': user._id});
-      log.save();
+      //var log = new Log({ 'userType': user.userType, 'username': user.username, 'organizationName': user.organizationName, 'action': '登录', '_memberId': user._id});
+      //log.save();
     }
 		});
 });
@@ -25,8 +25,8 @@ router.get('/logout', function (req, res) {
   req.session.user = null;
   res.redirect(301, '/login.html');
   var user = req.session.user;
-  var log = new Log({ 'userType': user.userType, 'username': user.username, 'organizationName': user.organizationName, 'action': '退出登录', '_memberId': user._id});
-  log.save();
+  //var log = new Log({ 'userType': user.userType, 'username': user.username, 'organizationName': user.organizationName, 'action': '退出登录', '_memberId': user._id});
+  //log.save();
 });
 
 router.put('/setting', function (req, res) {

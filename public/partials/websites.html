@@ -158,17 +158,17 @@
                                   <td md-cell>{{website.websiteName}}</td>
                                   <td md-cell>{{website.submitTime}}</td>
                                   <td md-cell>{{website.securityEvalustionReportState}}</td>
-                                  <td md-cell ng-show="user.userType=='系统管理员'" ng-mouseenter="showUploadSecurityEvalustionReport(website)">
+                                  <td md-cell ng-show="user.userType=='系统管理员'">
                                     <a href="{{website.securityEvalustionReportLink}} "><i class="material-icons ">attach_file</i></a>
                                     <i class="material-icons " ng-click="agreeSER(website) " style="color:green">thumb_up</i>
                                     <i class="material-icons " style="color:red " ng-click="refuseSER(website) ">pan_tool</i>
 
-                                    <input id="{{website._id}}S" style="display: none;" type="file" name="files" accept="*" multiple="multiple" >
+                                    <!--input id="{{website._id}}S" style="opacity: 0;filter: alpha(opacity=0);" ng-mouseenter="showUploadSecurityEvalustionReport(website)" type="file" name="files" accept="*" multiple="multiple"-->
 
                                   </td>
-                                  <td md-cell ng-show="user.userType=='部属单位网站管理员'" ng-mouseenter="showUploadSecurityEvalustionReport(website)">
+                                  <td md-cell ng-show="user.userType=='部属单位网站管理员'">
 
-                                    <input id="{{website._id}}S" style="display: none;" type="file" name="files" accept="*" multiple="multiple" >
+                                    <input id="{{website._id}}S" style="opacity: 0;filter: alpha(opacity=0);" ng-mouseenter="showUploadSecurityEvalustionReport(website)" type="file" name="files" accept="*" multiple="multiple">
                                   </td>
                                 </tr>
                               </tbody>
@@ -204,9 +204,9 @@
                                     <a> <i class="material-icons " style="color:green " ng-click="agreeRR(website)">thumb_up</i></a>
                                     <a> <i class="material-icons " style="color:red " ng-click="refuseRR(website) ">pan_tool</i></a>
                                   </td>
-                                  <td md-cell ng-show="user.userType=='部属单位网站管理员'" ng-mouseenter="showUploadReformReport(website)">
+                                  <td md-cell ng-show="user.userType=='部属单位网站管理员'">
 
-                                    <input id="{{website._id}}R" style="display: none;" type="file" name="files" accept="*" multiple="multiple" >
+                                    <input id="{{website._id}}R" style="opacity: 0;filter: alpha(opacity=0);" ng-mouseenter="showUploadReformReport(website)" type="file" name="files" accept="*" multiple="multiple">
                                   </td>
                                 </tr>
                               </tbody>
