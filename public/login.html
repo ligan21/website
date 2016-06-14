@@ -2,106 +2,82 @@
 <html>
 
 <head>
-<meta charset="UTF-8">
-  <style>
-    h1 {
-      height: 100px;
-      width: 100%;
-      font-size: 18px;
-      background: #18aa8d;
-      color: white;
-      line-height: 150%;
-      border-radius: 3px 3px 0 0;
-      box-shadow: 0 2px 5px 1px rgba(0, 0, 0, 0.2);
-    }
-    
-    form {
-      box-sizing: border-box;
-      width: 260px;
-      margin: 100px auto 0;
-      box-shadow: 2px 2px 5px 1px rgba(0, 0, 0, 0.2);
-      padding-bottom: 40px;
-      border-radius: 3px;
-    }
-    
-    form h1 {
-      box-sizing: border-box;
-      padding: 20px;
-    }
-    
-    input {
-      margin: 40px 25px;
-      width: 200px;
-      display: block;
-      border: none;
-      padding: 10px 0;
-      border-bottom: solid 1px #1abc9c;
-      -webkit-transition: all 0.3s cubic-bezier(0.64, 0.09, 0.08, 1);
-      transition: all 0.3s cubic-bezier(0.64, 0.09, 0.08, 1);
-      background: -webkit-linear-gradient(top, rgba(255, 255, 255, 0) 96%, #1abc9c 4%);
-      background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 96%, #1abc9c 4%);
-      background-position: -200px 0;
-      background-size: 200px 100%;
-      background-repeat: no-repeat;
-      color: #0e6252;
-    }
-    
-    input:focus,
-    input:valid {
-      box-shadow: none;
-      outline: none;
-      background-position: 0 0;
-    }
-    
-    input:focus::-webkit-input-placeholder,
-    input:valid::-webkit-input-placeholder {
-      color: #1abc9c;
-      font-size: 11px;
-      -webkit-transform: translateY(-20px);
-      transform: translateY(-20px);
-      visibility: visible !important;
-    }
-    
-    button {
-      border: none;
-      background: #1abc9c;
-      cursor: pointer;
-      border-radius: 3px;
-      padding: 6px;
-      width: 200px;
-      color: white;
-      margin-left: 25px;
-      box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.2);
-    }
-    
-    button:hover {
-      -webkit-transform: translateY(-3px);
-      -ms-transform: translateY(-3px);
-      transform: translateY(-3px);
-      box-shadow: 0 6px 6px 0 rgba(0, 0, 0, 0.2);
-    }
-    
-    The magic happens in a few lines of code for the input:focus and input:valid. The CSS transform property plays a crucial role to achieve this little instant feedback effect. input:focus::-webkit-input-placeholder,
-    input:valid::-webkit-input-placeholder {
-      color: #1abc9c;
-      font-size: 11px;
-      -webkit-transform: translateY(-20px);
-      transform: translateY(-20px);
-      visibility: visible !important;
-    }
-  </style>
-<title> 登录 </title>
+  <meta charset="UTF-8">
+  <title>登录</title>
+
+
+
+
+  <link rel="stylesheet" href="css/login.css">
+
+
+
+
 </head>
-<form id="loginForm" action="/users/login" method="POST">
-  <h1>网站备案管理系统</h1>
-  <input name="username" placeholder="用户名" type="text" required="">
-  <input name="password" placeholder="密码" type="password" required="">
-  <button onclick="formSubmit()">登录</button>
-</form>
-<script type="text/javascript">
-function formSubmit()
-  {
-  document.getElementById("loginForm").submit()
-  }
-</script>
+
+<body>
+
+  <body>
+    <div class="indigo material-header header-full " role="header">
+      <h4 class="header-intro" tagged-to="indigoHeader">欢迎使用网站报备系统</h4>
+    </div>
+    <div class="intro-card z-2" produces="intro-animation-up">
+      <div class="appendBeforeContent">
+        <p>登录</p>
+        <p>点击登录</p>
+      </div>
+      <form id="loginForm" action="/users/login" method="POST" class="material-form">
+        <div class="row material-control-group">
+          <div class="form-member floating-action-member controls material-name">
+            <input name="username" type="text" class="material-input form-input-section" id="name form-input" required autofocus>
+            <label class="m--header">用户名</label>
+            <p class="material-popup text-danger">用户名不能为空!</p>
+            <span class="wipe"></span>
+          </div>
+          <div class="form-member form-member-e-bm floating-action-member controls">
+            <input name="password" type="password" class="material-input material-email" id="mail form-input" required>
+            <label class="m--header">密码</label>
+            <p class="material-popup text-danger">密码不能为空!</p>
+            <span class="wipe"></span>
+          </div>
+          <div class="material-button button-blu" onclick="formSubmit()">登录</div>
+        </div>
+      </form>
+    </div>
+    <!--div class="intro-card-registration z-2" produces="intro-animation-up">
+				<div class="appendBeforeContent">
+						<p>Register</p>
+						<p>Don't have an account? Register Now</p>
+				</div>
+				<form name="message" class="material-form" toggles="registration">
+						<div class="row material-control-group">
+								<div class="form-member floating-action-member controls material-name">
+										<input name="fname" type="text" class="material-input form-input-section" id="name form-input" required autofocus>
+										<label class="m--header">Username/Email</label>
+										<p class="material-popup text-danger">You must enter a username!</p>
+										<span class="wipe"></span>
+								</div>
+								<div class="form-member form-member-e-bm floating-action-member controls">
+										<input name="pass" type="password" class="material-input material-email" id="mail form-input" required>
+										<label class="m--header">Password</label>
+										<p class="material-popup text-danger">You must enter a password!</p>
+										<span class="wipe"></span>
+								</div>
+						</div>
+				</form>
+		</div-->
+  </body>
+  <script src="lib/jquery.min.js"></script>
+
+  <script src="js/login.js"></script>
+  <script type="text/javascript">
+    function formSubmit() {
+      document.getElementById("loginForm").submit()
+    }
+  </script>
+
+
+
+</body>
+
 </html>

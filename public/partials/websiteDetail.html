@@ -19,7 +19,7 @@
                         </div>
                     </div>
                     <div class="panel-content ">
-                        <form >
+                        <form>
                             <div layout-gt-sm="row">
                                 <md-input-container class="md-block" flex-gt-sm>
                                     <label>备案ID</label>
@@ -48,6 +48,9 @@
                                 <md-input-container class="md-block" flex-gt-sm>
                                     <label>状态</label>
                                     <input ng-model="information.state" disabled>
+                                    <md-tooltip>
+                                        {{information.refuseReason}}
+                                    </md-tooltip>
                                 </md-input-container>
                             </div>
                             <div layout-gt-sm="row">
@@ -95,16 +98,16 @@
                                     <label>安全评测单位</label>
                                     <input ng-model="information.securityEvaluationOrganization" disabled>
                                 </md-input-container>
- 
+
                             </div>
-                           <div layout-gt-sm="row">
+                            <div layout-gt-sm="row">
                                 <md-input-container class="md-block" flex-gt-sm>
                                     <label>备案信息附件 </label> <a href="{{information.attachmentLink}}" class="btn btn-link"><i class="material-icons">file_download</i></a>
-        
-                                    
+
+
                                 </md-input-container>
                                 <md-input-container class="md-block" flex-gt-sm>
-                                    <label>拓扑信息 </label> <a href="{{information.topologyLink}}" class="btn btn-link"><i class="material-icons">file_download</i></a> 
+                                    <label>拓扑信息 </label> <a href="{{information.topologyLink}}" class="btn btn-link"><i class="material-icons">file_download</i></a>
                                 </md-input-container>
                             </div>
                             <div layout-gt-sm="row">
@@ -115,7 +118,7 @@
                                     <label>安全评测结果 </label><a href="{{information.securityEvalustionResultLink}}" class="btn btn-link"><i class="material-icons">file_download</i></a>
                                 </md-input-container>
                             </div>
-                           <div layout-gt-sm="row">
+                            <div layout-gt-sm="row">
                                 <md-input-container class="md-block" flex-gt-sm>
                                     <label>网站备灾方案</label><a href="{{information.recoveryPlanLink}}" class="btn btn-link"><i class="material-icons">file_download</i></a>
                                 </md-input-container>
@@ -123,88 +126,90 @@
                                     <label>等级保护备案信息</label> <a href="{{information.gradeProtectLink}}" class="btn btn-link"><i class="material-icons">file_download</i></a>
                                 </md-input-container>
                             </div>
-                           <div style="background-color:rgba(0,0,0,0.2)" layout-padding>
-                              <p><b>相关附件</b></p>
-                           <div layout-gt-sm="row">
-                                <md-input-container class="md-block" flex-gt-sm>
-                                    <label>安全评测报告</label><a href="{{information.securityEvalustionReportLink}}" class="btn btn-link"><i class="material-icons">file_download</i></a>
-                                </md-input-container>
-                                <md-input-container class="md-block" flex-gt-sm>
-                                    <label>网站整改报告 </label> <a href="{{information.reformReportLink}}" class="btn btn-link"><i class="material-icons">file_download</i></a>
-                                </md-input-container>
-                           </div>
-                           </div>
-  
+                            <div style="background-color:rgba(0,0,0,0.2)" layout-padding>
+                                <p><b>相关附件</b></p>
+                                <div layout-gt-sm="row">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>安全评测报告</label><a href="{{information.securityEvalustionReportLink}}" class="btn btn-link"><i class="material-icons">file_download</i></a>
+                                    </md-input-container>
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>网站整改报告 </label> <a href="{{information.reformReportLink}}" class="btn btn-link"><i class="material-icons">file_download</i></a>
+                                    </md-input-container>
+                                </div>
+                            </div>
 
-            </form>
-          </div>
 
-          <div class="row " ng-show="user.userType='系统管理员'">
-            <div class="col-md-12 ">
-              <div class="panel z-depth-1 ">
-                <div class="panel-header ">
-                  <div class="panel-title ">
-                    <h5>操作日志</h5>
-                  </div>
-                </div>
-                <div class="panel-content ">
-
-                  <div class="row ">
-                    <div class="col-md-12 ">
-                           <md-table-container>
-                                    <table md-table md-row-select multiple  md-progress="promise ">
-                                        <thead md-head md-order="query.order " >
-                                            <tr md-row>
-                                                <th md-column ><span>时间</span></th>
-                                                <th md-column ><span>用户类型</span></th>
-                                                <th md-column >用户名</th>
-                                                <th md-column> 操作</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody md-body>
-                                            <tr md-row  md-auto-select ng-repeat="log in logs.docs " class="table-row ">
-                                                <td md-cell>{{log.time}}</td>
-                                                <td md-cell>{{log.userType}}</td>
-                                                <td md-cell>{{log.username}}</td>
-                                                <td md-cell>{{log.action}}</td>
-                                                
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </md-table-container>
-                               <md-table-pagination md-label="{page: '页:', rowsPerPage: '每页行:', of: '/'} " md-limit="query.limit " md-limit-options="[5, 10, 15] " md-page="query.page " md-total="{{logs.total}} " md-on-paginate="getLogs " md-page-select></md-table-pagination>
-
+                        </form>
                     </div>
-                  </div>
+
+                    <div class="row " ng-show="user.userType='系统管理员'">
+                        <div class="col-md-12 ">
+                            <div class="panel z-depth-1 ">
+                                <div class="panel-header ">
+                                    <div class="panel-title ">
+                                        <h5>操作日志</h5>
+                                    </div>
+                                </div>
+                                <div class="panel-content ">
+
+                                    <div class="row ">
+                                        <div class="col-md-12 ">
+                                            <md-table-container>
+                                                <table md-table md-row-select multiple md-progress="promise ">
+                                                    <thead md-head md-order="query.order ">
+                                                        <tr md-row>
+                                                            <th md-column><span>时间</span></th>
+                                                            <th md-column><span>用户类型</span></th>
+                                                            <th md-column>用户名</th>
+                                                            <th md-column> 操作</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody md-body>
+                                                        <tr md-row md-auto-select ng-repeat="log in logs.docs " class="table-row ">
+                                                            <td md-cell>{{log.time}}</td>
+                                                            <td md-cell>{{log.userType}}</td>
+                                                            <td md-cell>{{log.username}}</td>
+                                                            <td md-cell>{{log.action}}</td>
+
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </md-table-container>
+                                            <md-table-pagination md-label="{page: '页:', rowsPerPage: '每页行:', of: '/'} " md-limit="query.limit " md-limit-options="[5, 10, 15] " md-page="query.page " md-total="{{logs.total}} " md-on-paginate="getLogs " md-page-select></md-table-pagination>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--.row-->
+
+                    <div class="row " style="text-align: right; " ng-show="user.userType=='系统管理员'">
+                        <div class="col-md-12 ">
+                            <md-button class="md-raised md-primary" ng-click="needSecurityEvalustionReport($event)">要求安全测评报告</md-button>
+                            <md-button class="md-raised" ng-click="needReformReport($event)">要求网站整改报告</md-button>
+                            <button class="btn btn-secundary " ng-click="refuse($event)">驳回申请
+                              </button>
+
+                            <button class="btn btn-raised btn-primary " ng-click="accept()">通过审核</button>
+                        </div>
+                    </div>
+                    <div class="row " style="text-align: right; " ng-show="user.userType=='部属单位管理员'">
+                        <div class="col-md-12 ">
+                            <button class="btn btn-secundary " ng-click="refuse($event)">驳回申请
+                              </button>
+
+                            <button class="btn btn-raised btn-primary " ng-click="accept()">通过审核</button>
+                        </div>
+                    </div>
+
                 </div>
-              </div>
             </div>
-          </div>
-          <!--.row-->
-
-          <div class="row " style="text-align: right; " ng-show="user.userType=='系统管理员'">
-            <div class="col-md-12 ">
-              <button class="btn btn-secundary "   ng-click="refuse()">驳回申请
-                              </button>
-
-              <button class="btn btn-raised btn-primary "  ng-click="accept()">通过审核</button>
-            </div>
-          </div>
-          <div class="row " style="text-align: right; " ng-show="user.userType=='部属单位管理员'">
-            <div class="col-md-12 ">
-              <button class="btn btn-secundary "   ng-click="refuse()">驳回申请
-                              </button>
-
-              <button class="btn btn-raised btn-primary "  ng-click="accept()">通过审核</button>
-            </div>
-          </div>
-
         </div>
-      </div>
     </div>
-  </div>
-  <!--.row-->
-   </div>
-    <!--.container-->
+    <!--.row-->
+</div>
+<!--.container-->
 </div>
 <!--.body-content-->

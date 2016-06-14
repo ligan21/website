@@ -16,6 +16,7 @@ var websiteSchema = new Schema({
     "submitTime": { type: Date, default: Date.now },
     "useState": String,
     "state": String,
+    "refuseReason":String,
     "homepage": String,
     "submitter": String,
     "_submitterId":Schema.Types.ObjectId,

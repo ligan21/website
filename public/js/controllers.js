@@ -47,6 +47,7 @@ angular.module('websiteApp.controllers', []).controller('indexController', funct
   //$scope.websites = websites.websites.get($scope.option);
   $scope.getWebsites = function (query) {
     if ($scope.organizationName) $scope.query.organizationName = $scope.organizationName;
+    if ($scope.state) $scope.query.state = $scope.state;
     if ($scope.startDate) {
       $scope.query.startDate = $scope.startDate;
       $scope.query.endDate = $scope.endDate;
@@ -55,49 +56,30 @@ angular.module('websiteApp.controllers', []).controller('indexController', funct
   }
   function success(websites) {
     $scope.websites = websites;
-/*
-    $("#uploadSecurityEvalustionReport").pekeUpload({
-      url: "/upload",
-      btnText: '<i class="fa fa-upload" aria-hidden="true"></i>',
-      onFileSuccess: function (file, data) {
-       // $scope.website.id = website._id;
-       // $scope.website.securityEvalustionReportLink = data.path;
-       // $websiteDetail.information.update($scope.website, successAction, errorAction);
-      }
 
-    });
-    
-    $("#uploadReformReport").pekeUpload({
-      url: "/upload",
-      btnText: '<i class="fa fa-upload" aria-hidden="true"></i>',
-      onFileSuccess: function (file, data) {
-        //$scope.website.id = website._id;
-        //$scope.website.reformReportLink = data.path;
-        //$websiteDetail.information.update($scope.website, successAction, errorAction);
-      }
-    });
-*/
   }
-  $scope.showUploadSecurityEvalustionReport = function (website){
-   $("#"+website._id+"S").pekeUpload({
+  $scope.showUploadSecurityEvalustionReport = function (website) {
+    $("#" + website._id + "S").pekeUpload({
       url: "/upload",
       btnText: '<i class="material-icons">publish</i>',
       onFileSuccess: function (file, data) {
-          website.id = website._id;
-          website.securityEvalustionReportLink = data.path;
-          $websiteDetail.information.update(website, successAction, errorAction);
+        website.id = website._id;
+        website.securityEvalustionReportLink = data.path;
+        website.securityEvalustionState = "已提交";
+        $websiteDetail.information.update(website, successAction, errorAction);
       }
 
     });
   }
-  $scope.showUploadReformReport = function(website){
-      $("#"+website._id+"R").pekeUpload({
+  $scope.showUploadReformReport = function (website) {
+    $("#" + website._id + "R").pekeUpload({
       url: "/upload",
       btnText: '<i class="material-icons">publish</i>',
       onFileSuccess: function (file, data) {
-         website.id = website._id;
-         website.reformReportLink = data.path;
-         $websiteDetail.information.update(website, successAction, errorAction);
+        website.id = website._id;
+        website.reformReportLink = data.path;
+        website.reformState = "已提交";
+        $websiteDetail.information.update(website, successAction, errorAction);
       }
     });
   }
@@ -140,7 +122,7 @@ angular.module('websiteApp.controllers', []).controller('indexController', funct
 
 
 
-}).controller('websiteDetailController', function ($scope, $state, $user, $stateParams, $websiteDetail, $popupService) {
+}).controller('websiteDetailController', function ($scope, $state, $user, $stateParams, $websiteDetail, $popupService, $mdDialog) {
   $scope.query = {
     limit: 10,
     page: 1
@@ -157,25 +139,82 @@ angular.module('websiteApp.controllers', []).controller('indexController', funct
   $scope.accept = function () {
     $scope.information.id = $scope.information._id;
     if ($user.user.userType == "系统管理员") {
+      $scope.information.refuseReason = '';
       $scope.information.state = "通过审核";
     }
     else if ($user.user.userType == "部属单位管理员") {
+      $scope.information.refuseReason = '';
       $scope.information.state = "待审核";
     }
     $websiteDetail.information.update($scope.information, $popupService.showPopup("通过网站审核"), $popupService.showPopup("通过网站审核失败"));
   }
-  $scope.refuse = function () {
-    $scope.information.id = $scope.information._id;
-    if ($user.user.userType == "系统管理员") {
-      $scope.information.state = "驳回申请";
-      $scope.information.ownerId = '1';
-    }
-    else if ($user.user.userType == "部属单位管理员") {
-      $scope.information.state = "驳回提交网站";
-    }
+  $scope.refuse = function (ev) {
+    var confirm = $mdDialog.prompt()
+      .title('提示')
+      .textContent('请输入驳回理由.')
+      .placeholder('驳回理由')
+      .ariaLabel('驳回理由')
+      .targetEvent(ev)
+      .ok('确定')
+      .cancel('取消');
+    $mdDialog.show(confirm).then(function (result) {
+      $scope.information.refuseReason = result;
+      $scope.information.id = $scope.information._id;
+      if ($user.user.userType == "系统管理员") {
+        //$scope.information.refuseReason;
+        $scope.information.state = "驳回申请";
+        $scope.information.ownerId = '1';
+      }
+      else if ($user.user.userType == "部属单位管理员") {
+        $scope.information.state = "驳回提交网站";
+      }
 
-    $websiteDetail.information.update($scope.information, $popupService.showPopup("拒绝网站审核"), $popupService.showPopup("拒绝网站审核失败"));
+      $websiteDetail.information.update($scope.information, $popupService.showPopup("拒绝网站审核"), $popupService.showPopup("拒绝网站审核失败"));
+    }, function () {
+      $scope.information.refuseReason = '';
+    });
+
   }
+  $scope.needSecurityEvalustionReport = function (ev) {
+    var confirm = $mdDialog.confirm()
+      .title('提示')
+      .textContent('您确定要求此网站提交安全测评报告？')
+      .ariaLabel('Lucky day')
+      .targetEvent(ev)
+      .ok('确定')
+      .cancel('取消');
+    $mdDialog.show(confirm).then(function () {
+      $scope.information.id = $scope.information._id;
+      $scope.informationSecurityEvalustionReportState = "需要提交";
+      $websiteDetail.information.update($scope.information, successAction, errorAction);
+    }, function () {
+
+    });
+  };
+  $scope.needReformReport = function (ev) {
+    var confirm = $mdDialog.confirm()
+      .title('提示')
+      .textContent('您确定要求此网站提交整改报告？')
+      .ariaLabel('Lucky day')
+      .targetEvent(ev)
+      .ok('确定')
+      .cancel('取消');
+    $mdDialog.show(confirm).then(function () {
+      $scope.information.id = $scope.information._id;
+      $scope.informationReformReportState = "需要提交";
+      $websiteDetail.information.update($scope.information, successAction, errorAction);
+    }, function () {
+
+    });
+  };
+  function successAction() {
+    $popupService.showPopup("操作成功");
+  }
+  function errorAction(err) {
+    $popupService.showPopup("操作失败:" + error.data + error.message);
+  }
+
+
 }).controller('addWebsiteController', function ($scope, $state, $stateParams, $websiteDetail, $popupService) {
   $scope.information = {};
 
@@ -350,7 +389,11 @@ angular.module('websiteApp.controllers', []).controller('indexController', funct
   $('#summernote').summernote({ lang: 'zh-CN' });
   $("#uploadFile").pekeUpload({
     url: "/upload",
-    onFileSuccess: function (file, data) { $scope.message.attachment = data.path; }
+    btnText: '<i class="fa fa-upload" aria-hidden="true"></i>',
+    onFileSuccess: function (file, data) {
+      $scope.message.attachment = data.path;
+      $popupService.showPopup("成功上传附件");
+    }
   });
   $scope.submit = function () {
     $scope.content = $('#summernote').summernote('code');
@@ -393,5 +436,39 @@ angular.module('websiteApp.controllers', []).controller('indexController', funct
   $scope.search = function () {
     $scope.getLogs();
   }
-}).controller('chartsController', function ($scope, $state, $stateParams) {
+}).controller('chartsController', function ($scope, $state, $stateParams, $count) {
+
+  $count.get(success, function () { })
+  function success(count) {
+    var ctx = document.getElementById("websiteAgreeChart");
+    
+
+    var data = {
+      labels: [
+        "通过审核",
+        "驳回申请",
+        "待审核"
+      ],
+      datasets: [
+        {
+          data: [count.agreeCount, count.refuseCount, count.paddingCheckCount],
+         
+          backgroundColor: [
+            "#FF6384",
+            "#36A2EB",
+            "#FFCE56"
+          ],
+          hoverBackgroundColor: [
+            "#FF6384",
+            "#36A2EB",
+            "#FFCE56"
+          ]
+        }]
+    };
+    var myPieChart = new Chart(ctx, {
+      type: 'pie',
+      data: data
+    });
+  }
+
 });

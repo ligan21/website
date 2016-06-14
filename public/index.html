@@ -36,7 +36,7 @@
         <div class="sdc-navbar shadow-1">
             <div class="sdc-navbar-main">
                 <div class="col-xs-3">
-                    <img class="logo" src="http://i.imgur.com/eXoTvRC.png">
+                    <img class="logo" src="images/logo.png">
                 </div>
                 <ul class="col-xs-9 text-right">
                     <li class="user-avatar">
@@ -54,12 +54,12 @@
                             <i class="material-icons">menu</i>
                         </a>
                     </li>
-                    <li>
-                        <span>Overview</span>
-                    </li>
+                    <!--li>
+                        <span>导航</span>
+                    </li-->
                 </ul>
                 <ul class="text-center sdc-navbar-tabs nav-tab ">
-                    <li class="active"><a href="#" ui-sref="websites"><span>网站管理</span></a></li>
+                    <li><a href="#" ui-sref="websites"><span>网站管理</span></a></li>
                     <li><a href="#" ui-sref="members"><span>成员管理</span></a></li>
                     <li><a href="#" ui-sref="messages"><span>公告消息</span></a></li>
                     <li><a href="#" ui-sref="logs"><span>日志管理</span></a></li>
@@ -70,17 +70,17 @@
     </div>
     <div id="sidemenu" class="sdc-sidemenu active shadow-2">
         <div class="logo-mobile">
-            <img class="logo" src="http://i.imgur.com/eXoTvRC.png">
+            <img class="logo" src="images/logo_1.png">
         </div>
         <ul>
-            <li class="searchbox">
+            <!--li class="searchbox">
                 <form>
                     <i class="material-icons">search</i>
                     <div class="field" contenteditable></div>
                     <i class="material-icons reset"></i>
                 </form>
-            </li>
-            <li><span class="section-title">Hosts</span></li>
+            </li-->
+            <li><span class="section-title">导航</span></li>
             <li>
                 <a href="#" class="active" ui-sref="home">
                     <i class="material-icons">home</i>主页
@@ -100,7 +100,7 @@
 
                 <ul>
                     <li><a href="#" ui-sref="members"><i class="material-icons">group</i>成员列表</a></li>
-                    <li ><a href="#" ui-sref="organizations"><i class="material-icons">domain</i>部属单位</a></li>
+                    <li><a href="#" ui-sref="organizations"><i class="material-icons">domain</i>部属单位</a></li>
                 </ul>
             </li>
             <li ng-show="user.userType=='部属单位管理员'"><a href="#" ui-sref="members"><i class="material-icons">group</i>成员列表</a></li>
@@ -112,7 +112,7 @@
 
             </li>
             <li>
-                <a href="#" ui-sref="logs" ng-hide="user.userType=='部属单位网站管理员'" ng-hide="user.userType=='部属单位管理员'" >
+                <a href="#" ui-sref="logs" ng-hide="user.userType=='部属单位网站管理员'" ng-hide="user.userType=='部属单位管理员'">
                     <i class="material-icons">playlist_add_check</i>日志管理
                 </a>
 
@@ -139,10 +139,14 @@
         </div>
         <div class="fab-actions">
             <div class="btn btn-fab btn-material-purple">
-                <i class="material-icons">settings</i>
+                <a href="#" ui-sref="settings">
+                    <i class="material-icons">settings</i>
+                </a>
+
             </div>
             <div class="btn btn-fab btn-material-purple">
-                <i class="material-icons">exit_to_app</i>
+                
+                <a href="#" ng-click="logout()"><i class="material-icons">exit_to_app</i></a>
             </div>
         </div>
     </div>
@@ -162,6 +166,7 @@
     <script src="lib/angular-animate.min.js "></script>
     <script src="lib/angular-aria.min.js "></script>
     <script src="lib/pekeUpload.min.js"></script>
+    <script src="lib/Chart.min.js"></script>
     <!-- Angular Material Library -->
     <script src="lib/angular-material.min.js "></script>
     <script type="text/javascript" src="js/md-data-table.min.js"></script>

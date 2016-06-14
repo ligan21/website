@@ -8,6 +8,8 @@ var Schema=mongoose.Schema;
 var countSchema=new Schema({
    "time":{type:Date,default:Date.now},
    "websiteCount":Number,
+   "agreeCount":Number,
+   "refuseCount":Number,
    "paddingCheckCount":Number,
    "memberCount":Number
 });

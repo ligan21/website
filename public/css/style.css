@@ -1,5 +1,5 @@
 .sdc-navbar {
-  position: absolute;
+ /* position: absolute;*/
   width: 100%;
   left: 0;
   right: 0;
@@ -84,7 +84,7 @@
 }
 .sdc-navbar .sdc-navbar-main li.user-avatar a {
   display: block;
-  background-image: url(http://i.imgur.com/SM9UV94.png);
+  background-image: url(../images/SM9UV94.png);
   background-size: cover;
   background-color: #000;
   background-position: center;
@@ -405,7 +405,7 @@
 .container-fluid {
   -webkit-transition: padding 0.3s ease;
   transition: padding 0.3s ease;
-  padding-top: 125px;
+  /*padding-top: 125px;*/
   margin-bottom: 100px;
 }
 .sdc-sidemenu.active ~ .container-fluid {

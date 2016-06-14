@@ -30,10 +30,10 @@ router.route('/count')
 router.route('/websites')
     .get(function (req, res) {
         var user = req.session.user;
-        console.log("user:"+user);
-       // if (user == null) {
-       //     res.redirect(301, '/login.html');//no login
-       //     return;
+        console.log("user:" + user);
+        // if (user == null) {
+        //     res.redirect(301, '/login.html');//no login
+        //     return;
         //}
         var organizationName = req.param('organizationName');
         var startDate = req.param('startDate');
@@ -45,13 +45,13 @@ router.route('/websites')
         if (state) {
             query.state = state;
         }
-        if(organizationName)query.orangizationName=organizationName;
-        if(startDate)query.submitTime={"$gte": startDate, "$lt": endDate};
+        if (organizationName) query.orangizationName = organizationName;
+        if (startDate) query.submitTime = { "$gte": startDate, "$lt": endDate };
         console.log(query);
         if (user.userType == "部属单位网站管理员") { query._submitterId = user._id; }
         else if (user.userType == "部属单位管理员") {
             query._organizationId = user._organizationId;
-            query.state = {$ne:"保存网站"};
+            query.state = { $ne: "保存网站" };
 
         }
         else if (user.userType == "系统管理员") query._ownerId = user._id;
@@ -89,11 +89,11 @@ router.route('/websites')
                 Count.findOne({}, function (err, count) { count["websiteCount"] = c; count.save(); });
 
             });
-            Website.count({ state: "待审核" }, function (err, c) {
+           /* Website.count({ state: "待审核" }, function (err, c) {
                 console.log('Count is ' + c);
                 Count.findOne({}, function (err, count) { count["paddingCheckCount"] = c; count.save(); });
 
-            });
+            });*/
         });
     });
 
@@ -126,7 +126,21 @@ router.route('/websites/:id')
                 }
                 res.state(200).json({ message: 'website updated!' });
             });
+            Website.count({ state: "待审核" }, function (err, c) {
+                console.log('Count is ' + c);
+                Count.findOne({}, function (err, count) { count["paddingCheckCount"] = c; count.save(); });
 
+            });
+            Website.count({ state: "通过审核" }, function (err, c) {
+                console.log('Count is ' + c);
+                Count.findOne({}, function (err, count) { count["agreeCount"] = c; count.save(); });
+
+            });
+            Website.count({ state: "驳回申请" }, function (err, c) {
+                console.log('Count is ' + c);
+                Count.findOne({}, function (err, count) { count["refuseCount"] = c; count.save(); });
+
+            });
             var log = new Log({ 'userType': user.userType, 'username': user.username, 'organizationName': user.organizationName, 'action': website['state'], '_memberId': user._id, '_websiteId': website._id });
             log.save();
         });
@@ -164,7 +178,7 @@ router.route('/members')
         if (userType) {
             query.userType = userType;
         }
-        if(organizationName)query.orangizationName=organizationName;
+        if (organizationName) query.orangizationName = organizationName;
         console.log(query);
         Member.paginate(query, { page: page, limit: limit, select: { _id: 1, username: 1, organizationName: 1, name: 1, userType: 1, time: 1 } }, function (err, result) {
             res.json(result);
@@ -394,11 +408,11 @@ router.route('/logs')
         if (memberId) {
             query._memberId = memberId;
         }
-        if(userType){
-            query.userType=userType;
+        if (userType) {
+            query.userType = userType;
         }
-        if(organizationName){
-            query.organizationName=organizationName;
+        if (organizationName) {
+            query.organizationName = organizationName;
         }
         console.log(query);
         Log.paginate(query, { page: page, limit: limit, sort: { time: -1 } }, function (err, result) {

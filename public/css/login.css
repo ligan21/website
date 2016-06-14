@@ -1,0 +1,387 @@
+body {
+		font-family: 'Roboto','Noto Sans', sans-serif;
+		display: flex;
+		background: #DFDFDF;
+		-webkit-transition: background-color 0.4s cubic-bezier(.55, 0, .1, 1);
+		-moz-transition: background-color 0.4s cubic-bezier(.55, 0, .1, 1);
+		-ms-transition: background-color 0.4s cubic-bezier(.55, 0, .1, 1);
+		-o-transition: background-color 0.4s cubic-bezier(.55, 0, .1, 1);
+		transition: background-color 0.4s cubic-bezier(.55, 0, .1, 1);
+}
+
+body.clicked {
+		background-color: #3F51B5;
+		position: absolute;
+}
+
+.off-white {
+		background: #eee;
+}
+
+.indigo {
+		background: #3F51B5;
+}
+
+.header-full {
+		width: 100%;
+		height: 350px;
+		position: absolute;
+		top: 0;
+		left: 0;
+}
+
+.header-intro {
+		font-family: 'Roboto', sans-serif;
+		font-size: 30pt;
+		font-weight: 400;
+		color: #fff;
+}
+
+.header-intro[tagged-to=indigoHeader] {
+		margin-left: 10vw;
+		width: 45%;
+}
+
+.appendBeforeContent {
+		position: absolute;
+		z-index: 101;
+		text-transform: uppercase;
+		font-weight: 300;
+		color: #757575;
+		left: 2vw;
+		top: 0;
+}
+
+.appendBeforeContent p:nth-child(1) {
+		font-size: 22pt;
+		color: #000;
+}
+
+.appendBeforeContent p:nth-child(2) {
+		margin-top: 47px;
+}
+
+.intro-card:hover,
+.intro-card-registration:hover {
+		box-shadow: 0 13px 25px 0 rgba(0, 0, 0, 0.3), 0 11px 7px 0 rgba(0, 0, 0, 0.19);
+}
+
+.intro-card,
+.intro-card-registration {
+		cursor: pointer;
+		overflow: hidden;
+		width: 400px;
+		height: 200px;
+		background: #eee;
+		position: absolute;
+		left: 39vw;
+		border-radius: 0.15em;
+		-webkit-transform: translateY(220px);
+		-moz-transform: translateY(220px);
+		-ms-transform: translateY(220px);
+		-o-transform: translateY(220px);
+		transform: translateY(220px);
+		-webkit-transition: all .5s cubic-bezier(.55, 0, .1, 1);
+		-moz-transition: all .5s cubic-bezier(.55, 0, .1, 1);
+		-ms-transition: all .5s cubic-bezier(.55, 0, .1, 1);
+		-o-transition: all .5s cubic-bezier(.55, 0, .1, 1);
+		transition: all .5s cubic-bezier(.55, 0, .1, 1);
+}
+
+.intro-card .material-form,
+.intro-card-registration .material-form {
+		visibility: hidden;
+}
+
+.intro-card.open,
+.intro-card-registration.open {
+		overflow: hidden;
+		width: 800px;
+		height: 600px;
+		background: #eee;
+		position: absolute;
+		left: 26vw;
+		z-index: 23;
+		border-radius: 0.15em;
+		-webkit-transform: translateY(220px);
+		-moz-transform: translateY(220px);
+		-ms-transform: translateY(220px);
+		-o-transform: translateY(220px);
+		transform: translateY(220px);
+		-webkit-transition: all .5s cubic-bezier(.55, 0, .1, 1);
+		-moz-transition: all .5s cubic-bezier(.55, 0, .1, 1);
+		-ms-transition: all .5s cubic-bezier(.55, 0, .1, 1);
+		-o-transition: all .5s cubic-bezier(.55, 0, .1, 1);
+		transition: all .5s cubic-bezier(.55, 0, .1, 1);
+}
+
+.intro-card.open .appendBeforeContent,
+.intro-card-registration.open .appendBeforeContent {
+		visibility: hidden;
+}
+
+.intro-card.open .material-form,
+.intro-card-registration.open .material-form {
+		visibility: visible;
+}
+
+.intro-card-registration {
+		top: 210px;
+}
+/***** Z-Index Values *****/
+
+.z-1 {
+		box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.37);
+}
+
+.z-2 {
+		box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.3), 0 2px 2px 0 rgba(0, 0, 0, 0.2);
+}
+
+.z-3 {
+		box-shadow: 0 13px 25px 0 rgba(0, 0, 0, 0.3), 0 11px 7px 0 rgba(0, 0, 0, 0.19);
+}
+
+.z-4 {
+		box-shadow: 0 20px 40px 0 rgba(0, 0, 0, 0.3), 0 14px 12px 0 rgba(0, 0, 0, 0.17);
+}
+
+.z-5 {
+		box-shadow: 0 27px 55px 0 rgba(0, 0, 0, 0.3), 0 17px 17px 0 rgba(0, 0, 0, 0.15);
+}
+/***** REGISTRATION STYLES ******/
+/***** FROM FILE DEMON *****/
+/***** AUTHOR: Corbin "Polyg0n" Matschull *****/
+
+.material-form {
+		height: 100%;
+		padding: 30px;
+}
+
+.material-control-group,
+.form-member,
+.material-input {
+		position: relative;
+}
+
+.material-name {
+		top: 40px;
+}
+
+.form-member {
+		width: 525px;
+		height: 77px;
+		margin-left: 100px;
+}
+
+.form-member-e-bm {
+		top: 185px;
+}
+
+.form-member-m label {
+		top: -90px;
+}
+
+.floating-action-member {
+		position: absolute;
+}
+
+.wipe {
+		position: relative;
+		display: block;
+		width: 525px;
+		top: 57px;
+}
+
+.wipe:before,
+.wipe:after {
+		content: '';
+		height: 3px;
+		width: 0;
+		bottom: 1px;
+		position: absolute;
+		background: #2196F3;
+		transition: 0.2s ease all;
+}
+
+.wipe:before {
+		left: 50%;
+}
+
+.wipe:after {
+		right: 50%;
+}
+/* active state */
+
+input:focus ~ .wipe:before,
+input:focus ~ .wipe:after {
+		width: 50%;
+}
+
+input:valid ~ .wipe:before,
+input:valid ~ .wipe:after {
+		background: #4CAF50;
+}
+
+.m--header {
+		color: #999;
+		font-size: 18px;
+		font-weight: normal;
+		font-family: 'Roboto', sans-serif;
+		position: absolute;
+		pointer-events: none;
+		left: 5px;
+		top: 30px;
+		transition: all .25s ease;
+		-webkit-transition: all .25s ease;
+		-moz-transition: all .25s ease;
+		-o-transition: all .25s ease;
+		-ms-transition: all .25s ease;
+}
+/* active state */
+
+.material-input:focus ~ .m--header,
+.material-input:valid ~ .m--header {
+		top: 10px;
+		font-size: 14px;
+		color: #2196F3;
+}
+
+.material-input:valid ~ .m--header {
+		color: #4CAF50;
+}
+/********** MATERIAL MEMBERS ***********/
+
+.material-form > p {
+		position: absolute;
+		margin: 20px 0 0 0;
+}
+
+.material-input {
+		border: none;
+		position: absolute;
+		border-bottom: 1px solid #BDBDBD;
+		border-radius: 0.1em;
+		color: #000;
+		background: none;
+		outline: none;
+		width: 525px;
+		line-height: 30px;
+		top: 23px;
+		left: 0;
+		font-size: 15pt;
+		transition: all .2s ease;
+		-webkit-transition: all .2s ease;
+}
+
+.material-input-m {
+		left: -87px;
+		resize: none;
+		font-family: 'Roboto', sans-serif;
+		font-size: 15px;
+}
+
+.material-input-m::-webkit-input-placeholder {
+		font-size: 15px;
+}
+
+.material-popup {
+		width: 300px;
+		height: 23px;
+		position: absolute;
+		margin: 60px 0 0 1px;
+		color: #F50057;
+		display: none;
+}
+
+.material-popup.active {
+		display: block;
+}
+
+.material-button {
+		position: absolute;
+		width: 80px;
+		height: 45px;
+		text-align: center;
+		line-height: 3;
+		border-radius: 3px;
+		box-shadow: none;
+		transition: all .85s ease;
+		-webkit-transition: all .85s ease;
+}
+
+.material-button:hover {
+		cursor: pointer;
+		box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.material-button p {
+		color: #2196F3;
+		margin: 0;
+		transition: all .45s ease;
+		-webkit-transition: all .45s ease;
+}
+
+.material-form-button {
+		top: 380px;
+}
+
+.material-button,
+.material-button p {
+		-webkit-user-select: none;
+		-moz-user-select: -moz-none;
+		-ms-user-select: none;
+		user-select: none;
+}
+
+.form-break {
+		position: absolute;
+		top: 445px;
+		width: 525px;
+		height: 2px;
+		background: rgba(0, 0, 0, 0.4);
+}
+
+.material-button-lg {
+		width: 100px;
+		height: 40px;
+		line-height: 2.5;
+}
+
+.material-login-rg {
+		height: 800px;
+}
+
+.material-create-account {
+		top: 600px;
+}
+
+.material-register,
+.material-login-account {
+		top: 525px;
+		left: 0;
+}
+
+.material-login-account {
+		left: -100px;
+		top: 750px;
+}
+
+.f-bm {
+		top: 650px;
+}
+
+.rg-bm {
+		top: 665px;
+		font-size: 20pt;
+}
+
+.reg--log {
+		font-size: 17pt;
+		margin-top: 10px;
+}
+
+.button-blu {
+		top: 300px;
+		left: 100px;
+}
