@@ -1,7 +1,7 @@
 <div class="breadcrumbs shadow-1">
     <div class="container">
         <div class="row">
-            <i class="material-icons">home</i> You are in:
+            <i class="fa fa-sitemap" aria-hidden="true"></i>
             <ul>
                 <li><a href="#">网站详情</a></li>
             </ul>
@@ -13,32 +13,38 @@
         <div class="row ">
             <div class="col-md-12 ">
                 <div class="panel z-depth-1 ">
-                    <div class="panel-header ">
+                    <!--div class="panel-header ">
                         <div class="panel-title ">
-                            <h5><b>网站详情</b></h5>
+                            <h5><b></b></h5>
                         </div>
-                    </div>
+                    </div-->
                     <div class="panel-content ">
                         <form>
-                            <div layout-gt-sm="row">
-                                <md-input-container class="md-block" flex-gt-sm>
-                                    <label>备案ID</label>
-                                    <input ng-model="information.id" disabled>
-                                </md-input-container>
-                                <md-input-container class="md-block" flex-gt-sm>
-                                    <label>单位名称</label>
-                                    <input ng-model="information.organizationName" disabled>
-                                </md-input-container>
+                            <div style="background-color:rgba(0,100,100,0.1)" layout-padding>
+                                <div layout-gt-sm="row">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>备案ID</label>
+                                        <input ng-model="information.id" disabled>
+                                    </md-input-container>
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>单位名称</label>
+                                        <input ng-model="information.organizationName" disabled>
+                                    </md-input-container>
+                                </div>
                             </div>
-                            <div layout-gt-sm="row">
-                                <md-input-container class="md-block" flex-gt-sm>
-                                    <label>网站名称</label>
-                                    <input ng-model="information.websiteName" disabled>
-                                </md-input-container>
-                                <md-input-container class="md-block" flex-gt-sm>
-                                    <label>提交时间</label>
-                                    <input ng-model="information.submitTime" disabled>
-                                </md-input-container>
+                            <div style="background-color:rgba(0,100,100,0.1)" layout-padding>
+                                <div layout-gt-sm="row">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>网站名称</label>
+                                        <input ng-model="information.websiteName" disabled>
+                                    </md-input-container>
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>提交时间</label>
+                                        <input ng-model="information.submitTime" disabled>
+                                    </md-input-container>
+                                </div>
+                            </div>
+                            <div layout-padding>
                             </div>
                             <div layout-gt-sm="row">
                                 <md-input-container class="md-block" flex-gt-sm>
@@ -68,10 +74,6 @@
                                     <label>域名列表</label>
                                     <input ng-model="information.domainNameList" disabled>
                                 </md-input-container>
-                                <md-input-container class="md-block" flex-gt-sm>
-                                    <label>网站规模</label>
-                                    <input ng-model="information.websiteScale" disabled>
-                                </md-input-container>
                             </div>
                             <div layout-gt-sm="row">
                                 <md-input-container class="md-block" flex-gt-sm>
@@ -79,61 +81,81 @@
                                     <input ng-model="information.classify" disabled>
                                 </md-input-container>
                                 <md-input-container class="md-block" flex-gt-sm>
-                                    <label>用户性质</label>
-                                    <input ng-model="information.userProperty" disabled>
+                                    <label>网站规模</label>
+                                    <input ng-model="information.websiteScale" disabled>
                                 </md-input-container>
                             </div>
+
                             <div layout-gt-sm="row">
+
                                 <md-input-container class="md-block" flex-gt-sm>
-                                    <label>开发厂商</label>
-                                    <input ng-model="information.developer" disabled>
+                                    <label>用户性质</label>
+                                    <input ng-model="information.userProperty" disabled>
                                 </md-input-container>
                                 <md-input-container class="md-block" flex-gt-sm>
                                     <label>后台互联情况</label>
                                     <input ng-model="information.backgroundInterconnect" disabled>
                                 </md-input-container>
                             </div>
+
+
                             <div layout-gt-sm="row">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>开发厂商</label>
+                                    <input ng-model="information.developer" disabled>
+                                </md-input-container>
                                 <md-input-container class="md-block" flex-gt-sm>
                                     <label>安全评测单位</label>
                                     <input ng-model="information.securityEvaluationOrganization" disabled>
                                 </md-input-container>
 
                             </div>
-                            <div layout-gt-sm="row">
-                                <md-input-container class="md-block" flex-gt-sm>
-                                    <label>备案信息附件 </label> <a href="{{information.attachmentLink}}" class="btn btn-link"><i class="material-icons">file_download</i></a>
+                            <div style="background-color:rgba(0,0,0,0.1)" layout-padding>
+                                <div layout-gt-sm="row">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>备案信息附件 </label> <a href="{{information.attachmentLink}}" class="btn btn-link"><i class="material-icons">file_download</i>
+                                    {{information.attachmentLink}}</a>
 
-
-                                </md-input-container>
-                                <md-input-container class="md-block" flex-gt-sm>
-                                    <label>拓扑信息 </label> <a href="{{information.topologyLink}}" class="btn btn-link"><i class="material-icons">file_download</i></a>
-                                </md-input-container>
+                                    </md-input-container>
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>拓扑信息 </label> <a href="{{information.topologyLink}}" class="btn btn-link"><i class="material-icons">file_download</i>
+                                    {{information.topologyLink}}</a>
+                                    </md-input-container>
+                                </div>
+                                <div layout-gt-sm="row">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>关键产品使用情况 </label> <a href="{{information.keyProductsLink}}" class="btn btn-link"><i class="material-icons">file_download</i>
+                                    {{information.keyProductsLink}}</a>
+                                    </md-input-container>
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>安全评测结果 </label><a href="{{information.securityEvaluationResultLink}}" class="btn btn-link"><i class="material-icons">file_download</i>
+                                    {{information.securityEvaluationResultLink}}</a>
+                                    </md-input-container>
+                                </div>
+                                <div layout-gt-sm="row">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>网站备灾方案</label><a href="{{information.recoveryPlanLink}}" class="btn btn-link"><i class="material-icons">file_download</i>
+                                    {{information.recoveryPlanLink}}</a>
+                                    </md-input-container>
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>等级保护备案信息</label> <a href="{{information.gradeProtectLink}}" class="btn btn-link"><i class="material-icons">file_download</i>
+                                    {{information.gradeProtectLink}}</a>
+                                    </md-input-container>
+                                </div>
                             </div>
-                            <div layout-gt-sm="row">
-                                <md-input-container class="md-block" flex-gt-sm>
-                                    <label>关键产品使用情况 </label> <a href="{{information.keyProductsLink}}" class="btn btn-link"><i class="material-icons">file_download</i></a>
-                                </md-input-container>
-                                <md-input-container class="md-block" flex-gt-sm>
-                                    <label>安全评测结果 </label><a href="{{information.securityEvalustionResultLink}}" class="btn btn-link"><i class="material-icons">file_download</i></a>
-                                </md-input-container>
-                            </div>
-                            <div layout-gt-sm="row">
-                                <md-input-container class="md-block" flex-gt-sm>
-                                    <label>网站备灾方案</label><a href="{{information.recoveryPlanLink}}" class="btn btn-link"><i class="material-icons">file_download</i></a>
-                                </md-input-container>
-                                <md-input-container class="md-block" flex-gt-sm>
-                                    <label>等级保护备案信息</label> <a href="{{information.gradeProtectLink}}" class="btn btn-link"><i class="material-icons">file_download</i></a>
-                                </md-input-container>
+                            <div layout-padding>
                             </div>
                             <div style="background-color:rgba(0,0,0,0.2)" layout-padding>
                                 <p><b>相关附件</b></p>
                                 <div layout-gt-sm="row">
                                     <md-input-container class="md-block" flex-gt-sm>
-                                        <label>安全评测报告</label><a href="{{information.securityEvalustionReportLink}}" class="btn btn-link"><i class="material-icons">file_download</i></a>
+                                        <label>安全评测报告</label><a href="{{information.securityEvaluationReportLink}}" class="btn btn-link"><i class="material-icons">file_download</i>
+                                        {{information.securityEvaluationReportLink}}</a>
                                     </md-input-container>
                                     <md-input-container class="md-block" flex-gt-sm>
-                                        <label>网站整改报告 </label> <a href="{{information.reformReportLink}}" class="btn btn-link"><i class="material-icons">file_download</i></a>
+                                        <label>网站整改报告 </label> <a href="{{information.reformReportLink}}" class="btn btn-link"><i class="material-icons">file_download</i>
+                                        {{information.reformReportLink}}</a>
+
                                     </md-input-container>
                                 </div>
                             </div>
@@ -192,7 +214,7 @@
                             <button class="btn btn-secundary " ng-click="refuse($event)">驳回申请
                               </button>
 
-                            <button class="btn btn-raised btn-primary " ng-click="accept()">通过审核</button>
+                            <button style="color:white" class="btn  btn-primary " ng-click="accept()">通过审核</button>
                         </div>
                     </div>
                     <div class="row " style="text-align: right; " ng-show="user.userType=='部属单位管理员'">
@@ -200,16 +222,15 @@
                             <button class="btn btn-secundary " ng-click="refuse($event)">驳回申请
                               </button>
 
-                            <button class="btn btn-raised btn-primary " ng-click="accept()">通过审核</button>
+                            <button style="color:white" class="btn  btn-primary " ng-click="accept()">通过审核</button>
                         </div>
                     </div>
 
                 </div>
             </div>
         </div>
+        <!--.row-->
     </div>
-    <!--.row-->
-</div>
-<!--.container-->
+    <!--.container-->
 </div>
 <!--.body-content-->

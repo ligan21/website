@@ -1,27 +1,34 @@
 <div class="breadcrumbs shadow-1">
-  <div class="container">
-    <div class="row">
-      <i class="material-icons">home</i> You are in:
-      <ul>
-        <li><a href="#">单位详情</a></li>
-      </ul>
+    <div class="container">
+        <div class="row">
+            <i class="material-icons">domain</i>
+            <ul>
+                <li><a href="#">单位详情</a></li>
+            </ul>
+        </div>
     </div>
-  </div>
 </div>
 <div class="body-content">
-  <div class="container">
-    <div class="row ">
-      <div class="col-md-12 ">
-        <div class="panel z-depth-1 ">
-          <div class="panel-header ">
-            <div class="panel-title " style="width:100%">
-              <div style="width:100%">
-                <h5><b>部属单位详情</b><md-button  class="md-fab  md-mini md-primary" style="float:right;margin-top:0px; " ui-sref="modifyOrganization({id:information._id})"><i class="material-icons">mode_edit</i></md-button>
+    <div class="container">
+        <div class="row ">
+            <div class="col-md-12 ">
+                <div class="panel z-depth-1 ">
+                    <!--div class="panel-header ">
+                        <div class="panel-title " style="width:100%">
+                            <div style="width:100%">
+                                <h5><b></b>
+<md-button  class="md-fab  md-mini md-primary" style="float:right;margin-top:0px; " ui-sref="modifyOrganization({id:information._id})"><i class="material-icons">mode_edit</i></md-button>
                                    </h5>
-              </div>
-            </div>
-          </div>
-          <div class="panel-content ">
+                            </div>
+                        </div>
+                    </div-->
+                    <div class="panel-content ">
+                        <md-button class="md-fab  md-mini md-primary" style="float:right;margin-top:0px; " ui-sref="modifyOrganization({id:information._id})">
+                            <i class="material-icons">mode_edit</i>
+                            <md-tooltip md-direction="bottom">
+                                编辑单位
+                            </md-tooltip>
+                        </md-button>
                         <form class="">
 
                             <div layout-gt-sm="row">
@@ -36,7 +43,7 @@
                                 </md-input-container>
                             </div>
                             <div layout-gt-sm="row" layout-padding></div>
-                            <div layout-gt-sm="row">
+                            <div layout-gt-sm="row" style="border-left: 1px solid #EC407A; margin-top : 0.25in;padding-left:5px;">
                                 <md-input-container class="md-block" flex-gt-sm>
                                     <label>单位分管领导</label>
                                     <input ng-model="information.leaderName" disabled>
@@ -46,17 +53,17 @@
                                     <input ng-model="information.leaderPost" disabled>
                                 </md-input-container>
                             </div>
-                            <div layout-gt-sm="row">
-                                <md-input-container class="md-block" flex-gt-sm>
+                            <div layout-gt-sm="row" style="border-left: 1px solid #EC407A;margin-bottom : 0.25in;padding-left :5px;">
+                                <md-input-container class=" md-block " flex-gt-sm>
                                     <label>手机</label>
-                                    <input ng-model="information.leaderPhone" disabled>
+                                    <input ng-model="information.leaderPhone " disabled>
                                 </md-input-container>
-                                <md-input-container class="md-block" flex-gt-sm>
+                                <md-input-container class="md-block " flex-gt-sm>
                                     <label>座机</label>
-                                    <input ng-model="information.leaderTel" disabled>
+                                    <input ng-model="information.leaderTel " disabled>
                                 </md-input-container>
                             </div>
-                            <div layout-gt-sm="row">
+                            <div layout-gt-sm="row " style="border-left: 1px solid #2772ee; margin-top : 0.25in;padding-left : 5px;">
                                 <md-input-container class="md-block" flex-gt-sm>
                                     <label>网络安全管理人</label>
                                     <input ng-model="information.secureManagerName" disabled>
@@ -66,34 +73,34 @@
                                     <input ng-model="information.secureManagerPost" disabled>
                                 </md-input-container>
                             </div>
-                            <div layout-gt-sm="row">
-                                <md-input-container class="md-block" flex-gt-sm>
+                            <div layout-gt-sm="row" style="border-left: 1px solid #2772ee; margin-bottom : 0.25in;padding-left :5px;">
+                                <md-input-container class=" md-block " flex-gt-sm>
                                     <label>手机</label>
-                                    <input ng-model="information.secureManagerPhone" disabled>
+                                    <input ng-model="information.secureManagerPhone " disabled>
                                 </md-input-container>
-                                <md-input-container class="md-block" flex-gt-sm>
+                                <md-input-container class="md-block " flex-gt-sm>
                                     <label>座机</label>
-                                    <input ng-model="information.secureManagerTel" disabled>
+                                    <input ng-model="information.secureManagerTel " disabled>
                                 </md-input-container>
                             </div>
-                            <div layout-gt-sm="row">
-                                <md-input-container class="md-block" flex-gt-sm>
+                            <div layout-gt-sm="row " style="border-left: 1px solid #286012; margin-top : 0.25in;padding-left :5px;">
+                                <md-input-container class="md-block " flex-gt-sm>
                                     <label>网络安全联系人</label>
-                                    <input ng-model="information.secureLiaisonName" disabled>
+                                    <input ng-model="information.secureLiaisonName " disabled>
                                 </md-input-container>
-                                <md-input-container class="md-block" flex-gt-sm>
+                                <md-input-container class="md-block " flex-gt-sm>
                                     <label>职务</label>
-                                    <input ng-model="information.secureLiaisonPost" disabled>
+                                    <input ng-model="information.secureLiaisonPost " disabled>
                                 </md-input-container>
                             </div>
-                            <div layout-gt-sm="row">
-                                <md-input-container class="md-block" flex-gt-sm>
+                            <div layout-gt-sm="row " style="border-left: 1px solid #286012; margin-bottom : 0.25in;padding-left :5px;">
+                                <md-input-container class="md-block " flex-gt-sm>
                                     <label>手机</label>
-                                    <input ng-model="information.secureLiaisonPhone" disabled>
+                                    <input ng-model="information.secureLiaisonPhone " disabled>
                                 </md-input-container>
-                                <md-input-container class="md-block" flex-gt-sm>
+                                <md-input-container class="md-block " flex-gt-sm>
                                     <label>座机</label>
-                                    <input ng-model="information.secureLiaisonTel" disabled>
+                                    <input ng-model="information.secureLiaisonTel " disabled>
                                 </md-input-container>
                             </div>
 
@@ -105,12 +112,12 @@
 
 
 
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
+        <!--.row-->
     </div>
-  </div>
-  <!--.row-->
-   </div>
     <!--.container-->
 </div>
 <!--.body-content-->

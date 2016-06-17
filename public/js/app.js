@@ -3,13 +3,13 @@
  */
 
 
-angular.module('websiteApp',['ngMaterial', 'ngMessages', 'md.data.table', 'ui.router', 'ngResource', 'websiteApp.controllers', 'websiteApp.services']).controller('AppCtrl', function ($scope) { });
+angular.module('websiteApp', ['ngMaterial', 'ngMessages', 'md.data.table', 'ui.router', 'ngResource', 'websiteApp.controllers', 'websiteApp.services']).controller('AppCtrl', function($scope) {});
 
 
-angular.module('websiteApp').config(function ($httpProvider) {
+angular.module('websiteApp').config(function($httpProvider) {
     $httpProvider.defaults.withCredentials = true;
     //rest of route code
-}).config(function ($stateProvider, $httpProvider) {
+}).config(function($stateProvider, $httpProvider) {
     $stateProvider.state('home', {
         url: '/home',
         templateUrl: 'partials/dashboard.html',
@@ -22,10 +22,10 @@ angular.module('websiteApp').config(function ($httpProvider) {
         url: '/websiteDetail?id',
         templateUrl: 'partials/websiteDetail.html',
         controller: 'websiteDetailController'
-    }).state('addWebsite',{
-        url:'/addWebsite',
+    }).state('addWebsite', {
+        url: '/addWebsite',
         templateUrl: 'partials/website-add.html',
-        controller :  'addWebsiteController'
+        controller: 'addWebsiteController'
     }).state('members', {
         url: '/members',
         templateUrl: 'partials/members.html',
@@ -80,6 +80,6 @@ angular.module('websiteApp').config(function ($httpProvider) {
         templateUrl: 'partials/charts.html',
         controller: 'chartsController'
     })
-}).run(function ($state) {
+}).run(function($state) {
     $state.go('home');
 });

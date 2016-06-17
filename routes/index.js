@@ -13,22 +13,22 @@ var upload = require('../modules/multerUtil');
 var router = express.Router();
 
 /* GET home page. */
-router.get('/', function (req, res, next) {
+router.get('/', function(req, res, next) {
     //res.render('index', { title: 'Express' });
 
     //console.log("homepage");
 });
 
 router.route('/count')
-    .get(function (req, res) {
+    .get(function(req, res) {
 
-        Count.findOne(function (err, count) {
+        Count.findOne(function(err, count) {
             res.json(count);
         })
     });
 // website route
 router.route('/websites')
-    .get(function (req, res) {
+    .get(function(req, res) {
         var user = req.session.user;
         console.log("user:" + user);
         // if (user == null) {
@@ -46,66 +46,109 @@ router.route('/websites')
             query.state = state;
         }
         if (organizationName) query.orangizationName = organizationName;
-        if (startDate) query.submitTime = { "$gte": startDate, "$lt": endDate };
+        if (startDate) query.submitTime = {
+            "$gte": startDate,
+            "$lt": endDate
+        };
         console.log(query);
-        if (user.userType == "部属单位网站管理员") { query._submitterId = user._id; }
-        else if (user.userType == "部属单位管理员") {
-            query._organizationId = user._organizationId;
-            query.state = { $ne: "保存网站" };
+        if (user.userType == "部属单位网站管理员") {
+            query._submitterId = user._id;
+        } else if (user.userType == "部属单位管理员") {
+            query.organizationName = user.organizationName
+            query.state = {
+                $ne: "保存网站"
+            };
 
-        }
-        else if (user.userType == "系统管理员") query._ownerId = user._id;
+        } else if (user.userType == "系统管理员") query._ownerId = user._id;
 
-        Website.paginate(query, { page: page, limit: limit, sort: { updateTime: -1 }, select: { _id: 1, organizationName: 1, websiteName: 1, submitTime: 1, state: 1, securityEvalustionReportLink: 1, securityEvalustionReportState: 1, reformReportLink: 1, reformReportState: 1 } }, function (err, result) {
+        Website.paginate(query, {
+            page: page,
+            limit: limit,
+            sort: {
+                updateTime: -1
+            },
+            select: {
+                _id: 1,
+                organizationName: 1,
+                websiteName: 1,
+                submitTime: 1,
+                state: 1,
+                securityEvalustionReportLink: 1,
+                securityEvalustionReportState: 1,
+                reformReportLink: 1,
+                reformReportState: 1
+            }
+        }, function(err, result) {
             res.json(result);
         });
 
 
     })
-    .post(function (req, res) {
+    .post(function(req, res) {
         console.log("add websites");
         var user = req.session.user;
         var website = new Website(req.body);
         if (user == null) {
-            res.redirect(301, '/login.html');//no login
+            res.redirect(301, '/login.html'); //no login
             return;
         }
         website['submitter'] = user.username;
         website['_submitterId'] = user._id;
         website['_ownerId'] = user._id;
         website['organizationName'] = user.organizationName;
-        website['_organizationId'] = user._organizationId;
 
-        website.save(function (err) {
+        website.save(function(err) {
             if (err) {
                 res.send(err);
                 return;
             }
-            res.send({ message: 'website Added' });
-            var log = new Log({ 'userType': user.userType, 'username': user.username, 'organizationName': user.organizationName, 'action': '添加网站', '_memberId': user._id, '_websiteId': website._id });
+            res.send({
+                message: 'website Added'
+            });
+
+            var log = new Log({
+                'userType': user.userType,
+                'username': user.username,
+                'organizationName': user.organizationName,
+                'action': '添加网站',
+                '_memberId': user._id,
+                '_websiteId': website._id
+            });
             log.save();
-            Website.count({}, function (err, c) {
+            Organization.findOneAndUpdate({
+                name: user.organizationName
+            }, {
+                $inc: {
+                    count: 1
+                }
+            });
+            Website.count({}, function(err, c) {
                 console.log('Count is ' + c);
-                Count.findOne({}, function (err, count) { count["websiteCount"] = c; count.save(); });
+                Count.findOne({}, function(err, count) {
+                    count["websiteCount"] = c;
+                    count.save();
+                });
 
             });
-           /* Website.count({ state: "待审核" }, function (err, c) {
-                console.log('Count is ' + c);
-                Count.findOne({}, function (err, count) { count["paddingCheckCount"] = c; count.save(); });
+            /* Website.count({ state: "待审核" }, function (err, c) {
+                 console.log('Count is ' + c);
+                 Count.findOne({}, function (err, count) { count["paddingCheckCount"] = c; count.save(); });
 
-            });*/
+             });*/
         });
     });
 
 
 router.route('/websites/:id')
-    .put(function (req, res) {
+    .put(function(req, res) {
         var user = req.session.user;
         if (user == null) {
-            res.redirect(301, '/login.html');//no login
+            res.redirect(301, '/login.html'); //no login
             return;
         }
-        Website.findOne({ _id: req.params.id }, function (err, website) {
+        Website.findOne({
+            _id: req.params.id
+        }, function(err, website) {
 
             if (err) {
                 res.send(err);
@@ -119,98 +162,169 @@ router.route('/websites/:id')
                 website['_ownerId'] = user._createrId;
             // save the website
             console.log(website);
-            website.save(function (err) {
+            website.save(function(err) {
                 if (err) {
                     res.send(err);
                     return;
                 }
-                res.state(200).json({ message: 'website updated!' });
+                res.status(200).json({
+                    message: 'website updated!'
+                });
             });
-            Website.count({ state: "待审核" }, function (err, c) {
+            Website.count({
+                state: "待审核"
+            }, function(err, c) {
                 console.log('Count is ' + c);
-                Count.findOne({}, function (err, count) { count["paddingCheckCount"] = c; count.save(); });
+                Count.findOne({}, function(err, count) {
+                    count["paddingCheckCount"] = c;
+                    count.save();
+                });
 
             });
-            Website.count({ state: "通过审核" }, function (err, c) {
+            Website.count({
+                state: "通过审核"
+            }, function(err, c) {
                 console.log('Count is ' + c);
-                Count.findOne({}, function (err, count) { count["agreeCount"] = c; count.save(); });
+                Count.findOne({}, function(err, count) {
+                    count["agreeCount"] = c;
+                    count.save();
+                });
 
             });
-            Website.count({ state: "驳回申请" }, function (err, c) {
+            Website.count({
+                state: "驳回申请"
+            }, function(err, c) {
                 console.log('Count is ' + c);
-                Count.findOne({}, function (err, count) { count["refuseCount"] = c; count.save(); });
+                Count.findOne({}, function(err, count) {
+                    count["refuseCount"] = c;
+                    count.save();
+                });
 
             });
-            var log = new Log({ 'userType': user.userType, 'username': user.username, 'organizationName': user.organizationName, 'action': website['state'], '_memberId': user._id, '_websiteId': website._id });
+            var log = new Log({
+                'userType': user.userType,
+                'username': user.username,
+                'organizationName': user.organizationName,
+                'action': website['state'],
+                '_memberId': user._id,
+                '_websiteId': website._id
+            });
             log.save();
         });
     })
 
-    .get(function (req, res) {
-        Website.findOne({ _id: req.params.id }, function (err, website) {
-            if (err)
-                res.send(err);
+.get(function(req, res) {
+    Website.findOne({
+        _id: req.params.id
+    }, function(err, website) {
+        if (err)
+            res.send(err);
 
-            res.json(website);
-        });
-    })
+        res.json(website);
+    });
+})
 
 
-    .delete(function (req, res) {
-        Website.remove({
-            _id: req.params.id
-        }, function (err, website) {
-            if (err)
-                res.send(err);
+.delete(function(req, res) {
+    Website.remove({
+        _id: req.params.id
+    }, function(err, website) {
+        if (err)
+            res.send(err);
 
-            res.json({ message: 'Successfully deleted' });
+        res.json({
+            message: 'Successfully deleted'
         });
     });
+});
 
 //member route
 router.route('/members')
-    .get(function (req, res) {
+    .get(function(req, res) {
+        var username = req.param('username');
+        if (username) {
+            Member.findOne({
+                username: username
+            }, function(e, o) {
+                if (o == null) {
+                    res.status(200).json({
+                        message: 'not found user!'
+                    });
+                    return;
+                } else {
+                    res.status(403).send();
+                    return;
+                }
+            });
+            return;
+        }
         var userType = req.param('userType');
         var organizationName = req.param('organizationName');
         var limit = req.param('limit');
         var page = Math.max(0, req.param('page'));
-        var query = { '_createrId': req.session.user._id };
+        var query = {
+            '_createrId': req.session.user._id
+        };
         if (userType) {
             query.userType = userType;
         }
         if (organizationName) query.orangizationName = organizationName;
         console.log(query);
-        Member.paginate(query, { page: page, limit: limit, select: { _id: 1, username: 1, organizationName: 1, name: 1, userType: 1, time: 1 } }, function (err, result) {
+        Member.paginate(query, {
+            page: page,
+            limit: limit,
+            select: {
+                _id: 1,
+                username: 1,
+                organizationName: 1,
+                name: 1,
+                userType: 1,
+                time: 1
+            }
+        }, function(err, result) {
             res.json(result);
         });
 
     })
-    .post(function (req, res) {
+    .post(function(req, res) {
         console.log("add member");
         var user = req.session.user;
         if (user == null) {
-            res.redirect(301, '/login.html');//no login
+            res.redirect(301, '/login.html'); //no login
             return;
         }
         var member = new Member(req.body);
         member['_createrId'] = user._id;
-        member['organizationName'] = req.body.organization.name;
-        member['_organizationId'] = req.body.organization._id;
-        AM.addNewAccount(member, function (err, o) {
+        member['organizationName'] = req.body.organizationName;
+        AM.addNewAccount(member, function(err, o) {
             if (err) res.status(400).send(err);
             else res.json(o);
         });
-        var log = new Log({ 'userType': user.userType, 'username': user.username, 'organizationName': user.organizationName, 'action': '添加用户', '_memberId': user._id, '_websiteId': '' });
+        var log = new Log({
+            'userType': user.userType,
+            'username': user.username,
+            'organizationName': user.organizationName,
+            'action': '添加用户',
+            '_memberId': user._id
+        });
         log.save();
 
     });
 
 router.route('/members/:id')
-    .put(function (req, res) {
-        AM.updateAccount(req, function (err, o) {
+    .put(function(req, res) {
+        AM.updateAccount(req, function(err, o) {
             if (err) res.status(400).send(e);
             else res.json(o);
         });
+        var log = new Log({
+            'userType': user.userType,
+            'username': user.username,
+            'organizationName': user.organizationName,
+            'action': '更新用户',
+            '_memberId': user._id
+        });
+        log.save();
         /*
         Member.findOne({ _id: req.params.id }, function (err, member) {
 
@@ -233,49 +347,69 @@ router.route('/members/:id')
       */
     })
 
-    .get(function (req, res) {
-        Member.findOne({ _id: req.params.id }, function (err, member) {
-            if (err)
-                res.send(err);
-            else res.json(member);
-        });
-    })
-
-    .delete(function (req, res) {
-        Member.remove({
-            _id: req.params.id
-        }, function (err, member) {
-            if (err)
-                res.send(err);
-            else
-                res.json({ message: 'Successfully deleted' });
-        });
+.get(function(req, res) {
+    Member.findOne({
+        _id: req.params.id
+    }, function(err, member) {
+        if (err)
+            res.send(err);
+        else res.json(member);
     });
+})
+
+.delete(function(req, res) {
+    Member.remove({
+        _id: req.params.id
+    }, function(err, member) {
+        if (err)
+            res.send(err);
+        else
+            res.json({
+                message: 'Successfully deleted'
+            });
+    });
+});
 
 //organization route
 router.route('/organizations')
-    .get(function (req, res) {
+    .get(function(req, res) {
         var limit = req.param('limit');
         var page = Math.max(0, req.param('page'));
         console.log(req.param('page'));
-        Organization.paginate({}, { page: page, limit: limit, sort: { name: 1 }, select: { _id: 1, name: 1, type: 1, time: 1 } }, function (err, result) {
+        Organization.paginate({}, {
+            page: page,
+            limit: limit,
+            sort: {
+                name: 1
+            },
+            select: {
+                _id: 1,
+                name: 1,
+                type: 1,
+                time: 1
+            }
+        }, function(err, result) {
             res.json(result);
         });
     })
-    .post(function (req, res) {
+    .post(function(req, res) {
         console.log("add organization");
         var organization = new Organization(req.body);
-        organization.save(function (err) {
+        organization.save(function(err) {
             if (err)
                 res.send(err);
-            else res.json({ message: 'add organization!' });
+            else res.json({
+                message: 'add organization!'
+            });
         });
     });
 
 
 router.route('/organizations/:id')
-    .put(function (req, res) {
-        Organization.findOne({ _id: req.params.id }, function (err, organization) {
+    .put(function(req, res) {
+        Organization.findOne({
+            _id: req.params.id
+        }, function(err, organization) {
 
             if (err)
                 res.send(err);
@@ -284,40 +418,54 @@ router.route('/organizations/:id')
                 organization[prop] = req.body[prop];
             }
 
-            // save the movie
-            organization.save(function (err) {
+            // save the 
+            organization.save(function(err) {
                 if (err)
                     res.send(err);
 
-                res.json({ message: 'Movie updated!' });
+                res.json({
+                    message: 'organization updated!'
+                });
+                var log = new Log({
+                    'userType': user.userType,
+                    'username': user.username,
+                    'organizationName': user.organizationName,
+                    'action': '更新单位',
+                    '_memberId': user._id
+                });
+                log.save();
             });
 
         });
     })
 
-    .get(function (req, res) {
-        Organization.findOne({ _id: req.params.id }, function (err, organization) {
-            if (err)
-                res.send(err);
+.get(function(req, res) {
+    Organization.findOne({
+        _id: req.params.id
+    }, function(err, organization) {
+        if (err)
+            res.send(err);
 
-            res.json(organization);
-        });
-    })
+        res.json(organization);
+    });
+})
 
-    .delete(function (req, res) {
-        Organization.remove({
-            _id: req.params.id
-        }, function (err, organization) {
-            if (err)
-                res.send(err);
+.delete(function(req, res) {
+    Organization.remove({
+        _id: req.params.id
+    }, function(err, organization) {
+        if (err)
+            res.send(err);
 
-            res.json({ message: 'Successfully deleted' });
+        res.json({
+            message: 'Successfully deleted'
         });
     });
+});
 
 //message route
 router.route('/messages')
-    .get(function (req, res) {
+    .get(function(req, res) {
         var type = req.param('type');
         var limit = req.param('limit');
         var page = Math.max(0, req.param('page'));
@@ -326,33 +474,56 @@ router.route('/messages')
         if (type) {
             query.type = type;
         }
-        Message.paginate(query, { page: page, limit: limit, sort: { updateTime: -1 }, select: { _id: 1, title: 1, type: 1, time: 1, timeout: 1 } }, function (err, result) {
+        Message.paginate(query, {
+            page: page,
+            limit: limit,
+            sort: {
+                time: 1
+            },
+            select: {
+                _id: 1,
+                title: 1,
+                type: 1,
+                time: 1,
+                timeout: 1
+            }
+        }, function(err, result) {
             res.json(result);
         });
 
     })
-    .post(function (req, res) {
+    .post(function(req, res) {
         console.log("add message");
         var user = req.session.user;
         if (user == null) {
-            res.redirect(301, '/login.html');//no login
+            res.redirect(301, '/login.html'); //no login
             return;
         }
         var message = new Message(req.body);
-        message.save(function (err) {
+        message.save(function(err) {
             if (err)
                 res.send(err);
-            else res.json({ message: 'add message!' });
+            else res.json({
+                message: 'add message!'
+            });
         });
-        var log = new Log({ 'userType': user.userType, 'username': user.username, 'organizationName': user.organizationName, 'action': '发布消息', '_memberId': user._id, '_websiteId': '' });
+        var log = new Log({
+            'userType': user.userType,
+            'username': user.username,
+            'organizationName': user.organizationName,
+            'action': '发布消息',
+            '_memberId': user._id,
+        });
         log.save();
 
 
     });
 
 router.route('/messages/:id')
-    .put(function (req, res) {
-        Message.findOne({ _id: req.params.id }, function (err, message) {
+    .put(function(req, res) {
+        Message.findOne({
+            _id: req.params.id
+        }, function(err, message) {
 
             if (err)
                 res.send(err);
@@ -362,38 +533,44 @@ router.route('/messages/:id')
             }
 
             // save the message
-            message.save(function (err) {
+            message.save(function(err) {
                 if (err)
                     res.send(err);
 
-                res.json({ message: 'Message updated!' });
+                res.json({
+                    message: 'Message updated!'
+                });
             });
 
         });
     })
 
-    .get(function (req, res) {
-        Message.findOne({ _id: req.params.id }, function (err, message) {
-            if (err)
-                res.send(err);
+.get(function(req, res) {
+    Message.findOne({
+        _id: req.params.id
+    }, function(err, message) {
+        if (err)
+            res.send(err);
 
-            res.json(message);
-        });
-    })
+        res.json(message);
+    });
+})
 
-    .delete(function (req, res) {
-        Message.remove({
-            _id: req.params.id
-        }, function (err, organization) {
-            if (err)
-                res.send(err);
+.delete(function(req, res) {
+    Message.remove({
+        _id: req.params.id
+    }, function(err, organization) {
+        if (err)
+            res.send(err);
 
-            res.json({ message: 'Successfully deleted' });
+        res.json({
+            message: 'Successfully deleted'
         });
     });
+});
 //logs route
 router.route('/logs')
-    .get(function (req, res) {
+    .get(function(req, res) {
         var websiteId = req.param('_websiteId');
         var memberId = req.param("_memberId");
         var userType = req.param('userType');
@@ -415,15 +592,23 @@ router.route('/logs')
             query.organizationName = organizationName;
         }
         console.log(query);
-        Log.paginate(query, { page: page, limit: limit, sort: { time: -1 } }, function (err, result) {
+        Log.paginate(query, {
+            page: page,
+            limit: limit,
+            sort: {
+                time: -1
+            }
+        }, function(err, result) {
             res.json(result);
         });
 
     });
 
 router.route('/logs/:id')
-    .put(function (req, res) {
-        Log.findOne({ _id: req.params.id }, function (err, log) {
+    .put(function(req, res) {
+        Log.findOne({
+            _id: req.params.id
+        }, function(err, log) {
 
             if (err)
                 res.send(err);
@@ -433,47 +618,78 @@ router.route('/logs/:id')
             }
 
             // save the 
-            log.save(function (err) {
+            log.save(function(err) {
                 if (err)
                     res.send(err);
 
-                res.json({ message: 'log updated!' });
+                res.json({
+                    message: 'log updated!'
+                });
             });
 
         });
     })
 
-    .get(function (req, res) {
-        Logs.findOne({ _id: req.params.id }, function (err, log) {
-            if (err)
-                res.send(err);
+.get(function(req, res) {
+    Logs.findOne({
+        _id: req.params.id
+    }, function(err, log) {
+        if (err)
+            res.send(err);
 
-            res.json(log);
-        });
+        res.json(log);
     });
+});
 
 router.route('/organizationType')
-    .get(function (req, res) {
-        var organizationType = [{ "name": "部属单位" }, { "name": "直属高校" }, { "name": "地方主管部门" }];
+    .get(function(req, res) {
+        var organizationType = [{
+            "name": "部属单位"
+        }, {
+            "name": "直属高校"
+        }, {
+            "name": "地方主管部门"
+        }];
         res.json(organizationType);
     });
 
 router.route('/memberType')
-    .get(function (req, res) {
-        var memberType = [{ "name": "系统管理员" }, { "name": "系统部级一般用户" }, { "name": "部属单位网站管理员" }, { "name": "部属单位管理员" }, { "name": "安全审核员" }];
-        res.json(memberType);
+    .get(function(req, res) {
+        var user = req.session.user;
+        if (user == null) {
+            res.status(401).send();
+        }
+        if (user.userType == "系统管理员") {
+            var memberType = [{
+                "name": "系统部级一般用户"
+            }, {
+                "name": "部属单位管理员"
+            }, {
+                "name": "安全审核员"
+            }];
+            res.json(memberType);
+        } else if (user.userType == "部属单位管理员") {
+            var memberType = [{
+                "name": "部属单位网站管理员"
+            }];
+            res.json(memberType);
+        }
+
     });
 
 router.route('/upload')
-    .post(function (req, res) {
-        upload.single('files')(req, res, function (err) {
+    .post(function(req, res) {
+        upload.single('files')(req, res, function(err) {
             if (err) {
                 // An error occurred when uploading
                 console.log(err);
                 return
             }
             console.log(req.file);
-            var r = { success: 1, path: req.file.path };
+            var r = {
+                success: 1,
+                path: req.file.path
+            };
             res.json(r);
             // Everything went fine
         })

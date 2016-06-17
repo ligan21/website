@@ -1,7 +1,7 @@
 <div class="breadcrumbs shadow-1">
     <div class="container">
         <div class="row">
-            <i class="material-icons">home</i> 
+            <i class="material-icons">event_note</i>
             <ul>
                 <li><a href="#">公告详情</a></li>
             </ul>
@@ -16,13 +16,21 @@
                     <div class="panel-header">
                         <div class="panel-title" style="width:100%">
                             <h4><b>{{information.title}}</b></h4>
-                                    <label class="navbar-text" style="font-size:10px;color:rgba(0,0,0,0.3)">{{information.type}} 发布时间：{{information.time}} 过期时间： {{information.timeout}}</label>
+                            <label class="navbar-text" style="font-size:10px;color:rgba(0,0,0,0.3)">{{information.type}} 发布时间：{{information.time}} 过期时间： {{information.timeout}}</label>
 
-                            
+
                         </div>
                     </div>
-                    <div class="panel-content">
-                        {{information.content}}
+                    <div class="panel-content" ng-bind-html="information.content|unsafeFilter">
+
+
+                    </div>
+                    <div layout-gt-sm="row">
+
+                        <a href="{{information.attachment}}" class="btn btn-link"><i class="material-icons">file_download</i>  
+                         <md-tooltip md-direction="bottom">
+                          下载附件
+                          </md-tooltip>{{information.attachment}}</a>
 
 
                     </div>

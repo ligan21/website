@@ -11,16 +11,19 @@ var Schema = mongoose.Schema;
 var websiteSchema = new Schema({
     "id": String,
     "organizationName": String,
-    "_organizationId": Schema.Types.ObjectId,
+
     "websiteName": String,
-    "submitTime": { type: Date, default: Date.now },
+    "submitTime": {
+        type: Date,
+        default: Date.now
+    },
     "useState": String,
     "state": String,
-    "refuseReason":String,
+    "refuseReason": String,
     "homepage": String,
     "submitter": String,
-    "_submitterId":Schema.Types.ObjectId,
-    "_ownerId":Schema.Types.ObjectId,
+    "_submitterId": Schema.Types.ObjectId,
+    "_ownerId": Schema.Types.ObjectId,
     "domainNameList": String,
     "websiteScale": String,
     "classify": String,
@@ -34,11 +37,14 @@ var websiteSchema = new Schema({
     "keyProductsLink": String,
     "recoveryPlanLink": String,
     "gradeProtectLink": String,
-    "securityEvalustionReportLink": String,
-    "securityEvalustionReportState": String,
+    "securityEvaluationReportLink": String,
+    "securityEvaluationReportState": String,
     "reformReportLink": String,
     "reformReportState": String,
-    "updateTime": { type: Date, default: Date.now }
+    "updateTime": {
+        type: Date,
+        default: Date.now
+    }
 
 });
 websiteSchema.plugin(mongoosePaginate);
