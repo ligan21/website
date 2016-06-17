@@ -386,7 +386,8 @@ router.route('/organizations')
                 _id: 1,
                 name: 1,
                 type: 1,
-                time: 1
+                time: 1,
+                count: 1
             }
         }, function(err, result) {
             res.json(result);
@@ -478,7 +479,7 @@ router.route('/messages')
             page: page,
             limit: limit,
             sort: {
-                time: 1
+                time: -1
             },
             select: {
                 _id: 1,
