@@ -3,7 +3,7 @@
         <div class="row">
             <i class="material-icons">settings</i>
             <ul>
-                <li><a href="#">设置</a></li>
+                <li>设置</li>
             </ul>
         </div>
     </div>
@@ -11,7 +11,7 @@
 <div class="body-content">
     <div class="container">
         <div class="row ">
-            <div class="col-md-12 ">
+            <div class="col-md-6 ">
                 <div class="panel z-depth-1 ">
                     <!--div class="panel-header ">
                         <div class="panel-title ">
@@ -35,7 +35,8 @@
                                     <label>新密码</label>
                                     <input type="password" ng-model="information.newPassword" required>
                                 </md-input-container>
-
+                            </div>
+                            <div layout-gt-sm="row">
                                 <md-input-container class="md-block" flex-gt-xs>
                                     <label>确认新密码</label>
                                     <input type="password" name="confirmNewPassword" ng-pattern="{{information.newPassword}}" ng-model="information.confirmNewPassword" required>

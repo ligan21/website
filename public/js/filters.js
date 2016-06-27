@@ -18,3 +18,16 @@ angular.module('websiteApp').filter('unsafeFilter', function($sce) {
         return $sce.trustAsHtml(val);
     };
 });
+
+angular.module('websiteApp').filter('filenameFilter', function() {
+    return function(uploadFilename) {
+        if (uploadFilename !== undefined) {
+            var filename = uploadFilename.split("-");
+            if (filename == undefined) return "";
+            var filenameOriginal = filename[0].split('/')[1];
+            if (filenameOriginal !== undefined) {
+                return filenameOriginal;
+            } else return "";
+        } else return "";
+    };
+});

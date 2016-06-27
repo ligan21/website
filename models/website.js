@@ -38,9 +38,15 @@ var websiteSchema = new Schema({
     "recoveryPlanLink": String,
     "gradeProtectLink": String,
     "securityEvaluationReportLink": String,
-    "securityEvaluationReportState": String,
+    "securityEvaluationReportState": {
+        type: String,
+        default: "未提交"
+    },
     "reformReportLink": String,
-    "reformReportState": String,
+    "reformReportState": {
+        type: String,
+        default: "未提交"
+    },
     "updateTime": {
         type: Date,
         default: Date.now

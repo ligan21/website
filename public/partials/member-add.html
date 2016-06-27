@@ -11,16 +11,16 @@
 <div class="body-content">
     <div class="container">
         <div class="row">
-            <div class="col-md-12">
-                <div class="panel z-depth-1">
+            <div class="col-md-8">
+                <div class="panel z-depth-1" layout-padding>
                     <!--div class="panel-header">
                         <div class="panel-title">
                             <h5><b></b></h5>
                         </div>
                     </div-->
-                    <div class="panel-content">
+                    <div class="panel-content" layout-padding>
                         <form name="addMemberForm" class="">
-                            <div layout-gt-sm="row">
+                            <div layout-gt-sm="row" layout-padding>
 
                                 <md-input-container class="md-block" flex-gt-sm>
                                     <label>用户类型</label>
@@ -30,61 +30,67 @@
                                         </md-option>
                                     </md-select>
                                 </md-input-container>
-                                <md-input-container class="md-block" flex-gt-sm>
+                                <md-input-container class="md-block" flex-gt-sm ng-hide="user.userType=='部属单位管理员'">
                                     <label>单位</label>
-                                    <md-select ng-disabled="!enableSetOrganization" ng-model="information.organizationName" required>
+                                    <md-select ng-disabled="!enableSetOrganization" ng-model="information.organizationName">
                                         <md-option ng-repeat="organization in organizations.docs" value="{{organization.name}}">
                                             {{organization.name}}
                                         </md-option>
                                     </md-select>
                                 </md-input-container>
                             </div>
-                            <div layout-gt-sm="row">
+                            <div layout-gt-sm="row" layout-padding>
                                 <md-input-container class="md-block" flex-gt-sm>
                                     <label>用户名</label>
-                                    <input ng-model="information.username" name="username" required ng-blur="checkUsername()">
+                                    <input ng-model="information.username" name="username" required ng-blur="checkUsername()" ng-maxlength="50">
+                                    <span style="color:red;" ng-if="duplication" class="message slide-left">用户名重复</span>
                                     <div class="clearfix">
-                                        <div ng-messages="addMemberForm.username.$error" ng-if="addMemberForm.$submitted || addMemberForm.password.$dirty" ng-messages-multiple="ng-messages-multiple" class="error-messages slide-right">
+                                        <div ng-messages="addMemberForm.username.$error" ng-messages-multiple="ng-messages-multiple" class="error-messages slide-right">
                                             <div ng-message="required" class="message slide-left">不能为空</div>
+                                            <div ng-message="duplication" class="message slide-left">用户名重复</div>
+                                            <div ng-message="maxlength" class="message slide-left">最多50字符</div>
                                         </div>
                                     </div>
                                 </md-input-container>
                             </div>
 
-                            <div layout-gt-sm="row" style="border-left: 1px solid #EC407A;margin-top : 0.25in;padding-left : 5px;">
-                                <md-input-container class="md-block" flex-gt-sm>
+                            <div layout-gt-sm="row">
+                                <md-input-container class="md-block" flex-gt-sm style="padding-right:20px;">
                                     <label>登录密码</label>
-                                    <input type="password" name="password" ng-model="information.password" required>
+                                    <input type="password" name="password" ng-model="information.password" required ng-maxlength="50">
                                     <div class="clearfix">
-                                        <div ng-messages="addMemberForm.password.$error" ng-if="addMemberForm.$submitted || addMemberForm.password.$dirty" ng-messages-multiple="ng-messages-multiple" class="error-messages slide-right">
+                                        <div ng-messages="addMemberForm.password.$error" ng-messages-multiple="ng-messages-multiple" class="error-messages slide-right">
                                             <div ng-message="required" class="message slide-left">不能为空</div>
+                                            <div ng-message="maxlength" class="message slide-left">最多50字符</div>
                                         </div>
                                     </div>
                                 </md-input-container>
-                                <md-input-container class="md-block" flex-gt-sm>
+                                <md-input-container class="md-block" flex-gt-sm style="padding-right:20px;">
                                     <label>确认登录密码</label>
-                                    <input type="password" ng-pattern="{{information.password}}" name="confirmPassword" required>
+                                    <input type="password" ng-pattern="{{information.password}}" name="confirmPassword" required ng-maxlength="50">
 
                                     <div class="clearfix">
-                                        <div ng-messages="addMemberForm.confirmPassword.$error" ng-if="addMemberForm.$submitted || addMemberForm.confirmPassword.$dirty" ng-messages-multiple="ng-messages-multiple" class="error-messages slide-right">
+                                        <div ng-messages="addMemberForm.confirmPassword.$error" ng-messages-multiple="ng-messages-multiple" class="error-messages slide-right">
                                             <!--div ng-message="required" class="message slide-left"> 不能为空</div-->
                                             <div ng-message="pattern" class="message slide-left">密码不匹配</div>
+                                            <div ng-message="maxlength" class="message slide-left">最多50字符</div>
                                         </div>
                                     </div>
                                 </md-input-container>
                             </div>
 
-                            <div layout-gt-sm="row" style="border-left: 1px solid #2772ee; margin-top : 0.25in;padding-left : 5px;">
-                                <md-input-container class="md-block" flex-gt-sm>
+                            <div layout-gt-sm="row">
+                                <md-input-container class="md-block" flex-gt-sm style="padding-right:20px;">
                                     <label>姓名</label>
-                                    <input ng-model="information.name" name="name" required>
+                                    <input ng-model="information.name" name="name" required ng-maxlength="50">
                                     <div class="clearfix">
                                         <div ng-messages="addMemberForm.name.$error" ng-if="addMemberForm.$submitted || addMemberForm.name.$dirty" ng-messages-multiple="ng-messages-multiple" class="error-messages slide-right">
                                             <div ng-message="required" class="message slide-left">不能为空</div>
+                                            <div ng-message="maxlength" class="message slide-left">最多50字符</div>
                                         </div>
                                     </div>
                                 </md-input-container>
-                                <md-input-container class="md-block" flex-gt-sm>
+                                <md-input-container class="md-block" flex-gt-sm style="padding-right:20px;">
                                     <label>身份证号</label>
                                     <input ng-model="information.IDCard" name="IDCard" type="number" required ng-minlength="18" ng-maxlength="18">
                                     <div class="clearfix">
@@ -95,23 +101,25 @@
                                     </div>
                                 </md-input-container>
                             </div>
-                            <div layout-gt-sm="row" style="border-left: 1px solid #2772ee; margin-bottom : 0.25in;padding-left : 5px;">
-                                <md-input-container class="md-block" flex-gt-sm>
+                            <div layout-gt-sm="row">
+                                <md-input-container class="md-block" flex-gt-sm style="padding-right:20px;">
                                     <label>联系电话</label>
-                                    <input ng-model="information.tel" name="tel" type="number" required>
+                                    <input ng-model="information.tel" name="tel" type="number" required ng-maxlength="50">
                                     <div class="clearfix">
                                         <div ng-messages="addMemberForm.tel.$error" ng-if="addMemberForm.$submitted || addMemberForm.tel.$dirty" ng-messages-multiple="ng-messages-multiple" class="error-messages slide-right">
                                             <div ng-message="required" class="message slide-left">不能为空</div>
+
+                                            <div ng-message="maxlength" class="message slide-left">最多50字符</div>
                                         </div>
                                     </div>
                                 </md-input-container>
-                                <md-input-container class="md-block" flex-gt-sm>
+                                <md-input-container class="md-block" flex-gt-sm style="padding-right:20px;">
                                     <label>联系邮箱</label>
-                                    <input ng-model="information.email" name="email" type="email" required>
+                                    <input ng-model="information.email" name="email" type="email" required ng-maxlength="50">
                                     <div class="clearfix">
                                         <div ng-messages="addMemberForm.email.$error" ng-if="addMemberForm.$submitted || addMemberForm.email.$dirty" ng-messages-multiple="ng-messages-multiple" class="error-messages slide-right">
                                             <div ng-message="email" class="message slide-left">email 格式不正确</div>
-
+                                            <div ng-message="maxlength" class="message slide-left">最多50字符</div>
                                         </div>
                                     </div>
                                 </md-input-container>

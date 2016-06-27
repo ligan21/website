@@ -22,6 +22,10 @@ angular.module('websiteApp').config(function($httpProvider) {
         url: '/websiteDetail?id',
         templateUrl: 'partials/websiteDetail.html',
         controller: 'websiteDetailController'
+    }).state('modifyWebsite', {
+        url: '/modifyWebsite?id',
+        templateUrl: 'partials/website-modify.html',
+        controller: 'modifyWebsiteController'
     }).state('addWebsite', {
         url: '/addWebsite',
         templateUrl: 'partials/website-add.html',

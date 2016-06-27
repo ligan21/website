@@ -21,20 +21,52 @@ router.get('/', function(req, res, next) {
 
 router.route('/count')
     .get(function(req, res) {
+        var user = req.session.user;
+        console.log("user:" + user);
+        if (user == null) {
+            res.writeHead(301, {
+                Location: '/login.html'
+            });
+            res.end();
+            return;
+        }
+        var query = {};
+        if (user.userType == "部属单位管理员") {
+            query.organizationName = user.organizationName;
+        } else if (user.userType == "部属单位网站管理员") {
+            query.submitter = user.username;
+        }
+        var count = {};
+        Member.count(query, function(err, c) {
+            count.memberCount = c;
+            Website.count(query, function(err, c) {
+                count.websiteCount = c;
+                query.state = "待审核";
+                Website.count(query, function(err, c) {
+                    count.paddingCheckCount = c;
+                    query.state = "驳回申请";
+                    Website.count(query, function(err, c) {
+                        count.refuseCount = c;
+                        res.json(count);
+                    });
 
-        Count.findOne(function(err, count) {
-            res.json(count);
-        })
+                });
+            });
+
+        });
     });
 // website route
 router.route('/websites')
     .get(function(req, res) {
         var user = req.session.user;
         console.log("user:" + user);
-        // if (user == null) {
-        //     res.redirect(301, '/login.html');//no login
-        //     return;
-        //}
+        if (user == null) {
+            res.writeHead(301, {
+                Location: '/login.html'
+            });
+            res.end();
+            return;
+        }
         var organizationName = req.param('organizationName');
         var startDate = req.param('startDate');
         var endDate = req.param('endDate');
@@ -45,22 +77,22 @@ router.route('/websites')
         if (state) {
             query.state = state;
         }
-        if (organizationName) query.orangizationName = organizationName;
+        if (organizationName) query.organizationName = organizationName;
         if (startDate) query.submitTime = {
             "$gte": startDate,
             "$lt": endDate
         };
-        console.log(query);
+
         if (user.userType == "部属单位网站管理员") {
             query._submitterId = user._id;
         } else if (user.userType == "部属单位管理员") {
-            query.organizationName = user.organizationName
+            query.organizationName = user.organizationName;
             query.state = {
                 $ne: "保存网站"
             };
 
         } else if (user.userType == "系统管理员") query._ownerId = user._id;
-
+        console.log(query);
         Website.paginate(query, {
             page: page,
             limit: limit,
@@ -76,7 +108,8 @@ router.route('/websites')
                 securityEvalustionReportLink: 1,
                 securityEvalustionReportState: 1,
                 reformReportLink: 1,
-                reformReportState: 1
+                reformReportState: 1,
+                refuseReason: 1
             }
         }, function(err, result) {
             res.json(result);
@@ -87,16 +120,20 @@ router.route('/websites')
     .post(function(req, res) {
         console.log("add websites");
         var user = req.session.user;
-        var website = new Website(req.body);
+
         if (user == null) {
-            res.redirect(301, '/login.html'); //no login
+            res.writeHead(301, {
+                Location: '/login.html'
+            });
+            res.end();
             return;
         }
+        var website = new Website(req.body);
         website['submitter'] = user.username;
         website['_submitterId'] = user._id;
         website['_ownerId'] = user._id;
         website['organizationName'] = user.organizationName;
-
+        console.log(req.body);
         website.save(function(err) {
             if (err) {
                 res.send(err);
@@ -122,19 +159,20 @@ router.route('/websites')
                     count: 1
                 }
             });
-            Website.count({}, function(err, c) {
-                console.log('Count is ' + c);
-                Count.findOne({}, function(err, count) {
-                    count["websiteCount"] = c;
-                    count.save();
-                });
-
-            });
-            /* Website.count({ state: "待审核" }, function (err, c) {
-                 console.log('Count is ' + c);
-                 Count.findOne({}, function (err, count) { count["paddingCheckCount"] = c; count.save(); });
-
-             });*/
+            /*
+                        Website.count({}, function(err, c) {
+                            console.log('Count is ' + c);
+                            Count.findOne({}, function(err, count) {
+                                count["websiteCount"] = c;
+                                count.save();
+                            });
+            
+                        });
+                         Website.count({ state: "待审核" }, function (err, c) {
+                             console.log('Count is ' + c);
+                             Count.findOne({}, function (err, count) { count["paddingCheckCount"] = c; count.save(); });
+            
+                         });*/
         });
     });
 
@@ -143,7 +181,10 @@ router.route('/websites/:id')
     .put(function(req, res) {
         var user = req.session.user;
         if (user == null) {
-            res.redirect(301, '/login.html'); //no login
+            res.writeHead(301, {
+                Location: '/login.html'
+            });
+            res.end();
             return;
         }
         Website.findOne({
@@ -171,36 +212,37 @@ router.route('/websites/:id')
                     message: 'website updated!'
                 });
             });
-            Website.count({
-                state: "待审核"
-            }, function(err, c) {
-                console.log('Count is ' + c);
-                Count.findOne({}, function(err, count) {
-                    count["paddingCheckCount"] = c;
-                    count.save();
-                });
-
-            });
-            Website.count({
-                state: "通过审核"
-            }, function(err, c) {
-                console.log('Count is ' + c);
-                Count.findOne({}, function(err, count) {
-                    count["agreeCount"] = c;
-                    count.save();
-                });
-
-            });
-            Website.count({
-                state: "驳回申请"
-            }, function(err, c) {
-                console.log('Count is ' + c);
-                Count.findOne({}, function(err, count) {
-                    count["refuseCount"] = c;
-                    count.save();
-                });
-
-            });
+            /*
+                        Website.count({
+                            state: "待审核"
+                        }, function(err, c) {
+                            console.log('Count is ' + c);
+                            Count.findOne({}, function(err, count) {
+                                count["paddingCheckCount"] = c;
+                                count.save();
+                            });
+            
+                        });
+                        Website.count({
+                            state: "通过审核"
+                        }, function(err, c) {
+                            console.log('Count is ' + c);
+                            Count.findOne({}, function(err, count) {
+                                count["agreeCount"] = c;
+                                count.save();
+                            });
+            
+                        });
+                        Website.count({
+                            state: "驳回申请"
+                        }, function(err, c) {
+                            console.log('Count is ' + c);
+                            Count.findOne({}, function(err, count) {
+                                count["refuseCount"] = c;
+                                count.save();
+                            });
+            
+                        });*/
             var log = new Log({
                 'userType': user.userType,
                 'username': user.username,
@@ -290,16 +332,31 @@ router.route('/members')
         console.log("add member");
         var user = req.session.user;
         if (user == null) {
-            res.redirect(301, '/login.html'); //no login
+            res.writeHead(301, {
+                Location: '/login.html'
+            });
+            res.end();
             return;
         }
         var member = new Member(req.body);
+        console.log(req.body);
         member['_createrId'] = user._id;
-        member['organizationName'] = req.body.organizationName;
+        if (user.userType == '部属单位管理员') {
+            member['organizationName'] = user.organizationName;
+        }
         AM.addNewAccount(member, function(err, o) {
             if (err) res.status(400).send(err);
             else res.json(o);
         });
+        /*
+                Member.count({}, function (err, c) {
+                    console.log('Count is ' + c);
+                    Count.findOne({}, function (err, count) {
+                        count["memberCount"] = c;
+                        count.save();
+                    });
+
+                });*/
         var log = new Log({
             'userType': user.userType,
             'username': user.username,
@@ -313,9 +370,19 @@ router.route('/members')
 
 router.route('/members/:id')
     .put(function(req, res) {
+        var user = req.session.user;
+        if (user == null) {
+            res.writeHead(301, {
+                Location: '/login.html'
+            });
+            res.end();
+            return;
+        }
         AM.updateAccount(req, function(err, o) {
-            if (err) res.status(400).send(e);
-            else res.json(o);
+            if (err) {
+                res.status(400).send(e);
+                return;
+            } else res.json(o);
         });
         var log = new Log({
             'userType': user.userType,
@@ -408,6 +475,14 @@ router.route('/organizations')
 
 router.route('/organizations/:id')
     .put(function(req, res) {
+        var user = req.session.user;
+        if (user == null) {
+            res.writeHead(301, {
+                Location: '/login.html'
+            });
+            res.end();
+            return;
+        }
         Organization.findOne({
             _id: req.params.id
         }, function(err, organization) {

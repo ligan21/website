@@ -19,18 +19,18 @@
                         </div>
                     </div-->
                     <div class="panel-content ">
-                        <form>
+                        <form name="addWebsite">
                             <div layout-gt-sm="row">
                                 <md-input-container class="md-block" flex-gt-sm>
                                     <label class=" control-label">网站名称</label>
-                                    <input ng-model="information.websiteName">
+                                    <input ng-model="information.websiteName" required>
                                 </md-input-container>
                             </div>
 
                             <div layout-gt-sm="row">
                                 <div flex layout="row">
                                     <label class=" control-label" style="margin-top:2px; margin-right:10px;">使用状态:</label>
-                                    <md-radio-group ng-model="information.useState" layout="row">
+                                    <md-radio-group ng-model="information.useState" layout="row" required>
                                         <md-radio-button value="正常运营" class="md-primary">正常运营</md-radio-button>
                                         <md-radio-button value="已关闭"> 已关闭 </md-radio-button>
                                     </md-radio-group>
@@ -42,21 +42,21 @@
                             <div layout-gt-sm="row">
                                 <md-input-container class="md-block" flex-gt-sm>
                                     <label class=" control-label">主页地址</label>
-                                    <input ng-model="information.homepage">
+                                    <input ng-model="information.homepage" required>
                                 </md-input-container>
 
                             </div>
                             <div layout-gt-sm="row">
                                 <md-input-container class="md-block" flex-gt-sm>
                                     <label class=" control-label">域名列表</label>
-                                    <input ng-model="information.domainNameList">
+                                    <input ng-model="information.domainNameList" required>
                                 </md-input-container>
 
                             </div>
                             <div layout-gt-sm="row">
                                 <div flex layout="row">
                                     <label class=" control-label" style="margin-top:2px; margin-right:10px;">网站分类</label>
-                                    <md-radio-group ng-model="information.classify" layout="row">
+                                    <md-radio-group ng-model="information.classify" layout="row" required>
                                         <md-radio-button value="门户" class="md-primary">门户</md-radio-button>
                                         <md-radio-button value="业务系统"> 业务系统 </md-radio-button>
                                     </md-radio-group>
@@ -64,7 +64,7 @@
 
                                 <div flex layout="row">
                                     <label class=" control-label" style="margin-top:2px; margin-right:10px;">用户群:</label>
-                                    <md-radio-group ng-model="information.userProperty" layout="row">
+                                    <md-radio-group ng-model="information.userProperty" layout="row" required>
                                         <md-radio-button value="本单位" class="md-primary">本单位</md-radio-button>
                                         <md-radio-button value="面向社会"> 面向社会 </md-radio-button>
                                     </md-radio-group>
@@ -73,55 +73,55 @@
                             <div layout-gt-sm="row">
                                 <md-input-container class="md-block" flex-gt-sm>
                                     <label class=" control-label">开发厂商</label>
-                                    <input ng-model="information.developer">
+                                    <input ng-model="information.developer" required>
                                 </md-input-container>
                                 <md-input-container class="md-block" flex-gt-sm>
                                     <label class=" control-label">后台互联情况</label>
-                                    <input ng-model="information.backgroundInterconnect">
+                                    <input ng-model="information.backgroundInterconnect" required>
                                 </md-input-container>
                             </div>
                             <div layout-gt-sm="row">
                                 <div flex>
                                     <md-input-container class="md-block" flex-gt-sm>
                                         <label class=" control-label">安全评测单位</label>
-                                        <input ng-model="information.securityEvaluationOrganization">
+                                        <input ng-model="information.securityEvaluationOrganization" required>
                                     </md-input-container>
                                 </div>
                                 <div flex>
                                     <md-input-container class="md-block" flex-gt-sm>
                                         <label class=" control-label">网站规模</label>
-                                        <input ng-model="information.websiteScale">
+                                        <input ng-model="information.websiteScale" required>
                                     </md-input-container>
                                 </div>
                             </div>
                             <div layout-gt-sm="row">
                                 <div flex>
                                     <label class=" control-label">备案信息附件 </label>
-                                    <input id="uploadAttachment" type="file" name="files" accept="*" multiple="multiple">
+                                    <input id="uploadAttachment" type="file" name="files" accept="*" multiple="multiple" required>
                                 </div>
                                 <div flex>
                                     <label class=" control-label">拓扑信息 </label>
-                                    <input id="uploadTopology" type="file" name="files" accept="*" multiple="multiple">
+                                    <input id="uploadTopology" type="file" name="files" accept="*" multiple="multiple" required>
                                 </div>
                             </div>
                             <div layout-gt-sm="row">
                                 <div flex>
                                     <label class=" control-label">关键产品使用情况 </label>
-                                    <input id="uploadKeyProducts" type="file" name="files" accept="*" multiple="multiple">
+                                    <input id="uploadKeyProducts" type="file" name="files" accept="*" multiple="multiple" required>
                                 </div>
                                 <div flex>
                                     <label class=" control-label">安全评测结果 </label>
-                                    <input id="uploadSecurityEvalustionResult" type="file" name="files" accept="*" multiple="multiple">
+                                    <input id="uploadSecurityEvalustionResult" type="file" name="files" accept="*" multiple="multiple" required>
                                 </div>
                             </div>
                             <div layout-gt-sm="row">
                                 <div flex>
                                     <label class=" control-label">网站备灾方案</label>
-                                    <input id="uploadRecoveryPlan" type="file" name="files" accept="*" multiple="multiple">
+                                    <input id="uploadRecoveryPlan" type="file" name="files" accept="*" multiple="multiple" required>
                                 </div>
                                 <div flex>
                                     <label class=" control-label">等级保护备案信息</label>
-                                    <input id="uploadGradeProtect" type="file" name="files" accept="*" multiple="multiple">
+                                    <input id="uploadGradeProtect" type="file" name="files" accept="*" multiple="multiple" required>
                                 </div>
                             </div>
 
@@ -133,9 +133,9 @@
 
                     <div class="row " style="text-align: right; ">
                         <div class="col-md-12 ">
-                            <button class="btn btn-secundary " type="submit " name="action " ng-click="save()">保存</button>
+                            <button class="btn btn-secundary " name="action" ng-click="saveWebsite()">保存</button>
 
-                            <button class="btn btn-raised btn-primary " type="submit " ng-click="saveAndsubmit()">保存并提交</button>
+                            <button ng-disabled="addWebsite.$invalid" class="btn btn-raised btn-primary " ng-click="saveAndsubmitWebsite()">保存并提交</button>
                         </div>
                     </div>
 

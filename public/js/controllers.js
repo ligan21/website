@@ -68,14 +68,14 @@ angular.module('websiteApp.controllers', []).controller('indexController', funct
         $scope.websites = websites;
 
     }
-    $scope.showUploadSecurityEvalutionReport = function(website) {
+    $scope.showUploadSecurityEvaluationReport = function(website) {
         $("#" + website._id + "S").pekeUpload({
             url: "/upload",
             btnText: '<i class="material-icons">publish</i>',
             onFileSuccess: function(file, data) {
                 website.id = website._id;
                 website.securityEvaluationReportLink = data.path;
-                website.securityEvaluationState = "已提交";
+                website.securityEvaluationReportState = "已提交";
                 $websiteDetail.information.update(website, successAction, errorAction);
             }
 
@@ -88,14 +88,14 @@ angular.module('websiteApp.controllers', []).controller('indexController', funct
             onFileSuccess: function(file, data) {
                 website.id = website._id;
                 website.reformReportLink = data.path;
-                website.reformState = "已提交";
+                website.reformReportState = "已提交";
                 $websiteDetail.information.update(website, successAction, errorAction);
             }
         });
     }
     $scope.getWebsites();
     $scope.setWebsite = function(website) {
-        alert(website);
+
         $scope.website = website;
     }
     $scope.agreeSER = function(website) {
@@ -151,16 +151,30 @@ angular.module('websiteApp.controllers', []).controller('indexController', funct
         $scope.logs = logs;
     }
     $scope.getLogs();
+    $scope.checkLogin = function() {
+        $user.get(loginSuccess, loginError);
+    }
+    $scope.checkLogin();
+
+    function loginSuccess(user) {
+
+        $scope.user = user;
+    }
+
+    function loginError(err) {
+        $window.location.href = '/login.html';
+    }
     $scope.accept = function() {
         $scope.information.id = $scope.information._id;
-        if ($user.user.userType == "系统管理员") {
+        if ($scope.user.userType == "系统管理员") {
             $scope.information.refuseReason = '';
             $scope.information.state = "通过审核";
-        } else if ($user.user.userType == "部属单位管理员") {
+        } else if ($scope.user.userType == "部属单位管理员") {
             $scope.information.refuseReason = '';
+            $scope.information.ownerId = "1";
             $scope.information.state = "待审核";
         }
-        $websiteDetail.information.update($scope.information, $popupService.showPopup("通过网站审核"), $popupService.showPopup("通过网站审核失败"));
+        $websiteDetail.information.update($scope.information, successAction, errorAction);
     }
     $scope.refuse = function(ev) {
         var confirm = $mdDialog.prompt()
@@ -174,21 +188,21 @@ angular.module('websiteApp.controllers', []).controller('indexController', funct
         $mdDialog.show(confirm).then(function(result) {
             $scope.information.refuseReason = result;
             $scope.information.id = $scope.information._id;
-            if ($user.user.userType == "系统管理员") {
+            if ($scope.user.userType == "系统管理员") {
                 //$scope.information.refuseReason;
                 $scope.information.state = "驳回申请";
                 $scope.information.ownerId = '1';
-            } else if ($user.user.userType == "部属单位管理员") {
+            } else if ($scope.user.userType == "部属单位管理员") {
                 $scope.information.state = "驳回提交网站";
             }
 
-            $websiteDetail.information.update($scope.information, $popupService.showPopup("拒绝网站审核"), $popupService.showPopup("拒绝网站审核失败"));
+            $websiteDetail.information.update($scope.information, successAction, errorAction);
         }, function() {
             $scope.information.refuseReason = '';
         });
 
     }
-    $scope.needSecurityEvalustionReport = function(ev) {
+    $scope.needSecurityEvaluationReport = function(ev) {
         var confirm = $mdDialog.confirm()
             .title('提示')
             .textContent('您确定要求此网站提交安全测评报告？')
@@ -198,7 +212,7 @@ angular.module('websiteApp.controllers', []).controller('indexController', funct
             .cancel('取消');
         $mdDialog.show(confirm).then(function() {
             $scope.information.id = $scope.information._id;
-            $scope.informationSecurityEvalustionReportState = "需要提交";
+            $scope.information.securityEvaluationReportState = "需要提交";
             $websiteDetail.information.update($scope.information, successAction, errorAction);
         }, function() {
 
@@ -214,7 +228,7 @@ angular.module('websiteApp.controllers', []).controller('indexController', funct
             .cancel('取消');
         $mdDialog.show(confirm).then(function() {
             $scope.information.id = $scope.information._id;
-            $scope.informationReformReportState = "需要提交";
+            $scope.information.reformReportState = "需要提交";
             $websiteDetail.information.update($scope.information, successAction, errorAction);
         }, function() {
 
@@ -225,12 +239,12 @@ angular.module('websiteApp.controllers', []).controller('indexController', funct
         $popupService.showPopup("操作成功");
     }
 
-    function errorAction(err) {
+    function errorAction(error) {
         $popupService.showPopup("操作失败:" + error.data + error.message);
     }
 
 
-}).controller('addWebsiteController', function($scope, $state, $stateParams, $websiteDetail, $popupService) {
+}).controller('addWebsiteController', function($scope, $state, $stateParams, $websites, $websiteDetail, $popupService) {
     $scope.information = {};
 
     $("#uploadAttachment").pekeUpload({
@@ -276,21 +290,115 @@ angular.module('websiteApp.controllers', []).controller('indexController', funct
         }
     });
 
-    $scope.save = function() {
+    $scope.saveWebsite = function() {
         $scope.information.state = "保存网站";
-        $websiteDetail.information.save($scope.information, $popupService.showPopup("成功添加网站"), $popupService.showPopup("添加网站失败"));
-
+        $websites.save($scope.information, success, error);
     }
-    $scope.saveAndsubmit = function() {
+    $scope.saveAndsubmitWebsite = function() {
         $scope.information.state = "提交网站";
         $scope.information.ownerId = '1';
-        $websiteDetail.information.save($scope.information, $popupService.showPopup("成功添加网站"), $popupService.showPopup("添加网站失败"));
+        $websites.save($scope.information, success, error);
     }
 
-}).controller('dashboardController', function($scope, $stateParams, $count, $messages, $websites, $logs) {
+    function success() {
+        $popupService.showPopup("成功添加网站");
+    }
+
+    function error(err) {
+        $popupService.showPopup("添加网站失败");
+    }
+}).controller("modifyWebsiteController", function($scope, $state, $stateParams, $websiteDetail, $popupService) {
+    $scope.information = {};
+    $scope.id = $stateParams.id;
+    $scope.information = $websiteDetail.information.get({
+        "id": $scope.id
+    });
+
+
+
+    $("#uploadAttachment").pekeUpload({
+        url: "/upload",
+        btnText: '<i class="fa fa-upload" aria-hidden="true"></i>',
+        onFileSuccess: function(file, data) {
+            $scope.information.attachmentLink = data.path;
+        }
+    });
+    $("#uploadTopology").pekeUpload({
+        url: "/upload",
+        btnText: '<i class="fa fa-upload" aria-hidden="true"></i>',
+        onFileSuccess: function(file, data) {
+            $scope.information.topologyLink = data.path;
+        }
+    });
+    $("#uploadKeyProducts").pekeUpload({
+        url: "/upload",
+        btnText: '<i class="fa fa-upload" aria-hidden="true"></i>',
+        onFileSuccess: function(file, data) {
+            $scope.information.keyProductsLink = data.path;
+        }
+    });
+    $("#uploadRecoveryPlan").pekeUpload({
+        url: "/upload",
+        btnText: '<i class="fa fa-upload" aria-hidden="true"></i>',
+        onFileSuccess: function(file, data) {
+            $scope.information.recoveryPlanLink = data.path;
+        }
+    });
+    $("#uploadGradeProtect").pekeUpload({
+        url: "/upload",
+        btnText: '<i class="fa fa-upload" aria-hidden="true"></i>',
+        onFileSuccess: function(file, data) {
+            $scope.information.gradeProtectLink = data.path;
+        }
+    });
+    $("#uploadSecurityEvalustionResult").pekeUpload({
+        url: "/upload",
+        btnText: '<i class="fa fa-upload" aria-hidden="true"></i>',
+        onFileSuccess: function(file, data) {
+            $scope.information.securityEvaluationResultLink = data.path;
+        }
+    });
+    $scope.saveWebsite = function() {
+        $scope.information.state = "保存网站";
+        $websiteDetail.save($scope.information, success, error);
+    }
+    $scope.saveAndsubmitWebsite = function() {
+        $scope.information.state = "提交网站";
+        $scope.information.ownerId = '1';
+        $websiteDetail.save($scope.information, success, error);
+    }
+
+    function success() {
+        $popupService.showPopup("成功修改网站信息");
+    }
+
+    function error(err) {
+        $popupService.showPopup("修改成员网站失败");
+    }
+
+}).controller('dashboardController', function($scope, $stateParams, $user, $count, $messages, $websites, $logs) {
+    $scope.checkLogin = function() {
+        $user.get(success, error);
+    }
+    $scope.checkLogin();
+
+    function success(user) {
+        $scope.user = user;
+        if ($scope.user.userType == "部属单位网站管理员") $scope.webstate = "驳回申请";
+        else scope.webstate = "待审核";
+        $scope.paddingWebsites = $websites.get({
+            state: $scope.website,
+            page: 1,
+            limit: 10
+        });
+    }
+
+    function error(err) {
+        $window.location.href = '/login.html';
+    }
     $scope.count = $count.get();
     $scope.notifications = $messages.get({
-        type: '通知',
+        type: '公告',
         page: 1,
         limit: 10
     });
@@ -299,15 +407,36 @@ angular.module('websiteApp.controllers', []).controller('indexController', funct
         page: 1,
         limit: 10
     });
-    $scope.paddingWebsites = $websites.get({
-        state: '待审核',
-        page: 1,
-        limit: 10
-    });
+
     $scope.logs = $logs.get({
         page: 1,
         limit: 10
     });
+
+    anychart.onDocumentReady(function() {
+        // create pie chart with passed data
+        chart = anychart.pie3d([
+            ['Northfarthing', 235],
+            ['Westfarthing', 552],
+            ['Eastfarthing', 491],
+            ['Southfarthing', 619],
+            ['Buckland', 388],
+            ['Westmarch', 405]
+        ]);
+
+        // set container id for the chart
+        chart.container('chart');
+
+        // set chart title text settings
+        chart.title('Population in The Shire');
+
+        //set chart radius
+        chart.radius('43%');
+
+        // initiate chart drawing
+        chart.draw();
+    });
+
 
 }).controller('membersController', function($scope, $state, $stateParams, $members, $organizations) {
     $scope.organizations = $organizations.get({
@@ -382,12 +511,15 @@ angular.module('websiteApp.controllers', []).controller('indexController', funct
         }
     }
     $scope.checkUsername = function() {
+        if ($scope.information.username == undefined) return;
         query = {
             "username": $scope.information.username
         }
-        $memberDetail.information.get(query, function() {}, function() {
-            $popupService.showPopup("用户名已使用");
-            $scope.information.username = "";
+        $memberDetail.information.get(query, function() {
+            $scope.duplication = false;
+        }, function() {
+            $scope.duplication = true;
+
         });
 
     }
@@ -427,18 +559,39 @@ angular.module('websiteApp.controllers', []).controller('indexController', funct
         "id": $scope.id
     });
 
-}).controller('modifyOrganizationController', function($scope, $state, $stateParams, $organizationDetail) {
+}).controller('modifyOrganizationController', function($scope, $state, $stateParams, $organizationDetail, $popupService) {
     $scope.id = $stateParams.id;
     $scope.information = $organizationDetail.information.get({
         "id": $scope.id
     });
+    $scope.modifyOrganization = function() {
+        $scope.information.id = $scope.id;
+        $organizationDetail.information.update($scope.information, success, err);
+    }
+
+    function success() {
+        $popupService.showPopup("成功修改单位信息");
+    }
+
+    function err(error) {
+        $popupService.showPopup("修改单位信息失败:" + error.data + error.message);
+    }
 
 }).controller('messagesController', function($scope, $state, $stateParams, $messages) {
     $scope.query = {
         limit: 10,
         page: 1
     };
-
+    $scope.notificationsQuery = {
+        limit: 10,
+        page: 1,
+        type: "公告"
+    };
+    $scope.rulesQuery = {
+        limit: 10,
+        page: 1,
+        type: "规定"
+    };
     //$scope.websites = websites.websites.get($scope.option);
     $scope.getMessages = function(query) {
         $scope.promise = $messages.get($scope.query, successMessages).$promise;
@@ -448,18 +601,14 @@ angular.module('websiteApp.controllers', []).controller('indexController', funct
         $scope.messages = messages;
     }
     $scope.getNotifications = function() {
-        var query = $scope.query;
-        query.type = "通知";
-        $scope.promise = $messages.get(query, successNotifications).$promise;
+        $scope.promise = $messages.get($scope.notificationsQuery, successNotifications).$promise;
     }
 
     function successNotifications(notifications) {
         $scope.notifications = notifications;
     }
     $scope.getRules = function() {
-        var query = $scope.query;
-        query.type = "规定";
-        $scope.promise = $messages.get(query, successRules).$promise;
+        $scope.promise = $messages.get($scope.rulesQuery, successRules).$promise;
     }
 
     function successRules(rules) {
@@ -489,7 +638,7 @@ angular.module('websiteApp.controllers', []).controller('indexController', funct
     });
     $("#uploadFile").pekeUpload({
         url: "/upload",
-        btnText: '<i class="fa fa-upload" aria-hidden="true"></i>',
+        btnText: '<i class="fa fa-upload" aria-hidden="true">上传附件</i>',
         onFileSuccess: function(file, data) {
             $scope.message.attachment = data.path;
             $popupService.showPopup("成功上传附件");
@@ -501,12 +650,16 @@ angular.module('websiteApp.controllers', []).controller('indexController', funct
     }
 
     function success() {
-        $popupService.showPopup("成功发布公告消息");
-        $state.go('messages');
+        $popupService.showPopup("成功发布公告消息", goState('messages'));
+
     }
 
     function error(err) {
         $popupService.showPopup("添加消息失败:" + error.data + error.message);
+    }
+
+    function goState(state) {
+        $state.go(state);
     }
 
 }).controller('settingsController', function($scope, $state, $stateParams, $settings, $popupService) {

@@ -19,7 +19,7 @@
     <link href="lib/roboto.css" rel="stylesheet" type='text/css'>
     <link href="lib/material-icons.css" rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="lib/angular-material.min.css">
-
+    <link rel="stylesheet" href="lib/anychart-ui.min.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/style_curd.css">
     <link rel="stylesheet" href="css/style_menu.css">
@@ -39,9 +39,14 @@
                     <img class="logo" src="images/logo.png">
                 </div>
                 <ul class="col-xs-9 text-right">
-                    <!--li class="user-avatar">
+                    <li class="user-avatar">
                         <a title="Gravatar picture" href="#"></a>
-                    </li-->
+                        <md-tooltip md-direction="bottom">
+                            {{user.username}}
+                        </md-tooltip>
+                    </li>
+                    <!--li>{{user.username}}</li>
+                    <li>{{user.userType}}</li-->
                     <li>
                         <a href="#" ui-sref="settings"><i class="material-icons">settings</i>  
                          <md-tooltip md-direction="bottom">
@@ -134,7 +139,7 @@
 
             </li>
             <li>
-                <a href="#" ui-sref="logs" ng-hide="user.userType=='部属单位网站管理员'" ng-hide="user.userType=='部属单位管理员'">
+                <a href="#" ui-sref="logs" ng-show="user.userType=='系统管理员' || user.userType=='安全审核员'">
                     <i class="material-icons">playlist_add_check</i>日志管理
                 </a>
 
@@ -146,7 +151,7 @@
 
             </li>
             <li>
-                <a href="# " ui-sref="charts" ng-hide="user.userType=='部属单位网站管理员'" ng-hide="user.userType=='部属单位管理员'" ng-hide="user.userType=='安全审核员'">
+                <a href="# " ui-sref="charts" ng-show="user.userType=='系统管理员' || user.userType=='安全审核员'">
                     <i class="material-icons">poll</i>统计
                 </a>
 
@@ -178,7 +183,7 @@
             </div>
         </div>
     </div>
-    <div class="fab-button-label"></div>
+
     <div class="container-fluid">
         <div ui-view></div>
     </div>
@@ -195,6 +200,7 @@
     <script src="lib/angular-aria.min.js "></script>
     <script src="lib/pekeUpload.min.js"></script>
     <script src="lib/Chart.min.js"></script>
+    <script src="lib/anychart-bundle.min.js"></script>
 
 
     <!-- Angular Material Library -->

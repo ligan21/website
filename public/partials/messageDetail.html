@@ -3,7 +3,7 @@
         <div class="row">
             <i class="material-icons">event_note</i>
             <ul>
-                <li><a href="#">公告详情</a></li>
+                <li>公告详情</li>
             </ul>
         </div>
     </div>
@@ -27,10 +27,10 @@
                     </div>
                     <div layout-gt-sm="row">
 
-                        <a href="{{information.attachment}}" class="btn btn-link"><i class="material-icons">file_download</i>  
+                        <a href="{{information.attachment}}" class="btn btn-link" style="color:#02A477" ng-show="information.attachment"><i class="material-icons" >file_download</i>  
                          <md-tooltip md-direction="bottom">
                           下载附件
-                          </md-tooltip>{{information.attachment}}</a>
+                          </md-tooltip>{{information.attachment|filenameFilter}}</a>
 
 
                     </div>
