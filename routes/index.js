@@ -39,14 +39,15 @@ router.route('/count')
         var count = {};
         Member.count(query, function(err, c) {
             count.memberCount = c;
+            query.state = "通过审核";
             Website.count(query, function(err, c) {
-                count.websiteCount = c;
+                count.acceptWebsiteCount = c;
                 query.state = "待审核";
                 Website.count(query, function(err, c) {
-                    count.paddingCheckCount = c;
+                    count.paddingCheckWebsiteCount = c;
                     query.state = "驳回申请";
                     Website.count(query, function(err, c) {
-                        count.refuseCount = c;
+                        count.refuseWebsiteCount = c;
                         res.json(count);
                     });
 
@@ -442,12 +443,16 @@ router.route('/organizations')
     .get(function(req, res) {
         var limit = req.param('limit');
         var page = Math.max(0, req.param('page'));
+        var sort = req.param('sort');
+        var sortby;
+        if (sort) sortby = sort;
+        else sortby = "name";
         console.log(req.param('page'));
         Organization.paginate({}, {
             page: page,
             limit: limit,
             sort: {
-                name: 1
+                sortby: 1
             },
             select: {
                 _id: 1,

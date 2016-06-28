@@ -12,36 +12,29 @@
 <div class="body-content">
     <div class="container">
         <div class="row">
-
-            <div class="col-lg-4 col-xs-6">
+            <div id="chart" class="col-lg-6 col-xs-6 rad-info-box" style="height:400px;"></div>
+            <!--div class="col-lg-4 col-xs-6">
                 <div class="rad-info-box rad-txt-success">
                     <i class="fa fa-sitemap" aria-hidden="true"></i>
                     <span class="heading">已备案网站数</span>
-                    <span class="value "><span class="rad-txt-success">{{count.websiteCount}}</span></span>
+                    <span class="value "><span class="rad-txt-success">{{count.acceptWebsiteCount}}</span></span>
                 </div>
             </div>
             <div class="col-lg-4 col-xs-6" ng-hide="user.userType=='部属单位网站管理员'">
                 <div class="rad-info-box rad-txt-danger">
                     <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                     <span class="heading">待审核网站数</span>
-                    <span class="value "><span class="rad-txt-danger">{{count.paddingCheckCount}}</span></span>
+                    <span class="value "><span class="rad-txt-danger">{{count.paddingCheckWebsiteCount}}</span></span>
                 </div>
             </div>
             <div class="col-lg-4 col-xs-6" ng-show="user.userType=='部属单位网站管理员'">
                 <div class="rad-info-box rad-txt-danger">
                     <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                     <span class="heading">驳回申请网站数</span>
-                    <span class="value "><span class="rad-txt-danger">{{count.refuseCount}}</span></span>
+                    <span class="value "><span class="rad-txt-danger">{{count.refuseWebsiteCount}}</span></span>
                 </div>
-            </div>
+            </div-->
             <div class="col-lg-4 col-xs-6" ng-show="user.userType=='系统部级一般用户'||user.userType=='系统管理员'">
-                <div class="rad-info-box rad-txt-violet">
-                    <i class="fa fa-users" aria-hidden="true"></i>
-                    <span class="heading">成员总数</span>
-                    <span class="value "><span class="rad-txt-violet">{{count.memberCount}}</span></span>
-                </div>
-            </div>
-            <div class="col-lg-4 col-xs-6" ng-show="user.userType=='部属单位管理员'||user.userType=='系统管理员'">
                 <div class="rad-info-box rad-txt-violet">
                     <i class="fa fa-users" aria-hidden="true"></i>
                     <span class="heading">成员总数</span>

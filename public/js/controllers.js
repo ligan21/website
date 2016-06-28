@@ -396,7 +396,31 @@ angular.module('websiteApp.controllers', []).controller('indexController', funct
     function error(err) {
         $window.location.href = '/login.html';
     }
-    $scope.count = $count.get();
+    $scope.count = $count.get(countSuccess);
+
+    function countSuccess(count) {
+        anychart.onDocumentReady(function() {
+            // create pie chart with passed data
+            chart = anychart.pie3d([
+                ['通过审核', count.acceptWebsiteCount],
+                ['驳回申请', count.refuseWebsiteCount],
+                ['待审核', count.paddingCheckWebsiteCount],
+            ]);
+
+            // set container id for the chart
+            chart.container('chart');
+            // turn on chart animation
+            chart.animation(true);
+            // set chart title text settings
+            chart.title('备案网站占比');
+
+            //set chart radius
+            chart.radius('43%');
+
+            // initiate chart drawing
+            chart.draw();
+        });
+    }
     $scope.notifications = $messages.get({
         type: '公告',
         page: 1,
@@ -413,29 +437,6 @@ angular.module('websiteApp.controllers', []).controller('indexController', funct
         limit: 10
     });
 
-    anychart.onDocumentReady(function() {
-        // create pie chart with passed data
-        chart = anychart.pie3d([
-            ['Northfarthing', 235],
-            ['Westfarthing', 552],
-            ['Eastfarthing', 491],
-            ['Southfarthing', 619],
-            ['Buckland', 388],
-            ['Westmarch', 405]
-        ]);
-
-        // set container id for the chart
-        chart.container('chart');
-
-        // set chart title text settings
-        chart.title('Population in The Shire');
-
-        //set chart radius
-        chart.radius('43%');
-
-        // initiate chart drawing
-        chart.draw();
-    });
 
 
 }).controller('membersController', function($scope, $state, $stateParams, $members, $organizations) {
@@ -699,71 +700,67 @@ angular.module('websiteApp.controllers', []).controller('indexController', funct
         $scope.getLogs();
     }
 }).controller('chartsController', function($scope, $state, $stateParams, $count, $organizations) {
-
-    $count.get(success, function() {})
-
-    function success(count) {
-        var ctx = document.getElementById("websiteAgreeChart");
-
-
-        var data = {
-            labels: [
-                "通过审核",
-                "驳回申请",
-                "待审核"
-            ],
-            datasets: [{
-                data: [count.agreeCount, count.refuseCount, count.paddingCheckCount],
-
-                backgroundColor: [
-                    "#FF6384",
-                    "#36A2EB",
-                    "#FFCE56"
-                ],
-                hoverBackgroundColor: [
-                    "#FF6384",
-                    "#36A2EB",
-                    "#FFCE56"
-                ]
-            }]
-        };
-        var myPieChart = new Chart(ctx, {
-            type: 'pie',
-            data: data
-        });
-    }
     $scope.organizations = $organizations.get({
         page: 1,
-        limit: 200
+        limit: 10,
+        sort: "count",
     }, successOrganization);
 
     function successOrganization(organizations) {
-        var name = [];
-        var count = [];
-        for (var i = 0, l = organizations.docs.length; i < l; i++) {
-            name[i] = organizations.docs[i].name;
-            count[i] = organizations.docs[i].count;
-        }
-        var data = {
-            labels: name,
-            datasets: [{
-                label: "单位网站数",
-                backgroundColor: "rgba(255,99,132,0.2)",
-                borderColor: "rgba(255,99,132,1)",
-                borderWidth: 1,
-                hoverBackgroundColor: "rgba(255,99,132,0.4)",
-                hoverBorderColor: "rgba(255,99,132,1)",
-                data: count,
-            }]
-        };
-        var ctx = document.getElementById("websiteCountChart");
-        var myBarChart = new Chart(ctx, {
-            type: 'bar',
-            data: data,
-            options: {
+        anychart.onDocumentReady(function() {
+            // create bar chart
+            chart = anychart.bar();
 
+            // turn on chart animation
+            chart.animation(true);
+
+            // set container id for the chart
+            chart.container('chart');
+            chart.padding([10, 40, 5, 20]);
+            // create area series with passed data
+            /*var series = chart.bar([
+                ['Eyeshadows', '249980'],
+                ['Eyeliner', '213210'],
+                ['Eyebrow pencil', '170670'],
+                ['Nail polish', '143760'],
+                ['Pomade', '128000'],
+                ['Lip gloss', '110430'],
+                ['Mascara', '102610'],
+                ['Foundation', '94190'],
+                ['Rouge', '80540'],
+                ['Powder', '53540']
+            ]);*/
+            // set chart title text settings
+            var data = [];
+            chart.title('Top 10 单位网站数');
+            for (var i = 0, l = organizations.docs.length; i < l; i++) {
+                data[i] = [organizations.docs[i].name, organizations.docs[i].count];
             }
+            var series = chart.bar(data);
+            // set tooltip formatter
+            series.tooltip().titleFormatter(function() {
+                return this.x
+            });
+            series.tooltip().textFormatter(function() {
+                return parseInt(this.value).toLocaleString();
+            });
+            series.tooltip().position('right').anchor('left').offsetX(5).offsetY(0);
 
+            // set yAxis labels formatter
+            chart.yAxis().labels().textFormatter(function() {
+                return this.value.toLocaleString();
+            });
+
+            // set titles for axises
+            chart.xAxis().title('单位');
+            chart.yAxis().title('网站数');
+            chart.interactivity().hoverMode('byX');
+            chart.tooltip().positionMode('point');
+            // set scale minimum
+            chart.yScale().minimum(0);
+
+            // initiate chart drawing
+            chart.draw();
         });
     }
 });
