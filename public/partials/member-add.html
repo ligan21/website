@@ -57,7 +57,7 @@
                             <div layout-gt-sm="row">
                                 <md-input-container class="md-block" flex-gt-sm style="padding-right:20px;">
                                     <label>登录密码</label>
-                                    <input type="password" name="password" ng-model="information.password" required ng-maxlength="50">
+                                    <input type="password" name="password" ng-model="information.password" equals="{{information.confirmPassword}}" required ng-maxlength="50">
                                     <div class="clearfix">
                                         <div ng-messages="addMemberForm.password.$error" ng-messages-multiple="ng-messages-multiple" class="error-messages slide-right">
                                             <div ng-message="required" class="message slide-left">不能为空</div>
@@ -67,12 +67,12 @@
                                 </md-input-container>
                                 <md-input-container class="md-block" flex-gt-sm style="padding-right:20px;">
                                     <label>确认登录密码</label>
-                                    <input type="password" ng-pattern="{{information.password}}" name="confirmPassword" required ng-maxlength="50">
+                                    <input type="password" ng-model="information.confirmPassword" equals="{{information.password}}" name="confirmPassword" required ng-maxlength="50">
 
                                     <div class="clearfix">
                                         <div ng-messages="addMemberForm.confirmPassword.$error" ng-messages-multiple="ng-messages-multiple" class="error-messages slide-right">
                                             <!--div ng-message="required" class="message slide-left"> 不能为空</div-->
-                                            <div ng-message="pattern" class="message slide-left">密码不匹配</div>
+                                            <div ng-message="equals" class="message slide-left">密码不匹配</div>
                                             <div ng-message="maxlength" class="message slide-left">最多50字符</div>
                                         </div>
                                     </div>

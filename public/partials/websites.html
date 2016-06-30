@@ -153,7 +153,7 @@
                                                                 <td md-cell>{{website.submitTime}}</td>
                                                                 <td md-cell>
                                                                     <p>{{website.state}}
-                                                                        <md-tooltip md-direction="left">
+                                                                        <md-tooltip md-direction="left" ng-show="(website.state=='驳回提交网站'||website.state=='驳回申请')&&website.refuseReason ">
                                                                             {{website.refuseReason}}
                                                                         </md-tooltip>
                                                                     </p>
@@ -210,10 +210,10 @@
                                                                 </td>
                                                                 <td md-cell ng-show="user.userType=='部属单位网站管理员'">
                                                                     <div>
-                                                                        <md-tooltip md-direction="bottom">
+                                                                        <!--md-tooltip md-direction="bottom">
                                                                             上传
-                                                                        </md-tooltip>
-                                                                        <input id="{{website._id}}S" ng-mouseenter="showUploadSecurityEvaluationReport(website)" type="file" name="files" accept="*" multiple="multiple">
+                                                                        </md-tooltip-->
+                                                                        <input id="{{website._id}}S" ng-mouseenter="showUploadSecurityEvaluationReport(website)" type="file" name="files" accept="*" multiple="multiple">{{website.securityEvaluationReportLink|filenameFilter}}
                                                                     </div>
                                                                 </td>
                                                             </tr>
@@ -264,7 +264,7 @@
                                                                 </td>
                                                                 <td md-cell ng-show="user.userType=='部属单位网站管理员'">
                                                                     <div>
-                                                                        <input id="{{website._id}}R" ng-mouseenter="showUploadReformReport(website)" type="file" name="files" accept="*" multiple="multiple">
+                                                                        <input id="{{website._id}}R" ng-mouseenter="showUploadReformReport(website)" type="file" name="files" accept="*" multiple="multiple"> {{website.reformReportLink|filenameFilter}}
                                                                         <md-tooltip md-direction="bottom">
                                                                             上传
                                                                         </md-tooltip>

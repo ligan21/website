@@ -5,6 +5,12 @@
 angular.module('websiteApp.services', []).factory('$count', function($resource) {
     return $resource('/count')
 
+}).factory('$SERcount', function($resource) {
+    return $resource('/SERcount')
+
+}).factory('$RRcount', function($resource) {
+    return $resource('/RRcount')
+
 }).factory('$websites', function($resource) {
     return $resource('/websites', null, {
         'save': {
@@ -102,14 +108,22 @@ angular.module('websiteApp.services', []).factory('$count', function($resource) 
     return $resource('/users/user');
 }).service('$popupService', function($window, $mdDialog) {
     this.showPopup = function(message, fn) {
-
-        $mdDialog.show(
-            $mdDialog.confirm()
-            .title('网站备案管理系统')
+        var confirm = $mdDialog.confirm()
+            .title('提示')
             .textContent(message)
-            .ariaLabel('Alert Dialog Demo')
             .ok('确定')
-        ).then(fn);
+            .cancel('取消');
+        $mdDialog.show(confirm).then(fn, function() {
+
+        });
+        /*
+                $mdDialog.show(
+                    $mdDialog.confirm()
+                    .title('网站备案管理系统')
+                    .textContent(message)
+                    .ariaLabel('Alert Dialog Demo')
+                    .ok('确定')
+                ).then(fn);*/
     }
 }).service('$accountManager', function($scope, $user, $logout, $window, $popupService) {
     this.checkLogin = function() {

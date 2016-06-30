@@ -24,10 +24,7 @@ router.route('/count')
         var user = req.session.user;
         console.log("user:" + user);
         if (user == null) {
-            res.writeHead(301, {
-                Location: '/login.html'
-            });
-            res.end();
+            res.status(401).send();
             return;
         }
         var query = {};
@@ -56,16 +53,57 @@ router.route('/count')
 
         });
     });
+router.route('/SERcount')
+    .get(function(req, res) {
+        var user = req.session.user;
+        console.log("user:" + user);
+        if (user == null) {
+            res.status(401).send();
+            return;
+        }
+        var query = {}
+        if (user.userType == "部属单位管理员") {
+            query.organizationName = user.organizationName;
+        } else if (user.userType == "部属单位网站管理员") {
+            query.submitter = user.username;
+        }
+        var count = {};
+        query.securityEvaluationReportState = "需要提交";
+        Website.count(query, function(err, c) {
+            count.SERcount = c;
+            res.json(count);
+        });
+
+    });
+router.route('/RRcount')
+    .get(function(req, res) {
+        var user = req.session.user;
+        console.log("user:" + user);
+        if (user == null) {
+            res.status(401).send();
+            return;
+        }
+        var query = {}
+        if (user.userType == "部属单位管理员") {
+            query.organizationName = user.organizationName;
+        } else if (user.userType == "部属单位网站管理员") {
+            query.submitter = user.username;
+        }
+        var count = {};
+        query.reformReportState = "需要提交";
+        Website.count(query, function(err, c) {
+            count.RRcount = c;
+            res.json(count);
+        });
+
+    });
 // website route
 router.route('/websites')
     .get(function(req, res) {
         var user = req.session.user;
         console.log("user:" + user);
         if (user == null) {
-            res.writeHead(301, {
-                Location: '/login.html'
-            });
-            res.end();
+            res.status(401).send();
             return;
         }
         var organizationName = req.param('organizationName');
@@ -123,10 +161,7 @@ router.route('/websites')
         var user = req.session.user;
 
         if (user == null) {
-            res.writeHead(301, {
-                Location: '/login.html'
-            });
-            res.end();
+            res.status(401).send();
             return;
         }
         var website = new Website(req.body);
@@ -182,10 +217,7 @@ router.route('/websites/:id')
     .put(function(req, res) {
         var user = req.session.user;
         if (user == null) {
-            res.writeHead(301, {
-                Location: '/login.html'
-            });
-            res.end();
+            res.status(401).send();
             return;
         }
         Website.findOne({
@@ -244,11 +276,16 @@ router.route('/websites/:id')
                             });
             
                         });*/
+            var action;
+            if (website.target == "WS") action = website.state + "网站";
+            else if (website.target == "SER") action = website.securityEvaluationReportState + "安全评测报告";
+            else if (website.target == "RR") action = website.reformReportState + "整改报告";
+
             var log = new Log({
                 'userType': user.userType,
                 'username': user.username,
                 'organizationName': user.organizationName,
-                'action': website['state'],
+                'action': action,
                 '_memberId': user._id,
                 '_websiteId': website._id
             });
@@ -284,6 +321,11 @@ router.route('/websites/:id')
 //member route
 router.route('/members')
     .get(function(req, res) {
+        var user = req.session.user;
+        if (user == null) {
+            res.status(401).send();
+            return;
+        }
         var username = req.param('username');
         if (username) {
             Member.findOne({
@@ -333,10 +375,7 @@ router.route('/members')
         console.log("add member");
         var user = req.session.user;
         if (user == null) {
-            res.writeHead(301, {
-                Location: '/login.html'
-            });
-            res.end();
+            res.status(401).send();
             return;
         }
         var member = new Member(req.body);
@@ -373,10 +412,7 @@ router.route('/members/:id')
     .put(function(req, res) {
         var user = req.session.user;
         if (user == null) {
-            res.writeHead(301, {
-                Location: '/login.html'
-            });
-            res.end();
+            res.status(401).send();
             return;
         }
         AM.updateAccount(req, function(err, o) {
@@ -447,12 +483,14 @@ router.route('/organizations')
         var sortby;
         if (sort) sortby = sort;
         else sortby = "name";
+        console.log(sortby);
         console.log(req.param('page'));
         Organization.paginate({}, {
             page: page,
             limit: limit,
             sort: {
-                sortby: 1
+                count: -1,
+                name: 1,
             },
             select: {
                 _id: 1,
@@ -482,10 +520,7 @@ router.route('/organizations/:id')
     .put(function(req, res) {
         var user = req.session.user;
         if (user == null) {
-            res.writeHead(301, {
-                Location: '/login.html'
-            });
-            res.end();
+            res.status(401).send();
             return;
         }
         Organization.findOne({
@@ -577,7 +612,7 @@ router.route('/messages')
         console.log("add message");
         var user = req.session.user;
         if (user == null) {
-            res.redirect(301, '/login.html'); //no login
+            res.status(401).send();
             return;
         }
         var message = new Message(req.body);
@@ -760,10 +795,17 @@ router.route('/memberType')
 
 router.route('/upload')
     .post(function(req, res) {
+        /*
+                if (!req.file) {
+                    res.status(402).send();
+                    return;
+                }
+        */
         upload.single('files')(req, res, function(err) {
             if (err) {
                 // An error occurred when uploading
                 console.log(err);
+                res.status(402).send();
                 return
             }
             console.log(req.file);

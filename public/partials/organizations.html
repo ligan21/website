@@ -31,6 +31,7 @@
                                             <tr md-row>
                                                 <th md-column><span>单位名称</span></th>
                                                 <th md-column><span>单位类别</span></th>
+                                                <th md-column>网站数</th>
                                                 <th md-column>创建时间</th>
                                             </tr>
                                         </thead>
@@ -38,6 +39,7 @@
                                             <tr md-row md-select="dessert " md-select-id="name " md-auto-select ng-repeat="organization in organizations.docs " class="table-row ">
                                                 <td md-cell><a style="color:green" ui-sref="organizationDetail({id:organization._id})">{{organization.name}}</a></td>
                                                 <td md-cell>{{organization.type}}</td>
+                                                <td md-cell>{{organization.count}}</td>
                                                 <td md-cell>{{organization.time}}</td>
 
                                             </tr>

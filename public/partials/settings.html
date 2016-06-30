@@ -33,15 +33,15 @@
                             <div layout-gt-sm="row">
                                 <md-input-container class="md-block" flex-gt-xs>
                                     <label>新密码</label>
-                                    <input type="password" ng-model="information.newPassword" required>
+                                    <input type="password" ng-model="information.newPassword" equals="{{information.confirmNewPassword}}" required>
                                 </md-input-container>
                             </div>
                             <div layout-gt-sm="row">
                                 <md-input-container class="md-block" flex-gt-xs>
                                     <label>确认新密码</label>
-                                    <input type="password" name="confirmNewPassword" ng-pattern="{{information.newPassword}}" ng-model="information.confirmNewPassword" required>
+                                    <input type="password" name="confirmNewPassword" ng-model="information.confirmNewPassword" equals="{{information.newPassword}}" required>
                                     <div ng-messages="setting.confirmNewPassword.$error">
-                                        <div ng-message="pattern">密码不相等</div>
+                                        <div ng-message="equals">密码不匹配</div>
                                     </div>
                                 </md-input-container>
                             </div>

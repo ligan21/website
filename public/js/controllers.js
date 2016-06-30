@@ -30,7 +30,7 @@ angular.module('websiteApp.controllers', []).controller('indexController', funct
     function logoutError(err) {
         $popupService.showPopup("退出失败" + err.data + err.message);
     }
-}).controller('websitesController', function($scope, $state, $user, $websites, $websiteDetail, $organizations, $popupService) {
+}).controller('websitesController', function($scope, $state, $user, $websites, $websiteDetail, $window, $organizations, $popupService) {
     $scope.organizations = $organizations.get({
         page: 1,
         limit: 200
@@ -71,11 +71,15 @@ angular.module('websiteApp.controllers', []).controller('indexController', funct
     $scope.showUploadSecurityEvaluationReport = function(website) {
         $("#" + website._id + "S").pekeUpload({
             url: "/upload",
-            btnText: '<i class="material-icons">publish</i>',
+            //   showPreview: false,
+            //  showFilename: false,
+            //  showPercent: false,
+            btnText: '<div><i class="material-icons">publish</i>上传文件</div>',
             onFileSuccess: function(file, data) {
                 website.id = website._id;
                 website.securityEvaluationReportLink = data.path;
                 website.securityEvaluationReportState = "已提交";
+                website.target = "SER";
                 $websiteDetail.information.update(website, successAction, errorAction);
             }
 
@@ -84,10 +88,14 @@ angular.module('websiteApp.controllers', []).controller('indexController', funct
     $scope.showUploadReformReport = function(website) {
         $("#" + website._id + "R").pekeUpload({
             url: "/upload",
-            btnText: '<i class="material-icons">publish</i>',
+            //showPreview: false,
+            //showFilename: false,
+            //showPercent: false,
+            btnText: '<div><i class="material-icons">publish</i>上传文件<div>',
             onFileSuccess: function(file, data) {
                 website.id = website._id;
                 website.reformReportLink = data.path;
+                website.target = "RR";
                 website.reformReportState = "已提交";
                 $websiteDetail.information.update(website, successAction, errorAction);
             }
@@ -102,21 +110,25 @@ angular.module('websiteApp.controllers', []).controller('indexController', funct
         //alert(website._id);
         website.id = website._id;
         website.securityEvaluationReportState = "通过";
-        $websiteDetail.information.update(website, successAction, errAction);
+        website.target = "SER";
+        $websiteDetail.information.update(website, successAction, errorAction);
     };
     $scope.refuseSER = function(website) {
         website.id = website._id;
         website.securityEvaluationReportState = "拒绝";
-        $websiteDetail.information.update(website, successAction, errAction);
+        website.target = "SER";
+        $websiteDetail.information.update(website, successAction, errorAction);
     }
     $scope.agreeRR = function(website) {
         website.id = website._id;
         website.reformReportState = "通过";
+        website.target = "RR";
         $websiteDetail.information.update(website, successAction, errorAction);
     }
     $scope.refuseRR = function(website) {
         website.id = website._id;
         website.reformReportState = "拒绝";
+        website.target = "RR";
         $websiteDetail.information.update(website, successAction, errorAction);
     }
 
@@ -134,7 +146,7 @@ angular.module('websiteApp.controllers', []).controller('indexController', funct
 
 
 
-}).controller('websiteDetailController', function($scope, $state, $user, $stateParams, $websiteDetail, $popupService, $mdDialog) {
+}).controller('websiteDetailController', function($scope, $state, $user, $stateParams, $window, $websiteDetail, $popupService, $mdDialog) {
     $scope.query = {
         limit: 10,
         page: 1
@@ -166,6 +178,7 @@ angular.module('websiteApp.controllers', []).controller('indexController', funct
     }
     $scope.accept = function() {
         $scope.information.id = $scope.information._id;
+        $scope.information.target = "WS";
         if ($scope.user.userType == "系统管理员") {
             $scope.information.refuseReason = '';
             $scope.information.state = "通过审核";
@@ -188,11 +201,13 @@ angular.module('websiteApp.controllers', []).controller('indexController', funct
         $mdDialog.show(confirm).then(function(result) {
             $scope.information.refuseReason = result;
             $scope.information.id = $scope.information._id;
+            $scope.information.target = "WS";
             if ($scope.user.userType == "系统管理员") {
                 //$scope.information.refuseReason;
                 $scope.information.state = "驳回申请";
                 $scope.information.ownerId = '1';
             } else if ($scope.user.userType == "部属单位管理员") {
+                $scope.information.ownerId = '0';
                 $scope.information.state = "驳回提交网站";
             }
 
@@ -213,6 +228,7 @@ angular.module('websiteApp.controllers', []).controller('indexController', funct
         $mdDialog.show(confirm).then(function() {
             $scope.information.id = $scope.information._id;
             $scope.information.securityEvaluationReportState = "需要提交";
+            $scope.information.target = "SER";
             $websiteDetail.information.update($scope.information, successAction, errorAction);
         }, function() {
 
@@ -229,6 +245,7 @@ angular.module('websiteApp.controllers', []).controller('indexController', funct
         $mdDialog.show(confirm).then(function() {
             $scope.information.id = $scope.information._id;
             $scope.information.reformReportState = "需要提交";
+            $scope.information.target = "RR";
             $websiteDetail.information.update($scope.information, successAction, errorAction);
         }, function() {
 
@@ -236,13 +253,16 @@ angular.module('websiteApp.controllers', []).controller('indexController', funct
     };
 
     function successAction() {
-        $popupService.showPopup("操作成功");
+        $popupService.showPopup("操作成功", goState("websites"));
     }
 
     function errorAction(error) {
         $popupService.showPopup("操作失败:" + error.data + error.message);
     }
 
+    function goState(state) {
+        $state.go(state);
+    }
 
 }).controller('addWebsiteController', function($scope, $state, $stateParams, $websites, $websiteDetail, $popupService) {
     $scope.information = {};
@@ -256,6 +276,7 @@ angular.module('websiteApp.controllers', []).controller('indexController', funct
     });
     $("#uploadTopology").pekeUpload({
         url: "/upload",
+
         btnText: '<i class="fa fa-upload" aria-hidden="true"></i>',
         onFileSuccess: function(file, data) {
             $scope.information.topologyLink = data.path;
@@ -263,6 +284,7 @@ angular.module('websiteApp.controllers', []).controller('indexController', funct
     });
     $("#uploadKeyProducts").pekeUpload({
         url: "/upload",
+
         btnText: '<i class="fa fa-upload" aria-hidden="true"></i>',
         onFileSuccess: function(file, data) {
             $scope.information.keyProductsLink = data.path;
@@ -301,12 +323,17 @@ angular.module('websiteApp.controllers', []).controller('indexController', funct
     }
 
     function success() {
-        $popupService.showPopup("成功添加网站");
+        $popupService.showPopup("成功添加网站", goState);
     }
 
     function error(err) {
         $popupService.showPopup("添加网站失败");
     }
+
+    function goState() {
+        $state.go('websites');
+    }
+
 }).controller("modifyWebsiteController", function($scope, $state, $stateParams, $websiteDetail, $popupService) {
     $scope.information = {};
     $scope.id = $stateParams.id;
@@ -315,40 +342,51 @@ angular.module('websiteApp.controllers', []).controller('indexController', funct
     });
 
 
-
     $("#uploadAttachment").pekeUpload({
         url: "/upload",
         btnText: '<i class="fa fa-upload" aria-hidden="true"></i>',
         onFileSuccess: function(file, data) {
             $scope.information.attachmentLink = data.path;
+            alert($scope.information.attachmentLink);
+
         }
     });
+
     $("#uploadTopology").pekeUpload({
         url: "/upload",
         btnText: '<i class="fa fa-upload" aria-hidden="true"></i>',
         onFileSuccess: function(file, data) {
             $scope.information.topologyLink = data.path;
+            alert($scope.information.attachmentLink);
+
         }
     });
+
+
     $("#uploadKeyProducts").pekeUpload({
         url: "/upload",
         btnText: '<i class="fa fa-upload" aria-hidden="true"></i>',
         onFileSuccess: function(file, data) {
             $scope.information.keyProductsLink = data.path;
+
         }
     });
+
     $("#uploadRecoveryPlan").pekeUpload({
         url: "/upload",
         btnText: '<i class="fa fa-upload" aria-hidden="true"></i>',
         onFileSuccess: function(file, data) {
             $scope.information.recoveryPlanLink = data.path;
+
         }
     });
+
     $("#uploadGradeProtect").pekeUpload({
         url: "/upload",
         btnText: '<i class="fa fa-upload" aria-hidden="true"></i>',
         onFileSuccess: function(file, data) {
             $scope.information.gradeProtectLink = data.path;
+
         }
     });
     $("#uploadSecurityEvalustionResult").pekeUpload({
@@ -356,36 +394,46 @@ angular.module('websiteApp.controllers', []).controller('indexController', funct
         btnText: '<i class="fa fa-upload" aria-hidden="true"></i>',
         onFileSuccess: function(file, data) {
             $scope.information.securityEvaluationResultLink = data.path;
+
         }
     });
+
     $scope.saveWebsite = function() {
         $scope.information.state = "保存网站";
-        $websiteDetail.save($scope.information, success, error);
+        $websiteDetail.information.update($scope.information, success, error);
     }
     $scope.saveAndsubmitWebsite = function() {
         $scope.information.state = "提交网站";
         $scope.information.ownerId = '1';
-        $websiteDetail.save($scope.information, success, error);
+        $scope.information.id = $scope.id;
+        //$scope.information.id=
+        $websiteDetail.information.update($scope.information, success, error);
+
     }
 
     function success() {
-        $popupService.showPopup("成功修改网站信息");
+        $popupService.showPopup("成功修改网站信息", goState);
     }
 
     function error(err) {
-        $popupService.showPopup("修改成员网站失败");
+        $popupService.showPopup("修改网站失败");
     }
 
-}).controller('dashboardController', function($scope, $stateParams, $user, $count, $messages, $websites, $logs) {
+    function goState() {
+        $state.go('websites');
+    }
+
+}).controller('dashboardController', function($scope, $stateParams, $user, $count, $SERcount, $RRcount, $window, $messages, $websites, $logs) {
     $scope.checkLogin = function() {
         $user.get(success, error);
     }
     $scope.checkLogin();
 
     function success(user) {
+
         $scope.user = user;
         if ($scope.user.userType == "部属单位网站管理员") $scope.webstate = "驳回申请";
-        else scope.webstate = "待审核";
+        else $scope.webstate = "待审核";
         $scope.paddingWebsites = $websites.get({
             state: $scope.website,
             page: 1,
@@ -394,33 +442,37 @@ angular.module('websiteApp.controllers', []).controller('indexController', funct
     }
 
     function error(err) {
+        alert("user error");
         $window.location.href = '/login.html';
     }
-    $scope.count = $count.get(countSuccess);
+    $scope.count = $count.get(); //countSuccess);
+    $scope.SERcount = $SERcount.get();
+    $scope.RRcount = $RRcount.get();
+    /*
+        function countSuccess(count) {
+            anychart.onDocumentReady(function() {
+                // create pie chart with passed data
+                chart = anychart.pie3d([
+                    ['通过审核', count.acceptWebsiteCount],
+                    ['驳回申请', count.refuseWebsiteCount],
+                    ['待审核', count.paddingCheckWebsiteCount],
+                ]);
 
-    function countSuccess(count) {
-        anychart.onDocumentReady(function() {
-            // create pie chart with passed data
-            chart = anychart.pie3d([
-                ['通过审核', count.acceptWebsiteCount],
-                ['驳回申请', count.refuseWebsiteCount],
-                ['待审核', count.paddingCheckWebsiteCount],
-            ]);
+                // set container id for the chart
+                chart.container('chart');
+                // turn on chart animation
+                chart.animation(true);
+                // set chart title text settings
+                chart.title('备案网站占比');
 
-            // set container id for the chart
-            chart.container('chart');
-            // turn on chart animation
-            chart.animation(true);
-            // set chart title text settings
-            chart.title('备案网站占比');
+                //set chart radius
+                chart.radius('43%');
 
-            //set chart radius
-            chart.radius('43%');
-
-            // initiate chart drawing
-            chart.draw();
-        });
-    }
+                // initiate chart drawing
+                chart.draw();
+            });
+        }
+    */
     $scope.notifications = $messages.get({
         type: '公告',
         page: 1,
@@ -494,11 +546,15 @@ angular.module('websiteApp.controllers', []).controller('indexController', funct
     }
 
     function success() {
-        $popupService.showPopup("成功添加成员");
+        $popupService.showPopup("成功添加成员", goState);
     }
 
     function error(err) {
         $popupService.showPopup("添加成员失败");
+    }
+
+    function goState() {
+        $state.go('members');
     }
     $scope.enableSetOrganization = true;
     $scope.setOrganization = function() {
@@ -535,11 +591,15 @@ angular.module('websiteApp.controllers', []).controller('indexController', funct
     }
 
     function success() {
-        $popupService.showPopup("成功修改成员信息");
+        $popupService.showPopup("成功修改成员信息", goState);
     }
 
     function err(error) {
         $popupService.showPopup("修改成员信息失败:" + error.data + error.message);
+    }
+
+    function goState() {
+        $state.go('members');
     }
 }).controller('organizationsController', function($scope, $state, $stateParams, $organizations) {
     $scope.query = {
@@ -633,7 +693,8 @@ angular.module('websiteApp.controllers', []).controller('indexController', funct
     });
 
 }).controller('addMessageController', function($scope, $state, $stateParams, $messages, $popupService) {
-
+    $scope.message = {};
+    $scope.message.attachment = "";
     $('#summernote').summernote({
         lang: 'zh-CN'
     });
@@ -651,7 +712,7 @@ angular.module('websiteApp.controllers', []).controller('indexController', funct
     }
 
     function success() {
-        $popupService.showPopup("成功发布公告消息", goState('messages'));
+        $popupService.showPopup("成功发布公告消息", goState);
 
     }
 
@@ -659,8 +720,8 @@ angular.module('websiteApp.controllers', []).controller('indexController', funct
         $popupService.showPopup("添加消息失败:" + error.data + error.message);
     }
 
-    function goState(state) {
-        $state.go(state);
+    function goState() {
+        $state.go('messages');
     }
 
 }).controller('settingsController', function($scope, $state, $stateParams, $settings, $popupService) {
@@ -709,32 +770,38 @@ angular.module('websiteApp.controllers', []).controller('indexController', funct
     function successOrganization(organizations) {
         anychart.onDocumentReady(function() {
             // create bar chart
-            chart = anychart.bar();
+            chart = anychart.bar3d();
 
             // turn on chart animation
             chart.animation(true);
-
+            var color = ['rgb(146, 202, 248)', 'rgb(247, 210, 92)', 'rgb(226, 102, 0)', 'rgb(25, 118, 210)', 'rgb(91, 170, 255)', 'rgb(116, 215, 147)', 'rgb(22, 135, 255)', 'rgb(255, 127, 191)', 'rgb(205, 241, 217)', 'rgb(176, 232, 194)', 'rgb(146, 224, 170)'];
             // set container id for the chart
             chart.container('chart');
             chart.padding([10, 40, 5, 20]);
             // create area series with passed data
-            /*var series = chart.bar([
-                ['Eyeshadows', '249980'],
-                ['Eyeliner', '213210'],
-                ['Eyebrow pencil', '170670'],
-                ['Nail polish', '143760'],
-                ['Pomade', '128000'],
-                ['Lip gloss', '110430'],
-                ['Mascara', '102610'],
-                ['Foundation', '94190'],
-                ['Rouge', '80540'],
-                ['Powder', '53540']
-            ]);*/
+            /*
+                        var series = chart.bar([
+                            ['Eyeshadows', '249980'],
+                            ['Eyeliner', '213210'],
+                            ['Eyebrow pencil', '170670'],
+                            ['Nail polish', '143760'],
+                            ['Pomade', '128000'],
+                            ['Lip gloss', '110430'],
+                            ['Mascara', '102610'],
+                            ['Foundation', '94190'],
+                            ['Rouge', '80540'],
+                             ['Powder', '53540']
+                        ]);*/
             // set chart title text settings
             var data = [];
             chart.title('Top 10 单位网站数');
             for (var i = 0, l = organizations.docs.length; i < l; i++) {
-                data[i] = [organizations.docs[i].name, organizations.docs[i].count];
+                //data[i] = [organizations.docs[i].name, organizations.docs[i].count];
+                data[i] = {
+                    x: organizations.docs[i].name,
+                    value: organizations.docs[i].count,
+                    fill: color[i]
+                };
             }
             var series = chart.bar(data);
             // set tooltip formatter
