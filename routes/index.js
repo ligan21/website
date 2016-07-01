@@ -369,7 +369,7 @@ router.route('/members')
         if (userType) {
             query.userType = userType;
         }
-        if (organizationName) query.orangizationName = organizationName;
+        if (organizationName) query.organizationName = organizationName;
         console.log(query);
         Member.paginate(query, {
             page: page,
@@ -790,6 +790,22 @@ router.route('/memberType')
         var user = req.session.user;
         if (user == null) {
             res.status(401).send();
+        }
+        var all = req.param('all');
+        if (all == "1") {
+            var memberType = [{
+                "name": "系统部级一般用户"
+            }, {
+                "name": "部属单位管理员"
+            }, {
+                "name": "安全审核员"
+            }, {
+                "name": "部属单位管理员"
+            }, {
+                "name": "部属单位网站管理员"
+            }];
+            res.json(memberType);
+            return;
         }
         if (user.userType == "系统管理员") {
             var memberType = [{

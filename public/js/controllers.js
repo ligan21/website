@@ -742,7 +742,9 @@ angular.module('websiteApp.controllers', []).controller('indexController', funct
         page: 1,
         limit: 200
     });
-    $scope.userTypes = $memberType.query();
+    $scope.userTypes = $memberType.query({
+        all: "1"
+    });
     $scope.query = {
         limit: 10,
         page: 1
