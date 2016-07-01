@@ -91,7 +91,7 @@ angular.module('websiteApp.controllers', []).controller('indexController', funct
             //showPreview: false,
             //showFilename: false,
             //showPercent: false,
-            btnText: '<div><i class="material-icons">publish</i>上传文件<div>',
+            btnText: '<div><i class="material-icons">publish</i>上传文件</div>',
             onFileSuccess: function(file, data) {
                 website.id = website._id;
                 website.reformReportLink = data.path;
@@ -347,7 +347,7 @@ angular.module('websiteApp.controllers', []).controller('indexController', funct
         btnText: '<i class="fa fa-upload" aria-hidden="true"></i>',
         onFileSuccess: function(file, data) {
             $scope.information.attachmentLink = data.path;
-            alert($scope.information.attachmentLink);
+            //alert($scope.information.attachmentLink);
 
         }
     });
@@ -357,7 +357,7 @@ angular.module('websiteApp.controllers', []).controller('indexController', funct
         btnText: '<i class="fa fa-upload" aria-hidden="true"></i>',
         onFileSuccess: function(file, data) {
             $scope.information.topologyLink = data.path;
-            alert($scope.information.attachmentLink);
+            // alert($scope.information.attachmentLink);
 
         }
     });
@@ -442,7 +442,7 @@ angular.module('websiteApp.controllers', []).controller('indexController', funct
     }
 
     function error(err) {
-        alert("user error");
+
         $window.location.href = '/login.html';
     }
     $scope.count = $count.get(); //countSuccess);

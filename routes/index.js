@@ -144,8 +144,8 @@ router.route('/websites')
                 websiteName: 1,
                 submitTime: 1,
                 state: 1,
-                securityEvalustionReportLink: 1,
-                securityEvalustionReportState: 1,
+                securityEvaluationReportLink: 1,
+                securityEvaluationReportState: 1,
                 reformReportLink: 1,
                 reformReportState: 1,
                 refuseReason: 1
@@ -188,13 +188,29 @@ router.route('/websites')
                 '_websiteId': website._id
             });
             log.save();
-            Organization.findOneAndUpdate({
-                name: user.organizationName
-            }, {
-                $inc: {
-                    count: 1
-                }
+            var websiteQuery = {};
+            websiteQuery.organizationName = user.organizationName;
+            var organizationQuery = {};
+            organizationQuery.name = user.organizationName;
+            //Organization.findOneAndUpdate(query, {
+            //    $inc: {
+            //        count: 1
+            //    }
+            //}, function(err, doc) {
+            //    if (err) {
+            //        console.log("Something wrong when updating data!");
+            //    }
+            //});
+            console.log(organizationQuery);
+            Organization.findOne(organizationQuery, function(err, organization) {
+                console.log(organization);
+                Website.count(websiteQuery, function(err, c) {
+                    console.log(c);
+                    organization['count'] = c;
+                    organization.save();
+                })
             });
+
             /*
                         Website.count({}, function(err, c) {
                             console.log('Count is ' + c);
@@ -202,12 +218,12 @@ router.route('/websites')
                                 count["websiteCount"] = c;
                                 count.save();
                             });
-            
+ 
                         });
                          Website.count({ state: "待审核" }, function (err, c) {
                              console.log('Count is ' + c);
                              Count.findOne({}, function (err, count) { count["paddingCheckCount"] = c; count.save(); });
-            
+ 
                          });*/
         });
     });
@@ -254,7 +270,7 @@ router.route('/websites/:id')
                                 count["paddingCheckCount"] = c;
                                 count.save();
                             });
-            
+        
                         });
                         Website.count({
                             state: "通过审核"
@@ -264,7 +280,7 @@ router.route('/websites/:id')
                                 count["agreeCount"] = c;
                                 count.save();
                             });
-            
+        
                         });
                         Website.count({
                             state: "驳回申请"
@@ -274,7 +290,7 @@ router.route('/websites/:id')
                                 count["refuseCount"] = c;
                                 count.save();
                             });
-            
+        
                         });*/
             var action;
             if (website.target == "WS") action = website.state + "网站";
@@ -430,25 +446,25 @@ router.route('/members/:id')
         });
         log.save();
         /*
-        Member.findOne({ _id: req.params.id }, function (err, member) {
+    Member.findOne({ _id: req.params.id }, function (err, member) {
 
+        if (err)
+            res.send(err);
+
+        for (prop in req.body) {
+            member[prop] = req.body[prop];
+        }
+
+        // save the movie
+        member.save(function (err) {
             if (err)
                 res.send(err);
 
-            for (prop in req.body) {
-                member[prop] = req.body[prop];
-            }
-
-            // save the movie
-            member.save(function (err) {
-                if (err)
-                    res.send(err);
-
-                res.json({ message: 'member updated!' });
-            });
-
+            res.json({ message: 'member updated!' });
         });
-      */
+
+    });
+  */
     })
 
 .get(function(req, res) {
