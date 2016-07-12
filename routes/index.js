@@ -113,10 +113,10 @@ router.route('/websites')
         var limit = req.param('limit');
         var page = Math.max(0, req.param('page'));
         var query = {};
-        if (state) {
+        if (state && state!="全部") {
             query.state = state;
         }
-        if (organizationName) query.organizationName = organizationName;
+        if (organizationName && organizationName!="全部") query.organizationName = organizationName;
         if (startDate) query.submitTime = {
             "$gte": startDate,
             "$lt": endDate
@@ -366,10 +366,10 @@ router.route('/members')
         var query = {
             '_createrId': req.session.user._id
         };
-        if (userType) {
-            query.userType = userType;
-        }
-        if (organizationName) query.organizationName = organizationName;
+        //if (userType) {
+        //    query.userType = userType;
+        //}
+        if (organizationName && organizationName !="全部") query.organizationName = organizationName;
         console.log(query);
         Member.paginate(query, {
             page: page,
@@ -606,6 +606,7 @@ router.route('/messages')
         if (type) {
             query.type = type;
         }
+        console.log(limit);
         Message.paginate(query, {
             page: page,
             limit: limit,
@@ -620,7 +621,9 @@ router.route('/messages')
                 timeout: 1
             }
         }, function(err, result) {
-            res.json(result);
+            if(err) {res.json(err);}
+            else{
+            res.json(result);}
         });
 
     })
@@ -717,10 +720,10 @@ router.route('/logs')
         if (memberId) {
             query._memberId = memberId;
         }
-        if (userType) {
+        if (userType && userType!="全部") {
             query.userType = userType;
         }
-        if (organizationName) {
+        if (organizationName && organizationName!="全部") {
             query.organizationName = organizationName;
         }
         console.log(query);
@@ -733,6 +736,7 @@ router.route('/logs')
         }, function(err, result) {
             res.json(result);
         });
+       /* Log.find(query,function(err,result){res.json(result);});*/
 
     });
 
@@ -795,9 +799,9 @@ router.route('/memberType')
         if (all == "1") {
             var memberType = [{
                 "name": "系统部级一般用户"
-            }, {
-                "name": "部属单位管理员"
-            }, {
+            },{"name":"系统管理员"
+            },
+            {
                 "name": "安全审核员"
             }, {
                 "name": "部属单位管理员"

@@ -48,12 +48,12 @@
                             </div>
                             <div layout-gt-sm="row">
                                 <div flex layout="row">
+                                    <label class=" control-label" style="margin-top:15px; margin-right:10px;">使用状态:</label>
                                     <md-input-container class="md-block" flex-gt-sm>
-                                        <label>使用状态</label>
-                                        <md-radio-group ng-model="information.useState" layout="row" required>
-                                            <md-radio-button value="正常运营" class="md-primary">正常运营</md-radio-button>
-                                            <md-radio-button value="已关闭"> 已关闭 </md-radio-button>
-                                        </md-radio-group>
+                                      <md-radio-group ng-model="information.useState" layout="row"  required>
+                                        <md-radio-button value="正常运营" class="md-primary">正常运营</md-radio-button>
+                                        <md-radio-button value="已关闭"> 已关闭 </md-radio-button>
+                                      </md-radio-group>
                                     </md-input-container>
                                 </div>
                                 <md-input-container class="md-block" flex-gt-sm>
@@ -82,8 +82,8 @@
                             </div>
                             <div layout-gt-sm="row">
                                 <div flex layout="row">
+                                    <label class="control-label" style="margin-top:15px; margin-right:10px;">网站分类:</label>
                                     <md-input-container class="md-block" flex-gt-sm>
-                                        <label>网站分类</label>
                                         <md-radio-group ng-model="information.classify" layout="row" required>
                                             <md-radio-button value="门户" class="md-primary">门户</md-radio-button>
                                             <md-radio-button value="业务系统"> 业务系统 </md-radio-button>
@@ -98,8 +98,8 @@
 
                             <div layout-gt-sm="row">
                                 <div flex layout="row">
+                                        <label class="control-label" style="margin-top:15px; margin-right:10px;">用户性质:</label>
                                     <md-input-container class="md-block" flex-gt-sm>
-                                        <label>用户性质</label>
                                         <md-radio-group ng-model="information.userProperty" layout="row" required>
                                             <md-radio-button value="本单位" class="md-primary">本单位</md-radio-button>
                                             <md-radio-button value="面向社会"> 面向社会 </md-radio-button>

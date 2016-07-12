@@ -55,6 +55,8 @@ angular.module('websiteApp.controllers', []).controller('indexController', funct
 
     //$scope.websites = websites.websites.get($scope.option);
     $scope.getWebsites = function(query) {
+        console.log($scope.organizationName);
+        console.log($scope.state);
         if ($scope.organizationName) $scope.query.organizationName = $scope.organizationName;
         if ($scope.state) $scope.query.state = $scope.state;
         if ($scope.startDate) {
@@ -491,7 +493,21 @@ angular.module('websiteApp.controllers', []).controller('indexController', funct
 
 
 
-}).controller('membersController', function($scope, $state, $stateParams, $members, $organizations) {
+}).controller('membersController', function($scope, $state, $stateParams, $members, $organizations,$user) {
+   $scope.checkLogin = function() {
+        $user.get(success, error);
+    }
+    $scope.checkLogin();
+
+    function success(user) {
+
+        $scope.user = user;
+    }
+
+    function error(err) {
+
+        $window.location.href = '/login.html';
+    }
     $scope.organizations = $organizations.get({
         page: 1,
         limit: 200
@@ -501,6 +517,7 @@ angular.module('websiteApp.controllers', []).controller('indexController', funct
         page: 1
     };
     $scope.getMembers = function(query) {
+        console.log($scope.organizationName);
         if ($scope.organizationName) $scope.query.organizationName = $scope.organizationName;
         $scope.promise = $members.get($scope.query, success).$promise;
     }
@@ -510,11 +527,28 @@ angular.module('websiteApp.controllers', []).controller('indexController', funct
     }
     $scope.getMembers();
     $scope.search = function() {
+        console.log($scope);
+
         $scope.getMembers();
     }
 
 
-}).controller('memberDetailController', function($scope, $state, $stateParams, $memberDetail) {
+}).controller('memberDetailController', function($scope, $state, $stateParams, $memberDetail,$user) {
+    $scope.checkLogin = function() {
+        $user.get(success, error);
+    }
+    $scope.checkLogin();
+
+    function success(user) {
+        
+        $scope.user = user;
+        if ($scope.user.userType == "部属单位管理员") $scope.information.userType = "驳回申请";
+    }
+
+    function error(err) {
+        
+        $window.location.href = '/login.html';
+    }
     $scope.query = {
         limit: 10,
         page: 1
@@ -536,6 +570,21 @@ angular.module('websiteApp.controllers', []).controller('indexController', funct
 }).controller('addMemberController', function($scope, $state, $stateParams, $memberDetail, $popupService, $memberType, $organizations) {
     //$scope.id = $stateParams.id;
     //$scope.information = $memberDetail.informagion.get({"id":$scope.id});
+        $scope.checkLogin = function() {
+        $user.get(success, error);
+    }
+    $scope.checkLogin();
+
+    function success(user) {
+
+        $scope.user = user;
+        if ($scope.user.userType == "部属单位管理员") $scope.information.userType = "部属单位网站管理员";
+    }
+
+    function error(err) {
+
+        $window.location.href = '/login.html';
+    }
     $scope.types = $memberType.query();
     $scope.organizations = $organizations.get({
         page: 1,

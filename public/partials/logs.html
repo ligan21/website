@@ -27,6 +27,7 @@
                                     <md-input-container class="md-block" flex-gt-sm>
                                         <label class=" control-label">用户类型</label>
                                         <md-select ng-model="userType" ng-change="search()">
+                                            <md-option>全部</md-option>
                                             <md-option ng-repeat="type in userTypes" value="{{type.name}}">
                                                 {{type.name}}
                                             </md-option>
@@ -42,6 +43,7 @@
                                     <md-input-container class="md-block" flex-gt-sm>
                                         <label class=" control-label">单位名称:</label>
                                         <md-select ng-model="organizationName" ng-change="search()">
+                                            <md-option>全部</md-option>
                                             <md-option ng-repeat="organization in organizations.docs" value="{{organization.name}}">
                                                 {{organization.name}}
                                             </md-option>

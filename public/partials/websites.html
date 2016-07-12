@@ -28,12 +28,12 @@
 
                     </div-->
                     <div class="panel-content">
-                        <md-button ng-show="user.userType=='部属单位网站管理员'" class="md-fab  md-mini md-primary" style="float:right;margin-top:0px; " ui-sref="addWebsite"><i class="material-icons">add_to_queue</i>
+                        <md-button ng-if="user.userType=='部属单位网站管理员'" class="md-fab  md-mini md-primary" style="float:right;margin-top:0px; " ui-sref="addWebsite"><i class="material-icons">add_to_queue</i>
                             <md-tooltip md-direction="bottom">
                                 添加网站
                             </md-tooltip>
                         </md-button>
-                        <div class="row" style="margin-top:40px;">
+                        <div class="row" style="margin-top:10px;">
 
                             <div class="col-xs-12 col-sm-4 col-md-4">
 
@@ -58,16 +58,25 @@
                     <input type="email " class="form-control " id="inputEmail " placeholder=" ">
                   </div>
                   <span class="material-input "></span><span class="material-input "></span></div-->
-                                <div class="form-group col-md-6">
+                                <div class="form-group row">
                                     <md-input-container class="md-block" flex-gt-sm style="margin-top:0px;float:left">
                                         <label class="control-label">审核状态:</label>
                                         <md-select ng-model="state" ng-change="search()">
+                                            <md-option>全部</md-option>
                                             <md-option>待审核</md-option>
                                             <md-option>通过审核</md-option>
                                             <md-option>驳回申请</md-option>
                                         </md-select>
                                     </md-input-container>
-
+                                    <!--md-input-container class="md-block" flex-gt-sm style="margin-top:0px;float:left">
+                                        <label class="control-label">审核状态:</label>
+                                        <md-select ng-model="organizationName" ng-change="search()">
+                                            <md-option>全部</md-option>
+                                            <md-option ng-repeat="organization in organizations.docs" value="{{organization.name}}">
+                                                {{organization.name}}
+                                            </md-option>
+                                        </md-select>
+                                    </md-input-container-->
                                     <!--div class="col-md-9">
                                         <md-input-container class="md-block" flex-gt-sm style="margin-top:0px;float:left">
                                             <label class="control-label">审核状态:</label>
@@ -85,11 +94,12 @@
                                           </select>
                                     </div>
                                     <span class="material-input"></span-->
-                                </div>
-                                <div class="form-group col-md-6" ng-show="user.userType=='系统管理员' || user.userType=='系统部级一般用户' ">
-                                    <md-input-container class="md-block" flex-gt-sm style="margin-top:0px;">
+                                <!--/div-->
+                                <!--div class="form-group " ng-show="user.userType=='系统管理员' || user.userType=='系统部级一般用户' "-->
+                                    <md-input-container class="md-block" flex-gt-sm style="margin-top:0px; float:right" ng-show="user.userType=='系统管理员' || user.userType=='系统部级一般用户' ">
                                         <label class="control-label">单位名称:</label>
                                         <md-select ng-model="organizationName" ng-change="search()">
+                                            <md-option>全部</md-option>
                                             <md-option ng-repeat="organization in organizations.docs" value="{{organization.name}}">
                                                 {{organization.name}}
                                             </md-option>
@@ -175,7 +185,7 @@
                                                                 <th md-column><span>单位名称</span></th>
                                                                 <th md-column>网站名称</th>
                                                                 <th md-column>提交时间</th>
-                                                                <th md-column>审核状态</th>
+                                                                <th md-column>状态</th>
                                                                 <th md-column ng-show="user.userType=='系统管理员'"> 操作</th>
                                                                 <th md-column ng-show="user.userType=='部属单位网站管理员'"> 操作</th>
                                                             </tr>
@@ -187,8 +197,9 @@
                                                                 <td md-cell>{{website.websiteName}}</td>
                                                                 <td md-cell>{{website.submitTime }}</td>
                                                                 <td md-cell>{{website.securityEvaluationReportState}}</td>
-                                                                <td md-cell ng-show="user.userType=='系统管理员'">
-                                                                    <a href="{{website.securityEvaluationReportLink}} "><i class="material-icons ">attach_file</i>                       
+                                                                <td md-cell ng-show="user.userType=='系统管理员'" >
+                                                                  <div ng-show="website.securityEvaluationReportState=='已提交'">
+                                                                    <a href="{{website.securityEvaluationReportLink}} "><i class="material-icons ">attach_file</i>
                                                                     <md-tooltip md-direction="bottom">
                                                                       下载
                                                                     </md-tooltip>
@@ -206,10 +217,10 @@
                                                                         </md-tooltip>
                                                                     </div>
                                                                     <!--input id="{{website._id}}S" style="opacity: 0;filter: alpha(opacity=0);" ng-mouseenter="showUploadSecurityEvalustionReport(website)" type="file" name="files" accept="*" multiple="multiple"-->
-
+                                                                 </div>
                                                                 </td>
-                                                                <td md-cell ng-show="user.userType=='部属单位网站管理员'">
-                                                                    <div>
+                                                                <td md-cell ng-show="user.userType=='部属单位网站管理员'" >
+                                                                    <div ng-show="website.securityEvaluationReportState=='已提交'">
                                                                         <!--md-tooltip md-direction="bottom">
                                                                             上传
                                                                         </md-tooltip-->
@@ -233,7 +244,7 @@
                                                                 <th md-column><span>单位名称</span></th>
                                                                 <th md-column>网站名称</th>
                                                                 <th md-column>提交时间</th>
-                                                                <th md-column>审核状态</th>
+                                                                <th md-column>状态</th>
                                                                 <th md-column ng-show="user.userType=='系统管理员'"> 操作</th>
                                                                 <th md-column ng-show="user.userType=='部属单位网站管理员'"> 操作</th>
                                                             </tr>
@@ -246,8 +257,9 @@
                                                                 <td md-cell>{{website.submitTime}}</td>
                                                                 <td md-cell>{{website.reformReportState}}</td>
                                                                 <td md-cell ng-show="user.userType=='系统管理员'">
-                                                                    <a href="{{website.reformReportLink}} "><i class="material-icons ">attach_file</i>                                                                    
-                                                                     <md-tooltip md-direction="bottom">
+                                                                    <div ng-show="website.reformReportState=='已提交'">
+                                                                    <a href="{{website.reformReportLink}} "><i class="material-icons ">attach_file</i>
+                                                                    <md-tooltip md-direction="bottom">
                                                                       下载
                                                                     </md-tooltip>
                                                                     </a>
@@ -261,9 +273,10 @@
                                                                             拒绝
                                                                         </md-tooltip>
                                                                     </a>
+                                                                    </div>
                                                                 </td>
-                                                                <td md-cell ng-show="user.userType=='部属单位网站管理员'">
-                                                                    <div>
+                                                                <td md-cell ng-show="user.userType=='部属单位网站管理员'" >
+                                                                    <div ng-show="website.reformReportState=='已提交'">
                                                                         <input id="{{website._id}}R" ng-mouseenter="showUploadReformReport(website)" type="file" name="files" accept="*" multiple="multiple"> {{website.reformReportLink|filenameFilter}}
                                                                         <md-tooltip md-direction="bottom">
                                                                             上传

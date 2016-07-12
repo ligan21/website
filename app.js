@@ -18,7 +18,7 @@ var users = require('./routes/users');
 var app = express();
 
 var dbName='websiteRecordDB';
-var connectionString="mongodb://localhost:27017/"+dbName;
+var connectionString="mongodb://admin:123456@localhost:27017/"+dbName;
 mongoose.connect(connectionString);
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

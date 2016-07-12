@@ -12,8 +12,8 @@
 <div class="body-content">
     <div class="container">
         <div class="row">
-            <div class="col-lg-4 col-xs-6">
-                <div class="rad-info-box rad-txt-success" ng-hidess="user.userType=='部属单位网站管理员'">
+            <div class="col-lg-4 col-xs-6" ng-if="user.userType !='部属单位网站管理员'">
+                <div class="rad-info-box rad-txt-success" >
                     <i class="fa fa-sitemap" aria-hidden="true"></i>
                     <span class="heading">已备案网站数</span>
                     <span class="value "><span class="rad-txt-success">{{count.acceptWebsiteCount}}</span></span>
@@ -65,7 +65,7 @@
                                 <md-content>
                                     <md-list ng-repeat="notification in notifications.docs ">
                                         <md-list-item style="width:100%">
-                                            <div style="width:100%"><span style="color:green;margin-right:10px;">[公告]</span>{{notification.title}}
+                                            <div style="width:100%"><span style="color:green;margin-right:10px;">[公告]</span><a  ui-sref="messageDetail({id:notification._id}) ">{{notification.title}}</a>
                                                 <span style="color:silver;float:right;text-align:right; ">{{notification.time}}</span></div>
                                         </md-list-item>
                                     </md-list>
@@ -76,7 +76,7 @@
                                     <md-list ng-repeat="rule in rules.docs">
                                         <md-list-item style="width:100% ">
                                             <div style="width:100% "><span style="color:red;margin-right:10px;
-                                        ">[规定]</span>{{rule.title}} <span style="color:silver;float:right;text-align:right; ">{{rule.time}}</span></div>
+                                        ">[规定]</span><a ui-sref="messageDetail({id:rule._id})">{{rule.title}} <span style="color:silver;float:right;text-align:right; ">{{rule.time}}</span></div>
                                         </md-list-item>
                                     </md-list>
                                 </md-content>
@@ -116,7 +116,7 @@
                                         </thead>
                                         <tbody md-body>
                                             <tr md-row md-select="dessert" md-select-id="name" md-auto-select ng-repeat="paddingWebsite in paddingWebsites.docs" class="table-row">
-                                                <td md-cell>{{paddingWebsite._id}}</td>
+                                                <td md-cell><a ui-sref="websiteDetail({id:paddingWebsite._id})">{{paddingWebsite._id}}</a></td>
                                                 <td md-cell>{{paddingWebsite.organizationName}}</td>
                                                 <td md-cell>{{paddingWebsite.websiteName}}</td>
                                                 <td md-cell>{{paddingWebsite.submitTime}}</td>
@@ -150,8 +150,8 @@
                                     <table md-table md-row-select multiple md-progress="promise">
                                         <thead md-head md-order="query.order">
                                             <tr md-row>
-                                                <th md-column md-order-by="nameToLower"><span>单位名称</span></th>
-                                                <th md-column md-order-by="calories.value"><span>操作时间</span></th>
+                                                <th md-column ><span>单位名称</span></th>
+                                                <th md-column ><span>操作时间</span></th>
                                                 <th md-column>用户类型</th>
                                                 <th md-column>用户名</th>
                                                 <th md-column>操作</th>

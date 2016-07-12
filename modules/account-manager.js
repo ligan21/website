@@ -9,9 +9,11 @@ var Member = require('../models/member');
 /* login validation methods */
 
 exports.manualLogin = function(username, password, callback) {
+    console.log("AM login");
     Member.findOne({
         username: username
     }, function(e, o) {
+        console.log("manualLogin");
         if (o == null) {
             callback('user-not-found');
         } else {
